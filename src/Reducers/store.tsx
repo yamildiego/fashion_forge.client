@@ -3,12 +3,14 @@ import { composeWithDevTools } from "@redux-devtools/extension";
 
 import thunk from "redux-thunk";
 
-import configReducer from "./configReducer";
+import appReducer from "./appReducer";
+import clientReducer from "./clientReducer";
 
 export type StateType = ReturnType<typeof rootReducer>;
 
 const rootReducer = combineReducers({
-  configReducer,
+  appReducer,
+  clientReducer,
 });
 
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
