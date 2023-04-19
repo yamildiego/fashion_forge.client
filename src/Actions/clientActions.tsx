@@ -1,9 +1,9 @@
-import axios from "axios";
+// import axios from "axios";
 import * as Types from "../Constants/Types";
 
 import * as appActions from "./appActions";
 
-const server = axios.create({ withCredentials: true });
+// const server = axios.create({ withCredentials: true });
 
 const initValidationType = { value: "", error: false, helperText: "" };
 

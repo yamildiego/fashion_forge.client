@@ -1,11 +1,10 @@
 import { ChangeEvent, useState } from "react";
 
+import { TextField, Grid } from "@mui/material";
+
+import FormView from "../FormView";
 import withParamsAndNavigate from "../../Hooks/withParamsAndNavigate";
-
-import { Typography, TextField, Grid, Box, Stack, Button } from "@mui/material";
-
 import genericValidation from "../../Functions/genericValidation";
-
 import * as clientActions from "../../Actions/clientActions";
 
 interface ExistingClientProps {
@@ -40,47 +39,26 @@ const ExistingClient = (props: ExistingClientProps) => {
   };
 
   return (
-    <Stack spacing={2} direction="column" sx={styles.container}>
-      <Typography variant="h4" sx={styles.title}>
-        Existing client
-      </Typography>
-      <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1, width: "100%" }}>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <TextField
-              autoFocus={true}
-              required
-              id="name"
-              name="name"
-              label="Email"
-              fullWidth
-              placeholder="Enter your email address"
-              value={email.value}
-              onChange={(event: ChangeEvent<HTMLInputElement>) => handleOnChange({ ...email, value: event.target.value })}
-              error={email.error && submitted}
-              helperText={email.helperText}
-            />
-          </Grid>
+    <FormView title="Existing client" submitText="Enter" handleSubmit={handleSubmit}>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <TextField
+            autoFocus={true}
+            required
+            id="name"
+            name="name"
+            label="Email"
+            fullWidth
+            placeholder="Enter your email address"
+            value={email.value}
+            onChange={(event: ChangeEvent<HTMLInputElement>) => handleOnChange({ ...email, value: event.target.value })}
+            error={email.error && submitted}
+            helperText={email.helperText}
+          />
         </Grid>
-        <Button type="submit" variant="contained" color="primary" sx={styles.btn}>
-          Enter
-        </Button>
-      </Box>
-    </Stack>
+      </Grid>
+    </FormView>
   );
-};
-
-const styles = {
-  container: {
-    justifyContent: "flex-start",
-    alignItems: "center",
-    mt: 4,
-  },
-  title: {
-    textAlign: "left",
-    width: "100%",
-  },
-  btn: { mt: 2 },
 };
 
 const mapStateToProps = (state: StateType) => {
