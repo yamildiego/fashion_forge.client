@@ -12,6 +12,7 @@ declare global {
     };
     clientReducer: {
       formNewClient: FormClientType;
+      existing_customer_email: ValidationType;
     };
   };
 
@@ -27,8 +28,8 @@ declare global {
     phone: ValidationType;
     email: ValidationType;
     address: ValidationType;
-    state: string;
-    postcode: string;
+    state: ValidationType;
+    postcode: ValidationType;
   };
 
   export type MyMapDispatchToProps<TDispatchProps = {}, TOwnProps = {}> = MapDispatchToProps<TDispatchProps, TOwnProps>;

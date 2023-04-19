@@ -42,8 +42,8 @@ class Address extends Component<AddressProps> {
         this.props.setFormNewClient({
           ...this.props.formNewClient,
           address: genericValidation(addressValue, "required", "Address"),
-          state: metaData.state_territory,
-          postcode: metaData.postcode,
+          state: genericValidation(metaData.state_territory, "required", "State"),
+          postcode: genericValidation(metaData.postcode, "required", "Postal code"),
         });
       });
     }
@@ -54,15 +54,15 @@ class Address extends Component<AddressProps> {
       this.props.setFormNewClient({
         ...this.props.formNewClient,
         address: genericValidation("", "required", "Address"),
-        state: "",
-        postcode: "",
+        state: genericValidation("", "", "State"),
+        postcode: genericValidation("", "", "Postal code"),
       });
     else
       this.props.setFormNewClient({
         ...this.props.formNewClient,
-        address: { value: "", error: false, helperText: "" },
-        state: "",
-        postcode: "",
+        address: genericValidation("", "", "Address"),
+        state: genericValidation("", "", "State"),
+        postcode: genericValidation("", "", "Postal code"),
       });
 
     //@ts-ignore
@@ -86,14 +86,20 @@ class Address extends Component<AddressProps> {
             inputRef={this.address_line_1}
             disabled={formNewClient.address.value !== ""}
             error={formNewClient.address.error && submitted}
-            helperText={formNewClient.address.error ? formNewClient.address.helperText : ""}
+            helperText={submitted && formNewClient.address.error ? formNewClient.address.helperText : ""}
           />
         </Grid>
         <Grid item sm={4} sx={styles.btnChangeAddress}>
           <Button onClick={this.handleButtonModifyAddress}>Modify address</Button>
         </Grid>
         <Grid item sm={6}>
-          <TextField fullWidth label="State" disabled placeholder="State" value={formNewClient.address.value ? formNewClient.state : ""} />
+          <TextField
+            fullWidth
+            label="State"
+            disabled
+            placeholder="State"
+            value={formNewClient.address.value ? formNewClient.state.value : ""}
+          />
         </Grid>
         <Grid item sm={6}>
           <TextField
@@ -101,7 +107,7 @@ class Address extends Component<AddressProps> {
             label="Postal Code"
             disabled
             placeholder="Postal Code"
-            value={formNewClient.address.value ? formNewClient.postcode : ""}
+            value={formNewClient.address.value ? formNewClient.postcode.value : ""}
           />
         </Grid>
       </>
