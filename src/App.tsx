@@ -1,4 +1,3 @@
-import { Component } from "react";
 import { Route, Routes } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";

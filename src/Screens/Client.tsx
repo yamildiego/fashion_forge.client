@@ -21,7 +21,6 @@ const Client = (props: ClientProps) => {
   const { currentView, navigate } = props;
 
   const handleOnClickBack = () => {
-    let viewBack = "";
     switch (currentView) {
       case "main":
         navigate("/");
@@ -45,20 +44,6 @@ const Client = (props: ClientProps) => {
           <Typography variant="h6" component="div" sx={{ flex: 1, ml: 1 }}>
             Client dashboard
           </Typography>
-          {/* <FormControl className={classes.formControl}> */}
-          {/* <FormControl>
-            <Select value={state} onChange={handleChange} displayEmpty className={classes.selectEmpty}>
-              <MenuItem value="" disabled>
-                Select a state
-              </MenuItem>
-              {states.map((state) => (
-                <MenuItem key={state.value} value={state.value}>
-                  {state.label}
-                </MenuItem>
-              ))}
-            </Select>
-            <FormHelperText>Select your state</FormHelperText>
-          </FormControl> */}
         </Toolbar>
       </AppBar>
 
