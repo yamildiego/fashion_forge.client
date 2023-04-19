@@ -1,20 +1,22 @@
 import * as Types from "../Constants/Types";
 
+const initValidationType = { value: "", error: false, helperText: "" };
+
 const initialState = {
   formNewClient: {
-    name: { value: "", error: false, helperText: "" },
-    lastname: { value: "", error: false, helperText: "" },
-    phone: { value: "", error: false, helperText: "" },
-    email: { value: "", error: false, helperText: "" },
-    address: { value: "", error: false, helperText: "" },
-    state: { value: "", error: false, helperText: "" },
-    postcode: { value: "", error: false, helperText: "" },
+    name: initValidationType,
+    lastname: initValidationType,
+    phone: initValidationType,
+    email: initValidationType,
+    address: initValidationType,
+    state: initValidationType,
+    postcode: initValidationType,
   },
-  client: null,
+  existing_customer_email: { value: "", error: false, helperText: "" },
 };
 
 type SetFormNewClientAction = { type: typeof Types.SET_FORM_NEW_CLIENT; value: FormClientType };
-type SetCurrentFilterAction = { type: typeof Types.SET_CURRENT_VIEW; value: string };
+type SetCurrentFilterAction = { type: typeof Types.SET_EMAIL; value: ValidationType };
 
 type ClientReducerAction = SetFormNewClientAction | SetCurrentFilterAction;
 
@@ -22,6 +24,9 @@ export default function clientReducer(state = initialState, action: ClientReduce
   switch (action.type) {
     case Types.SET_FORM_NEW_CLIENT: {
       return { ...state, formNewClient: action.value };
+    }
+    case Types.SET_EMAIL: {
+      return { ...state, existing_customer_email: action.value };
     }
 
     default:
