@@ -7,6 +7,7 @@ declare global {
 
   type StateType = {
     appReducer: {
+      isLoading: boolean;
       currentView: string;
     };
     clientReducer: {
@@ -19,7 +20,6 @@ declare global {
     error: boolean;
     helperText: string;
   };
-
 
   type FormClientType = {
     name: ValidationType;

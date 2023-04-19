@@ -1,4 +1,6 @@
-import { AppBar, Toolbar, Typography, Container } from "@mui/material";
+import { NavigateFunction } from "react-router-dom";
+import { AppBar, Toolbar, Typography, Container, IconButton } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 import withParamsAndNavigate from "../Hooks/withParamsAndNavigate";
 
@@ -7,18 +9,40 @@ import NewClient from "../Components/Client/NewClient";
 import ExistingClient from "../Components/Client/ExistingClient";
 import Jobs from "../Components/Client/Jobs";
 
+import * as appActions from "../Actions/appActions";
+
 interface ClientProps {
   currentView: string;
+  navigate: NavigateFunction;
+  setCurrentView: (view: string) => void;
 }
 
 const Client = (props: ClientProps) => {
-  const { currentView } = props;
+  const { currentView, navigate } = props;
+
+  const handleOnClickBack = () => {
+    let viewBack = "";
+    switch (currentView) {
+      case "main":
+        navigate("/");
+        break;
+      case "existingClient":
+      case "newClient":
+        props.setCurrentView("main");
+        break;
+      default:
+        break;
+    }
+  };
 
   return (
     <Container maxWidth="sm" sx={{ display: "flex", flexDirection: "column", flex: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" component="div">
+          <IconButton onClick={handleOnClickBack}>
+            <ArrowBackIcon />
+          </IconButton>
+          <Typography variant="h6" component="div" sx={{ flex: 1, ml: 1 }}>
             Client dashboard
           </Typography>
           {/* <FormControl className={classes.formControl}> */}
@@ -52,4 +76,8 @@ const mapStateToProps = (state: StateType) => {
   };
 };
 
-export default withParamsAndNavigate(Client, mapStateToProps);
+const mapDispatchToProps: MyMapDispatchToProps = {
+  setCurrentView: appActions.setCurrentView,
+};
+
+export default withParamsAndNavigate(Client, mapStateToProps, mapDispatchToProps);
