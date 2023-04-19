@@ -24,10 +24,10 @@ const styles = {
   },
 };
 
-const mapStateToProps = (state: StateType) => {};
+// const mapStateToProps = (state: StateType) => {};
 
-const mapDispatchToProps: MyMapDispatchToProps = {
-  // setMainView: appActions.setMainView,
-};
+// const mapDispatchToProps: MyMapDispatchToProps = {
+//   // setMainView: appActions.setMainView,
+// };
 
-export default withParamsAndNavigate(Jobs, mapStateToProps, mapDispatchToProps);
+export default withParamsAndNavigate(Jobs);

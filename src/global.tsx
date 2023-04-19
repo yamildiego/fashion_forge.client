@@ -20,15 +20,6 @@ declare global {
     helperText: string;
   };
 
-  // type ClientType = {
-  //   name: string;
-  //   lastname: string;
-  //   phone: string;
-  //   email: string;
-  //   address: string;
-  //   state: string;
-  //   postcode: string;
-  // };
 
   type FormClientType = {
     name: ValidationType;
@@ -36,8 +27,8 @@ declare global {
     phone: ValidationType;
     email: ValidationType;
     address: ValidationType;
-    state: ValidationType;
-    postcode: ValidationType;
+    state: string;
+    postcode: string;
   };
 
   export type MyMapDispatchToProps<TDispatchProps = {}, TOwnProps = {}> = MapDispatchToProps<TDispatchProps, TOwnProps>;

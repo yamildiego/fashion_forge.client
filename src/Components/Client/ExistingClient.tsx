@@ -24,10 +24,10 @@ const styles = {
   },
 };
 
-const mapStateToProps = (state: StateType) => {};
+// const mapStateToProps = (state: StateType) => {};
 
-const mapDispatchToProps: MyMapDispatchToProps = {
-  // setExistingClientView: appActions.setExistingClientView,
-};
+// const mapDispatchToProps: MyMapDispatchToProps = {
+//   // setExistingClientView: appActions.setExistingClientView,
+// };
 
-export default withParamsAndNavigate(ExistingClient, mapStateToProps, mapDispatchToProps);
+export default withParamsAndNavigate(ExistingClient);

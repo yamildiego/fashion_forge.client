@@ -1,9 +1,11 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, useState } from "react";
 import withParamsAndNavigate from "../../Hooks/withParamsAndNavigate";
 
-import Address from "../Address";
+import { Typography, TextField, Grid, Box, Stack, Button } from "@mui/material";
 
-import { Typography, TextField, Grid, Stack, Button } from "@mui/material";
+import genericValidation from "../../Functions/genericValidation";
+
+import Address from "../Address";
 
 import * as clientActions from "../../Actions/clientActions";
 
@@ -13,16 +15,43 @@ interface NewClientProps {
 }
 
 const NewClient = (props: NewClientProps) => {
+  const [submitted, setSubmitted] = useState<boolean>(false);
   const { formNewClient } = props;
 
   const handleOnChange = (value: FormClientType) => {
-    props.setFormNewClient(value);
+    if (submitted) props.setFormNewClient(runValidation(value));
+    else props.setFormNewClient(value);
+  };
+
+  const handleSubmit = (event: React.FormEvent<EventTarget>) => {
+    event.preventDefault();
+    setSubmitted(true);
+    let formValidated = runValidation(formNewClient);
+    props.setFormNewClient(formValidated);
+    let hasError = Object.values(formValidated).some((field) => (field as ValidationType)?.error);
+
+    if (!hasError) console.log("send the form");
+  };
+
+  const runValidation = (formNew: FormClientType) => {
+    let formValidated: FormClientType = {
+      ...formNew,
+      name: genericValidation(formNew.name.value, "required", "Name"),
+      lastname: genericValidation(formNew.lastname.value, "required", "Lastname"),
+      phone: genericValidation(formNew.phone.value, "required", "Phone"),
+      email: genericValidation(formNew.email.value, "required", "Email"),
+      address: genericValidation(formNew.address.value, "required", "Address"),
+    };
+
+    if (!formValidated.email.error) formValidated.email = genericValidation(formNew.email.value, "email", "Email");
+
+    return formValidated;
   };
 
   return (
     <Stack spacing={2} direction="column" sx={styles.container}>
       <Typography variant="h4">New client</Typography>
-      <form>
+      <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
             <TextField
@@ -36,6 +65,8 @@ const NewClient = (props: NewClientProps) => {
               onChange={(event: ChangeEvent<HTMLInputElement>) =>
                 handleOnChange({ ...formNewClient, name: { ...formNewClient.name, value: event.target.value } })
               }
+              error={formNewClient.name.error && submitted}
+              helperText={formNewClient.name.helperText}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -49,6 +80,8 @@ const NewClient = (props: NewClientProps) => {
               onChange={(event: ChangeEvent<HTMLInputElement>) =>
                 handleOnChange({ ...formNewClient, lastname: { ...formNewClient.lastname, value: event.target.value } })
               }
+              error={formNewClient.lastname.error && submitted}
+              helperText={formNewClient.lastname.helperText}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -62,6 +95,8 @@ const NewClient = (props: NewClientProps) => {
               onChange={(event: ChangeEvent<HTMLInputElement>) =>
                 handleOnChange({ ...formNewClient, phone: { ...formNewClient.phone, value: event.target.value } })
               }
+              error={formNewClient.phone.error && submitted}
+              helperText={formNewClient.phone.helperText}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -75,14 +110,16 @@ const NewClient = (props: NewClientProps) => {
               onChange={(event: ChangeEvent<HTMLInputElement>) =>
                 handleOnChange({ ...formNewClient, email: { ...formNewClient.email, value: event.target.value } })
               }
+              error={formNewClient.email.error && submitted}
+              helperText={formNewClient.email.helperText}
             />
           </Grid>
-          <Address />
+          <Address submitted={submitted} />
         </Grid>
-        <Button variant="contained" color="primary" sx={styles.btn}>
+        <Button type="submit" variant="contained" color="primary" sx={styles.btn}>
           Submit
         </Button>
-      </form>
+      </Box>
     </Stack>
   );
 };

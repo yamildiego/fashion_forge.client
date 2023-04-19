@@ -33,7 +33,9 @@ const styles = {
   },
 };
 
-const mapStateToProps = (state: StateType) => {};
+const mapStateToProps = (state: StateType) => {
+  return {};
+};
 
 const mapDispatchToProps: MyMapDispatchToProps = {
   setCurrentView: appActions.setCurrentView,
