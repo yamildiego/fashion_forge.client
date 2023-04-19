@@ -12,6 +12,7 @@ import * as clientActions from "../../Actions/clientActions";
 interface NewClientProps {
   formNewClient: FormClientType;
   setFormNewClient: (view: FormClientType) => void;
+  newClient: (client: ClientType) => void;
 }
 
 const NewClient = (props: NewClientProps) => {
@@ -28,9 +29,11 @@ const NewClient = (props: NewClientProps) => {
     setSubmitted(true);
     let formValidated = runValidation(formNewClient);
     props.setFormNewClient(formValidated);
-    let hasError = Object.values(formValidated).some((field) => (field as ValidationType)?.error);
 
-    if (!hasError) console.log("send the form");
+    let hasError = Object.values(formValidated).some((field) => field.error);
+    let clientFormatted = Object.entries(formValidated).reduce((acc, [key, value]) => ({ ...acc, [key]: value.value }), {} as ClientType);
+
+    if (!hasError) props.newClient(clientFormatted);
   };
 
   const runValidation = (formNew: FormClientType) => {
@@ -50,8 +53,10 @@ const NewClient = (props: NewClientProps) => {
 
   return (
     <Stack spacing={2} direction="column" sx={styles.container}>
-      <Typography variant="h4">New client</Typography>
-      <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+      <Typography variant="h4" sx={styles.title}>
+        New client
+      </Typography>
+      <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1, width: "100%" }}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
             <TextField
@@ -66,7 +71,7 @@ const NewClient = (props: NewClientProps) => {
                 handleOnChange({ ...formNewClient, name: { ...formNewClient.name, value: event.target.value } })
               }
               error={formNewClient.name.error && submitted}
-              helperText={formNewClient.name.helperText}
+              helperText={submitted && formNewClient.name.error ? formNewClient.name.helperText : ""}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -81,7 +86,7 @@ const NewClient = (props: NewClientProps) => {
                 handleOnChange({ ...formNewClient, lastname: { ...formNewClient.lastname, value: event.target.value } })
               }
               error={formNewClient.lastname.error && submitted}
-              helperText={formNewClient.lastname.helperText}
+              helperText={submitted && formNewClient.lastname.error ? formNewClient.lastname.helperText : ""}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -96,7 +101,7 @@ const NewClient = (props: NewClientProps) => {
                 handleOnChange({ ...formNewClient, phone: { ...formNewClient.phone, value: event.target.value } })
               }
               error={formNewClient.phone.error && submitted}
-              helperText={formNewClient.phone.helperText}
+              helperText={submitted && formNewClient.phone.error ? formNewClient.phone.helperText : ""}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -111,7 +116,7 @@ const NewClient = (props: NewClientProps) => {
                 handleOnChange({ ...formNewClient, email: { ...formNewClient.email, value: event.target.value } })
               }
               error={formNewClient.email.error && submitted}
-              helperText={formNewClient.email.helperText}
+              helperText={submitted && formNewClient.email.error ? formNewClient.email.helperText : ""}
             />
           </Grid>
           <Address submitted={submitted} />
@@ -126,9 +131,13 @@ const NewClient = (props: NewClientProps) => {
 
 const styles = {
   container: {
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
     mt: 4,
+  },
+  title: {
+    textAlign: "left",
+    width: "100%",
   },
   btn: { mt: 2 },
 };
@@ -141,6 +150,7 @@ const mapStateToProps = (state: StateType) => {
 
 const mapDispatchToProps: MyMapDispatchToProps = {
   setFormNewClient: clientActions.setFormNewClient,
+  newClient: clientActions.newClient,
 };
 
 export default withParamsAndNavigate(NewClient, mapStateToProps, mapDispatchToProps);

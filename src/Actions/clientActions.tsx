@@ -26,9 +26,10 @@ export const cleanFormNewClient = () => (dispatch: any) =>
     })
   );
 
-export const newClient = () => {
+export const newClient = (client: ClientType) => {
   return async (dispatch: any) => {
     dispatch(appActions.setIsLoading(true));
+    console.log(client);
     // await server
     //   .post(`${Urls.editFields}`, { id, value })
     //   .then((response) => (response.data.status === "OK" ? dispatch(setReloadData(true)) : console.log("ERROR 200")))

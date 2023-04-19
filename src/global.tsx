@@ -32,6 +32,16 @@ declare global {
     postcode: ValidationType;
   };
 
+  type ClientType = {
+    name: string;
+    lastname: string;
+    phone: string;
+    email: string;
+    address: string;
+    state: string;
+    postcode: string;
+  };
+
   export type MyMapDispatchToProps<TDispatchProps = {}, TOwnProps = {}> = MapDispatchToProps<TDispatchProps, TOwnProps>;
 }
 
