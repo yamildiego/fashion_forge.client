@@ -5,3 +5,6 @@ export const SET_CURRENT_VIEW = "SET_CURRENT_VIEW";
 //Client
 export const SET_FORM_NEW_CLIENT = "SET_FORM_NEW_CLIENT";
 export const SET_EMAIL = "SET_EMAIL";
+
+//Job
+export const SET_FORM_NEW_JOB = "SET_FORM_NEW_JOB";

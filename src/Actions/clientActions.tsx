@@ -29,7 +29,11 @@ export const cleanFormNewClient = () => (dispatch: any) =>
 export const newClient = (client: ClientType) => {
   return async (dispatch: any) => {
     dispatch(appActions.setIsLoading(true));
-    console.log(client);
+    setTimeout(() => {
+      dispatch(appActions.setIsLoading(false));
+      dispatch(appActions.setCurrentView("jobs"));
+    }, 1500);
+
     // await server
     //   .post(`${Urls.editFields}`, { id, value })
     //   .then((response) => (response.data.status === "OK" ? dispatch(setReloadData(true)) : console.log("ERROR 200")))
@@ -40,6 +44,11 @@ export const newClient = (client: ClientType) => {
 export const getExistingClient = (email: string) => {
   return async (dispatch: any) => {
     dispatch(appActions.setIsLoading(true));
+    setTimeout(() => {
+      dispatch(appActions.setIsLoading(false));
+      dispatch(appActions.setCurrentView("jobs"));
+    }, 1500);
+
     // dispatch(setEmail({ value: email, error: true, helperText: "HERE ERROR NO FOUND" }));
     // await server
     //   .post(`${Urls.editFields}`, { id, value })

@@ -14,6 +14,9 @@ declare global {
       formNewClient: FormClientType;
       existing_customer_email: ValidationType;
     };
+    jobReducer: {
+      formNewJob: FormJobType;
+    };
   };
 
   type ValidationType = {
@@ -41,6 +44,20 @@ declare global {
     state: string;
     postcode: string;
   };
+
+  type FormJobType = {
+    type_of_clothing: ValidationType;
+    description: ValidationType;
+    budget: ValidationType;
+  };
+
+  type JobType = {
+    type_of_clothing: string;
+    description: string;
+    budget: number;
+  };
+
+  type TypeOfClothing = "t_shirt" | "jeans" | "swimsuit" | "cocktail_dress" | "tracksuit" | "leather_jacket" | "business_suit" | "skirt";
 
   export type MyMapDispatchToProps<TDispatchProps = {}, TOwnProps = {}> = MapDispatchToProps<TDispatchProps, TOwnProps>;
 }

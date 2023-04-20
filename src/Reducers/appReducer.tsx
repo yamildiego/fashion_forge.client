@@ -2,7 +2,7 @@ import * as Types from "../Constants/Types";
 
 const initialState = {
   isLoading: false,
-  currentView: "main",
+  currentView: "jobs",
 };
 
 type SetLoadingAction = { type: typeof Types.SET_IS_LOADING; value: boolean };

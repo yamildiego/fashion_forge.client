@@ -5,12 +5,14 @@ import thunk from "redux-thunk";
 
 import appReducer from "./appReducer";
 import clientReducer from "./clientReducer";
+import jobReducer from "./jobReducer";
 
 export type StateType = ReturnType<typeof rootReducer>;
 
 const rootReducer = combineReducers({
   appReducer,
   clientReducer,
+  jobReducer,
 });
 
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));

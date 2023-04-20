@@ -13,6 +13,12 @@ const initialState = {
     postcode: initValidationType,
   },
   existing_customer_email: { value: "", error: false, helperText: "" },
+
+  formNewJob: {
+    type_of_clothing: initValidationType,
+    description: initValidationType,
+    budget: initValidationType,
+  },
 };
 
 type SetFormNewClientAction = { type: typeof Types.SET_FORM_NEW_CLIENT; value: FormClientType };

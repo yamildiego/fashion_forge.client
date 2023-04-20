@@ -36,9 +36,9 @@ const Main = (props: MainProps) => {
 
 const styles = {
   container: {
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
-    mt: 8,
+    mt: 4,
   },
   btn: {
     width: "150px",
