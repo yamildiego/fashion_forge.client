@@ -9,6 +9,7 @@ declare global {
     appReducer: {
       isLoading: boolean;
       currentView: string;
+      client: ClientType;
     };
     clientReducer: {
       formNewClient: FormClientType;

@@ -1,5 +1,5 @@
 import { NavigateFunction } from "react-router-dom";
-import { AppBar, Toolbar, Typography, Container, IconButton } from "@mui/material";
+import { AppBar, Toolbar, Typography, Container, IconButton, Box } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 
@@ -14,13 +14,14 @@ import NewJob from "../Components/Client/NewJob";
 import * as appActions from "../Actions/appActions";
 
 interface ClientProps {
+  client: ClientType;
   currentView: string;
   navigate: NavigateFunction;
   setCurrentView: (view: string) => void;
 }
 
 const Client = (props: ClientProps) => {
-  const { currentView, navigate } = props;
+  const { currentView, navigate, client } = props;
 
   const handleOnClickBack = () => {
     switch (currentView) {
@@ -53,6 +54,7 @@ const Client = (props: ClientProps) => {
           <Typography variant="h6" component="div" sx={{ flex: 1, ml: 1 }}>
             Client dashboard
           </Typography>
+          <Box sx={{ mr: 1 }}>{`${client?.name ?? ""} ${client?.lastname ?? ""}`}</Box>
           {currentView == "jobs" && (
             <IconButton onClick={handleOnClickBack}>
               <ExitToAppIcon sx={{ color: "white" }} />
@@ -73,6 +75,7 @@ const Client = (props: ClientProps) => {
 const mapStateToProps = (state: StateType) => {
   return {
     currentView: state.appReducer.currentView,
+    client: state.appReducer.client,
   };
 };
 
