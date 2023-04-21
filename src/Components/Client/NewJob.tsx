@@ -1,20 +1,13 @@
 import { ChangeEvent, useState } from "react";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import Dropzone from "react-dropzone";
-import { Typography, Grid, Button } from "@mui/material";
-
-import { Stack, TextField, FormHelperText } from "@mui/material";
-import Box from "@mui/material/Box";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
+import { Grid, TextField, FormHelperText, InputLabel, MenuItem, FormControl } from "@mui/material";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-
-import FormView from "../FormView";
 
 import withParamsAndNavigate from "../../Hooks/withParamsAndNavigate";
 import genericValidation from "../../Functions/genericValidation";
 import * as jobActions from "../../Actions/jobActions";
+
+import FormView from "../FormView";
+import UploadImages from "../UploadImages";
 
 import TypesOfClothing from "../../TypesOfClothing.json";
 
@@ -27,17 +20,6 @@ interface JobsProps {
 const Jobs = (props: JobsProps) => {
   const [submitted, setSubmitted] = useState<boolean>(false);
   const { formNewJob } = props;
-
-  const [files, setFiles] = useState([]);
-
-  // const handleDrop = (acceptedFiles: any) => {
-  //   // @ts-ignore
-  //   setFiles((prevFiles: any) => [...prevFiles, ...acceptedFiles]);
-  // };
-
-  // const removeFile = (fileIndex: number) => {
-  //   setFiles((prevFiles) => prevFiles.filter((_, index) => index !== fileIndex));
-  // };
 
   const handleOnChange = (value: FormJobType) => {
     if (submitted) props.setFormNewJob(runValidation(value));
@@ -124,27 +106,12 @@ const Jobs = (props: JobsProps) => {
             helperText={submitted && formNewJob.budget.error ? formNewJob.budget.helperText : ""}
           />
         </Grid>
-        <Grid item xs={12} sm={6}></Grid>
+        <Grid item xs={12}>
+          <UploadImages />
+        </Grid>
       </Grid>
     </FormView>
   );
-};
-
-const styles = {
-  container: {
-    justifyContent: "flex-start",
-    alignItems: "center",
-    mt: 4,
-  },
-  dropzone: {
-    padding: "20px",
-    borderRadius: "5px",
-    backgroundColor: "#eee",
-    cursor: "pointer",
-  },
-  dropzoneActive: {
-    backgroundColor: "#ddd",
-  },
 };
 
 const mapStateToProps = (state: StateType) => {
@@ -159,43 +126,3 @@ const mapDispatchToProps: MyMapDispatchToProps = {
 };
 
 export default withParamsAndNavigate(Jobs, mapStateToProps, mapDispatchToProps);
-
-// padding: "",
-// // border: `2px dashed ${theme.palette.primary.main}`,
-// // borderRadius: theme.shape.borderRadius,
-
-// <Stack spacing={2} direction="column" sx={styles.container}>
-//       <>
-//         <Typography variant="h6" gutterBottom>
-//           Upload multiple images
-//         </Typography>
-//         <Grid container spacing={2}>
-//           <Grid item xs={12} sm={6}>
-//             <Dropzone onDrop={handleDrop}>
-//               {({ getRootProps, getInputProps, isDragActive }) => (
-//                 <div {...getRootProps()} style={{ ...styles.dropzone, ...(isDragActive ? { ...styles.dropzoneActive } : {}) }}>
-//                   <input {...getInputProps()} />
-//                   <CloudUploadIcon fontSize="large" />
-//                   <Typography variant="body1">Drag and drop your images here or click to select files</Typography>
-//                 </div>
-//               )}
-//             </Dropzone>
-//           </Grid>
-//           <Grid item xs={12} sm={6}>
-//             {files.length > 0 && (
-//               <Typography variant="h6" gutterBottom>
-//                 Selected images:
-//               </Typography>
-//             )}
-//             {files.map((file: any, index) => (
-//               <div key={index}>
-//                 <Typography variant="body1">{file.name}</Typography>
-//                 <Button variant="contained" color="secondary" onClick={() => removeFile(index)}>
-//                   Delete
-//                 </Button>
-//               </div>
-//             ))}
-//           </Grid>
-//         </Grid>
-//       </>
-//     </Stack>
