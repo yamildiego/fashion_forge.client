@@ -6,7 +6,10 @@ import withParamsAndNavigate from "../../Hooks/withParamsAndNavigate";
 
 import * as appActions from "../../Actions/appActions";
 
+import ListJobs from "./ListJobs";
+
 interface JobsProps {
+  jobs: JobType[];
   setCurrentView: (view: string) => void;
 }
 
@@ -16,7 +19,7 @@ const Jobs = (props: JobsProps) => {
   };
 
   return (
-    <Stack spacing={2} direction="column" sx={styles.container}>
+    <Stack spacing={2} direction="column">
       <Stack spacing={2} direction="row" sx={styles.header}>
         <Typography variant="h4" sx={styles.title}>
           My jobs
@@ -25,13 +28,13 @@ const Jobs = (props: JobsProps) => {
           New job
         </Button>
       </Stack>
-      <Box sx={styles.noElements}>No elements added</Box>
+      {props.jobs.length == 0 && <Box sx={styles.noElements}>No jobs added</Box>}
+      {props.jobs.length > 0 && <ListJobs />}
     </Stack>
   );
 };
 
 const styles = {
-  container: {},
   header: {
     mt: 4,
   },
@@ -50,7 +53,9 @@ const styles = {
 };
 
 const mapStateToProps = (state: StateType) => {
-  return {};
+  return {
+    jobs: state.jobReducer.jobs,
+  };
 };
 
 const mapDispatchToProps: MyMapDispatchToProps = {

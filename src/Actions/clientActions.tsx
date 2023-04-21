@@ -6,7 +6,7 @@ import * as appActions from "./appActions";
 
 import handleCatchGeneric from "../Functions/handleCatchGeneric";
 
-const server = axios.create();
+const server = axios.create({ withCredentials: true });
 
 const initValidationType = { value: "", error: false, helperText: "" };
 const initValidationTypeTEMP = { value: "yamildiego@gmail.com", error: false, helperText: "" };
@@ -55,11 +55,11 @@ export const newClient = (client: ClientType) => {
   };
 };
 
-export const getExistingClient = (email: string) => {
+export const getCreatedClient = (email: string) => {
   return async (dispatch: any) => {
     dispatch(appActions.setIsLoading(true));
     await server
-      .post(`${Urls.getExistingClient}`, { email })
+      .post(`${Urls.getCreatedClient}`, { email })
       .then((response) => {
         if (response.statusText === "OK") {
           dispatch(appActions.setCurrentView("jobs"));

@@ -7,13 +7,13 @@ import withParamsAndNavigate from "../../Hooks/withParamsAndNavigate";
 import genericValidation from "../../Functions/genericValidation";
 import * as clientActions from "../../Actions/clientActions";
 
-interface ExistingClientProps {
+interface CreatedClientViewProps {
   email: ValidationType;
   setEmail: (email: ValidationType) => void;
-  getExistingClient: (email: string) => void;
+  getCreatedClient: (email: string) => void;
 }
 
-const ExistingClient = (props: ExistingClientProps) => {
+const CreatedClientView = (props: CreatedClientViewProps) => {
   const { email } = props;
   const [submitted, setSubmitted] = useState<boolean>(false);
 
@@ -29,7 +29,7 @@ const ExistingClient = (props: ExistingClientProps) => {
     let emailValidated = runValidation(email);
     props.setEmail(emailValidated);
 
-    if (!emailValidated.error) props.getExistingClient(email.value);
+    if (!emailValidated.error) props.getCreatedClient(email.value);
   };
 
   const runValidation = (email: ValidationType) => {
@@ -69,7 +69,7 @@ const mapStateToProps = (state: StateType) => {
 
 const mapDispatchToProps: MyMapDispatchToProps = {
   setEmail: clientActions.setEmail,
-  getExistingClient: clientActions.getExistingClient,
+  getCreatedClient: clientActions.getCreatedClient,
 };
 
-export default withParamsAndNavigate(ExistingClient, mapStateToProps, mapDispatchToProps);
+export default withParamsAndNavigate(CreatedClientView, mapStateToProps, mapDispatchToProps);

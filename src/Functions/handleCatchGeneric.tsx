@@ -10,7 +10,7 @@ const initValidationType = {
   helperText: "",
 };
 
-const handleCatchGeneric = (error: any, callback: (formValidation: Partial<FormClientType>) => void) => {
+const handleCatchGeneric = (error: any, callback: (formValidation: Partial<any>) => void) => {
   console.log(error);
   if (error.code === "ERR_BAD_REQUEST") {
     let errors = JSON.parse(error.request.response).errors;
@@ -23,7 +23,7 @@ const handleCatchGeneric = (error: any, callback: (formValidation: Partial<FormC
         formValidation[error.field] = {
           ...initValidationType,
           error: true,
-          helperText: getMsgError(error.rule, capitalizeFirstLetter(error.field)),
+          helperText: getMsgError(error.rule, capitalizeFirstLetter(error.field).replaceAll("_", " ")),
         };
       } else {
         //@ts-ignore

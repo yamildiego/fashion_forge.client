@@ -41,7 +41,7 @@ const Jobs = (props: JobsProps) => {
     let formValidated: FormJobType = {
       type_of_clothing: genericValidation(formNew.type_of_clothing.value, "required", "Type of clothing"),
       description: genericValidation(formNew.description.value, "required", "Description"),
-      budget: genericValidation("", "", "Budget"),
+      budget: genericValidation(formNew.budget.value, "", "Budget"),
     };
 
     return formValidated;
@@ -107,7 +107,7 @@ const Jobs = (props: JobsProps) => {
           />
         </Grid>
         <Grid item xs={12}>
-          <UploadImages />
+          {/* <UploadImages /> */}
         </Grid>
       </Grid>
     </FormView>

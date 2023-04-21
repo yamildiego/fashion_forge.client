@@ -1,3 +1,4 @@
+import { Component } from "react";
 import { NavigateFunction } from "react-router-dom";
 import { AppBar, Toolbar, Typography, Container, IconButton, Box } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -5,72 +6,84 @@ import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 
 import withParamsAndNavigate from "../Hooks/withParamsAndNavigate";
 
-import Main from "../Components/Client/Main";
-import NewClient from "../Components/Client/NewClient";
-import ExistingClient from "../Components/Client/ExistingClient";
-import Jobs from "../Components/Client/Jobs";
-import NewJob from "../Components/Client/NewJob";
+import MainClientView from "../Components/Client/MainClientView";
+import NewClientView from "../Components/Client/NewClientView";
+import CreatedClientView from "../Components/Client/CreatedClientView";
+import Jobs from "../Components/Job/Jobs";
+import NewJob from "../Components/Job/NewJob";
 
 import * as appActions from "../Actions/appActions";
+import * as jobActions from "../Actions/jobActions";
 
 interface ClientProps {
   client: ClientType;
   currentView: string;
   navigate: NavigateFunction;
   setCurrentView: (view: string) => void;
+  getJobs: () => void;
 }
 
-const Client = (props: ClientProps) => {
-  const { currentView, navigate, client } = props;
+class Client extends Component<ClientProps> {
+  componentDidUpdate(oldProps: ClientProps) {
+    if (oldProps.currentView !== this.props.currentView && this.props.currentView == "jobs") this.props.getJobs();
+  }
 
-  const handleOnClickBack = () => {
+  handleOnClickBack = () => {
+    const { currentView, navigate, setCurrentView } = this.props;
+
     switch (currentView) {
       case "main":
       case "jobs":
         navigate("/");
-        props.setCurrentView("main");
+        setCurrentView("main");
         break;
-      case "existingClient":
+      case "createdClient":
       case "newClient":
-        props.setCurrentView("main");
+        setCurrentView("main");
         break;
       case "newJob":
-        props.setCurrentView("jobs");
+        setCurrentView("jobs");
         break;
       default:
         break;
     }
   };
 
-  return (
-    <Container maxWidth="sm" sx={{ display: "flex", flexDirection: "column", flex: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
-          {currentView !== "jobs" && (
-            <IconButton onClick={handleOnClickBack}>
-              <ArrowBackIcon sx={{ color: "white" }} />
-            </IconButton>
-          )}
-          <Typography variant="h6" component="div" sx={{ flex: 1, ml: 1 }}>
-            Client dashboard
-          </Typography>
-          <Box sx={{ mr: 1 }}>{`${client?.name ?? ""} ${client?.lastname ?? ""}`}</Box>
-          {currentView == "jobs" && (
-            <IconButton onClick={handleOnClickBack}>
-              <ExitToAppIcon sx={{ color: "white" }} />
-            </IconButton>
-          )}
-        </Toolbar>
-      </AppBar>
+  render() {
+    const { currentView, client } = this.props;
 
-      {currentView === "main" && <Main />}
-      {currentView === "newClient" && <NewClient />}
-      {currentView === "existingClient" && <ExistingClient />}
-      {currentView === "jobs" && <Jobs />}
-      {currentView === "newJob" && <NewJob />}
-    </Container>
-  );
-};
+    return (
+      <Container maxWidth="sm" sx={{ display: "flex", flexDirection: "column", flex: 1 }}>
+        <AppBar position="static">
+          <Toolbar>
+            {currentView !== "jobs" && (
+              <IconButton onClick={this.handleOnClickBack}>
+                <ArrowBackIcon sx={{ color: "white" }} />
+              </IconButton>
+            )}
+            <Typography variant="h6" component="div" sx={{ flex: 1, ml: 1 }}>
+              Client dashboard
+            </Typography>
+            {currentView == "jobs" && (
+              <>
+                <Box sx={{ mr: 1 }}>{`${client?.name ?? ""} ${client?.lastname ?? ""}`}</Box>
+                <IconButton onClick={this.handleOnClickBack}>
+                  <ExitToAppIcon sx={{ color: "white" }} />
+                </IconButton>
+              </>
+            )}
+          </Toolbar>
+        </AppBar>
+
+        {currentView === "main" && <MainClientView />}
+        {currentView === "newClient" && <NewClientView />}
+        {currentView === "createdClient" && <CreatedClientView />}
+        {currentView === "jobs" && <Jobs />}
+        {currentView === "newJob" && <NewJob />}
+      </Container>
+    );
+  }
+}
 
 const mapStateToProps = (state: StateType) => {
   return {
@@ -81,6 +94,7 @@ const mapStateToProps = (state: StateType) => {
 
 const mapDispatchToProps: MyMapDispatchToProps = {
   setCurrentView: appActions.setCurrentView,
+  getJobs: jobActions.getJobs,
 };
 
 export default withParamsAndNavigate(Client, mapStateToProps, mapDispatchToProps);

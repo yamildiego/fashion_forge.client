@@ -17,6 +17,7 @@ declare global {
     };
     jobReducer: {
       formNewJob: FormJobType;
+      jobs: JobType[];
     };
   };
 
@@ -56,6 +57,8 @@ declare global {
     type_of_clothing: string;
     description: string;
     budget: number;
+    quote?: number;
+    created_at: string;
   };
 
   type TypeOfClothing = "t_shirt" | "jeans" | "swimsuit" | "cocktail_dress" | "tracksuit" | "leather_jacket" | "business_suit" | "skirt";

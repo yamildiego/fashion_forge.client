@@ -11,3 +11,5 @@ export const MERGE_EMAIL = "MERGE_EMAIL";
 
 //Job
 export const SET_FORM_NEW_JOB = "SET_FORM_NEW_JOB";
+export const MERGE_FORM_NEW_JOB = "MERGE_FORM_NEW_JOB";
+export const SET_JOBS = "SET_JOBS";

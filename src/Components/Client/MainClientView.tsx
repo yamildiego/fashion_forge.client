@@ -5,21 +5,21 @@ import withParamsAndNavigate from "../../Hooks/withParamsAndNavigate";
 import * as appActions from "../../Actions/appActions";
 import * as clientActions from "../../Actions/clientActions";
 
-interface MainProps {
+interface MainClientViewProps {
   setCurrentView: (view: string) => void;
   cleanFormNewClient: () => void;
   cleanEmail: () => void;
 }
 
-const Main = (props: MainProps) => {
+const MainClientView = (props: MainClientViewProps) => {
   const { setCurrentView, cleanFormNewClient, cleanEmail } = props;
   const handleNewClient = () => {
     cleanFormNewClient();
     setCurrentView("newClient");
   };
-  const handleExistingClient = () => {
+  const handleCreatedClient = () => {
     cleanEmail();
-    setCurrentView("existingClient");
+    setCurrentView("createdClient");
   };
 
   return (
@@ -27,7 +27,7 @@ const Main = (props: MainProps) => {
       <Button variant="contained" sx={styles.btn} onClick={handleNewClient}>
         New Client
       </Button>
-      <Button variant="contained" sx={styles.btn} onClick={handleExistingClient}>
+      <Button variant="contained" sx={styles.btn} onClick={handleCreatedClient}>
         Existing Client
       </Button>
     </Stack>
@@ -55,4 +55,4 @@ const mapDispatchToProps: MyMapDispatchToProps = {
   cleanEmail: clientActions.cleanEmail,
 };
 
-export default withParamsAndNavigate(Main, mapStateToProps, mapDispatchToProps);
+export default withParamsAndNavigate(MainClientView, mapStateToProps, mapDispatchToProps);
