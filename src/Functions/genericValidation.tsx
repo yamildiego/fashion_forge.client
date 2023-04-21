@@ -1,4 +1,5 @@
 import validateEmail from "./validateEmail";
+import getMsgError from "./getMsgError";
 
 const genericValidation = (value: string, validation: string, nameField: string): ValidationType => {
   let validated: ValidationType = { value, error: false, helperText: "" };
@@ -16,12 +17,6 @@ const genericValidation = (value: string, validation: string, nameField: string)
   }
 
   return validated;
-};
-
-const validations = { required: "The %F field is required.", email: "The %F field must contain a valid email address." };
-
-const getMsgError = (id: "required" | "email", field: string) => {
-  return validations[id].replace("%F", field);
 };
 
 export default genericValidation;
