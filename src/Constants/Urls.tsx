@@ -12,6 +12,9 @@ const Urls = {
   // Job
   newJob: baseUrl + "/job",
   getJobs: baseUrl + "/jobs",
+
+  // Maker
+  getAllJobs: baseUrl + "/getAllJobs",
 };
 
 export default Urls;

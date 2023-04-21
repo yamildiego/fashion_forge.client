@@ -19,6 +19,9 @@ declare global {
       formNewJob: FormJobType;
       jobs: JobType[];
     };
+    markerReducer: {
+      jobs: JobType[];
+    };
   };
 
   type ValidationType = {
