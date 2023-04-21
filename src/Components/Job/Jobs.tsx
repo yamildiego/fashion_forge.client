@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { Stack, Box, Button, Typography } from "@mui/material";
 
@@ -28,7 +28,7 @@ const Jobs = (props: JobsProps) => {
           New job
         </Button>
       </Stack>
-      {props.jobs.length == 0 && <Box sx={styles.noElements}>No jobs added</Box>}
+      {props.jobs.length === 0 && <Box sx={styles.noElements}>No jobs added</Box>}
       {props.jobs.length > 0 && <ListJobs />}
     </Stack>
   );

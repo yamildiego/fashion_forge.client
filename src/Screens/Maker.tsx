@@ -1,8 +1,6 @@
 import { Component } from "react";
 import { NavigateFunction } from "react-router-dom";
-import { AppBar, Toolbar, Typography, Container, IconButton, Box } from "@mui/material";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import { AppBar, Toolbar, Typography, Container } from "@mui/material";
 
 import withParamsAndNavigate from "../Hooks/withParamsAndNavigate";
 
@@ -24,7 +22,7 @@ class Maker extends Component<MakerProps> {
   }
 
   componentDidUpdate(oldProps: MakerProps) {
-    if (oldProps.currentView !== this.props.currentView && this.props.currentView == "main") this.props.getAllJobs();
+    if (oldProps.currentView !== this.props.currentView && this.props.currentView === "main") this.props.getAllJobs();
   }
 
   // handleOnClickBack = () => {

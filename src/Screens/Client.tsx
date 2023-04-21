@@ -25,7 +25,7 @@ interface ClientProps {
 
 class Client extends Component<ClientProps> {
   componentDidUpdate(oldProps: ClientProps) {
-    if (oldProps.currentView !== this.props.currentView && this.props.currentView == "jobs") this.props.getJobs();
+    if (oldProps.currentView !== this.props.currentView && this.props.currentView === "jobs") this.props.getJobs();
   }
 
   handleOnClickBack = () => {
@@ -64,7 +64,7 @@ class Client extends Component<ClientProps> {
             <Typography variant="h6" component="div" sx={{ flex: 1, ml: 1 }}>
               Client dashboard
             </Typography>
-            {currentView == "jobs" && (
+            {currentView === "jobs" && (
               <>
                 <Box sx={{ mr: 1 }}>{`${client?.name ?? ""} ${client?.lastname ?? ""}`}</Box>
                 <IconButton onClick={this.handleOnClickBack}>

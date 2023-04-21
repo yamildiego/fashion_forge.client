@@ -1,9 +1,6 @@
 import getMsgError from "./getMsgError";
 import capitalizeFirstLetter from "./capitalizeFirstLetter";
 
-import * as clientActions from "../Actions/clientActions";
-import * as appActions from "../Actions/appActions";
-
 const initValidationType = {
   value: "",
   error: false,
@@ -18,7 +15,7 @@ const handleCatchGeneric = (error: any, callback: (formValidation: Partial<any>)
     let formValidation = {};
 
     errors.forEach((error: any) => {
-      if (error.rule == "required" || error.rule == "email" || error.rule == "unique" || error.rule == "exists") {
+      if (error.rule === "required" || error.rule === "email" || error.rule === "unique" || error.rule === "exists") {
         //@ts-ignore
         formValidation[error.field] = {
           ...initValidationType,

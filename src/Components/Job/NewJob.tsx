@@ -7,7 +7,6 @@ import genericValidation from "../../Functions/genericValidation";
 import * as jobActions from "../../Actions/jobActions";
 
 import FormView from "../FormView";
-import UploadImages from "../UploadImages";
 
 import TypesOfClothing from "../../TypesOfClothing.json";
 

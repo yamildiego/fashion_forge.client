@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 
-import { Stack, Box, Button, Typography } from "@mui/material";
+import { Stack, Box, Typography } from "@mui/material";
 
 import withParamsAndNavigate from "../../Hooks/withParamsAndNavigate";
 
@@ -14,10 +14,6 @@ interface MainMakerViewProps {
 }
 
 const MainMakerView = (props: MainMakerViewProps) => {
-  const handleOnClick = () => {
-    props.setCurrentView("newJob");
-  };
-
   return (
     <Stack spacing={2} direction="column">
       <Stack spacing={2} direction="row" sx={styles.header}>
@@ -25,7 +21,7 @@ const MainMakerView = (props: MainMakerViewProps) => {
           Jobs
         </Typography>
       </Stack>
-      {props.jobs.length == 0 && <Box sx={styles.noElements}>No jobs added</Box>}
+      {props.jobs.length === 0 && <Box sx={styles.noElements}>No jobs added</Box>}
       {props.jobs.length > 0 && <ListJobs />}
     </Stack>
   );
