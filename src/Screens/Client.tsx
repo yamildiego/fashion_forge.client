@@ -6,17 +6,17 @@ import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 
 import withParamsAndNavigate from "../Hooks/withParamsAndNavigate";
 
-import MainClientView from "../Components/Client/MainClientView";
-import NewClientView from "../Components/Client/NewClientView";
-import CreatedClientView from "../Components/Client/CreatedClientView";
-import Jobs from "../Components/Job/Jobs";
-import NewJob from "../Components/Job/NewJob";
+import MainUserView from "../Components/User/MainUserView";
+import NewUserView from "../Components/User/NewUserView";
+import SignInUserView from "../Components/User/SignInUserView";
+import Jobs from "../Components/Client/Jobs";
+import NewJob from "../Components/Client/NewJob";
 
 import * as appActions from "../Actions/appActions";
-import * as jobActions from "../Actions/jobActions";
+import * as clientActions from "../Actions/clientActions";
 
 interface ClientProps {
-  client: ClientType;
+  user: UserType;
   currentView: string;
   navigate: NavigateFunction;
   setCurrentView: (view: string) => void;
@@ -37,8 +37,8 @@ class Client extends Component<ClientProps> {
         navigate("/");
         setCurrentView("main");
         break;
-      case "createdClient":
-      case "newClient":
+      case "signInUser":
+      case "newUser":
         setCurrentView("main");
         break;
       case "newJob":
@@ -50,7 +50,7 @@ class Client extends Component<ClientProps> {
   };
 
   render() {
-    const { currentView, client } = this.props;
+    const { currentView, user } = this.props;
 
     return (
       <Container maxWidth="sm" sx={{ display: "flex", flexDirection: "column", flex: 1 }}>
@@ -66,7 +66,7 @@ class Client extends Component<ClientProps> {
             </Typography>
             {currentView === "jobs" && (
               <>
-                <Box sx={{ mr: 1 }}>{`${client?.name ?? ""} ${client?.lastname ?? ""}`}</Box>
+                <Box sx={{ mr: 1 }}>{`${user?.name ?? ""} ${user?.lastname ?? ""}`}</Box>
                 <IconButton onClick={this.handleOnClickBack}>
                   <ExitToAppIcon sx={{ color: "white" }} />
                 </IconButton>
@@ -75,9 +75,9 @@ class Client extends Component<ClientProps> {
           </Toolbar>
         </AppBar>
 
-        {currentView === "main" && <MainClientView />}
-        {currentView === "newClient" && <NewClientView />}
-        {currentView === "createdClient" && <CreatedClientView />}
+        {currentView === "main" && <MainUserView />}
+        {currentView === "newUser" && <NewUserView title="Create your Meyd.it Account" userType="CLIENT" />}
+        {currentView === "signInUser" && <SignInUserView userType="CLIENT" />}
         {currentView === "jobs" && <Jobs />}
         {currentView === "newJob" && <NewJob />}
       </Container>
@@ -88,13 +88,13 @@ class Client extends Component<ClientProps> {
 const mapStateToProps = (state: StateType) => {
   return {
     currentView: state.appReducer.currentView,
-    client: state.appReducer.client,
+    user: state.appReducer.user,
   };
 };
 
 const mapDispatchToProps: MyMapDispatchToProps = {
   setCurrentView: appActions.setCurrentView,
-  getJobs: jobActions.getJobs,
+  getJobs: clientActions.getJobs,
 };
 
 export default withParamsAndNavigate(Client, mapStateToProps, mapDispatchToProps);

@@ -2,19 +2,20 @@ import { ChangeEvent, useState } from "react";
 
 import { TextField, Grid } from "@mui/material";
 
-import FormView from "../FormView";
+import FormView from "../Common/FormView";
 import withParamsAndNavigate from "../../Hooks/withParamsAndNavigate";
 import genericValidation from "../../Functions/genericValidation";
-import * as clientActions from "../../Actions/clientActions";
+import * as userActions from "../../Actions/userActions";
 
-interface CreatedClientViewProps {
-  email: ValidationType;
+interface SignInUserViewProps {
+  userEmail: ValidationType;
+  userType: string;
   setEmail: (email: ValidationType) => void;
-  getCreatedClient: (email: string) => void;
+  signInUser: (email: string, userType: string) => void;
 }
 
-const CreatedClientView = (props: CreatedClientViewProps) => {
-  const { email } = props;
+const SignInUserView = (props: SignInUserViewProps) => {
+  const { userEmail } = props;
   const [submitted, setSubmitted] = useState<boolean>(false);
 
   const handleOnChange = (pEmail: ValidationType) => {
@@ -26,10 +27,10 @@ const CreatedClientView = (props: CreatedClientViewProps) => {
     event.preventDefault();
     setSubmitted(true);
 
-    let emailValidated = runValidation(email);
+    let emailValidated = runValidation(userEmail);
     props.setEmail(emailValidated);
 
-    if (!emailValidated.error) props.getCreatedClient(email.value);
+    if (!emailValidated.error) props.signInUser(userEmail.value, props.userType);
   };
 
   const runValidation = (email: ValidationType) => {
@@ -39,7 +40,7 @@ const CreatedClientView = (props: CreatedClientViewProps) => {
   };
 
   return (
-    <FormView title="Existing client" submitText="Enter" handleSubmit={handleSubmit}>
+    <FormView title="Sign in" submitText="Enter" handleSubmit={handleSubmit}>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <TextField
@@ -50,10 +51,10 @@ const CreatedClientView = (props: CreatedClientViewProps) => {
             label="Email"
             fullWidth
             placeholder="Enter your email address"
-            value={email.value}
-            onChange={(event: ChangeEvent<HTMLInputElement>) => handleOnChange({ ...email, value: event.target.value })}
-            error={email.error && submitted}
-            helperText={email.helperText}
+            value={userEmail.value}
+            onChange={(event: ChangeEvent<HTMLInputElement>) => handleOnChange({ ...userEmail, value: event.target.value })}
+            error={userEmail.error && submitted}
+            helperText={userEmail.helperText}
           />
         </Grid>
       </Grid>
@@ -63,13 +64,13 @@ const CreatedClientView = (props: CreatedClientViewProps) => {
 
 const mapStateToProps = (state: StateType) => {
   return {
-    email: state.clientReducer.existing_customer_email,
+    userEmail: state.userReducer.userEmail,
   };
 };
 
 const mapDispatchToProps: MyMapDispatchToProps = {
-  setEmail: clientActions.setEmail,
-  getCreatedClient: clientActions.getCreatedClient,
+  setEmail: userActions.setEmail,
+  signInUser: userActions.signInUser,
 };
 
-export default withParamsAndNavigate(CreatedClientView, mapStateToProps, mapDispatchToProps);
+export default withParamsAndNavigate(SignInUserView, mapStateToProps, mapDispatchToProps);

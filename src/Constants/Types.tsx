@@ -1,11 +1,11 @@
 //App
 export const SET_IS_LOADING = "SET_IS_LOADING";
 export const SET_CURRENT_VIEW = "SET_CURRENT_VIEW";
-export const SET_CURRENT_CLIENT = "SET_CURRENT_CLIENT";
+export const SET_CURRENT_USER = "SET_CURRENT_USER";
 
-//Client
-export const SET_FORM_NEW_CLIENT = "SET_FORM_NEW_CLIENT";
-export const MERGE_FORM_NEW_CLIENT = "MERGE_FORM_NEW_CLIENT";
+//User
+export const SET_FORM_NEW_USER = "SET_FORM_NEW_USER";
+export const MERGE_FORM_NEW_USER = "MERGE_FORM_NEW_USER";
 export const SET_EMAIL = "SET_EMAIL";
 export const MERGE_EMAIL = "MERGE_EMAIL";
 

@@ -1,6 +1,7 @@
 import { Component } from "react";
 import { NavigateFunction } from "react-router-dom";
-import { AppBar, Toolbar, Typography, Container } from "@mui/material";
+import { AppBar, Toolbar, Typography, Container, IconButton } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 import withParamsAndNavigate from "../Hooks/withParamsAndNavigate";
 
@@ -25,26 +26,24 @@ class Maker extends Component<MakerProps> {
     if (oldProps.currentView !== this.props.currentView && this.props.currentView === "main") this.props.getAllJobs();
   }
 
-  // handleOnClickBack = () => {
-  //   const { currentView, navigate, setCurrentView } = this.props;
-
-  //   switch (currentView) {
-  //     case "main":
-  //     case "jobs":
-  //       navigate("/");
-  //       setCurrentView("main");
-  //       break;
-  //     case "existingMaker":
-  //     case "newMaker":
-  //       setCurrentView("main");
-  //       break;
-  //     case "newJob":
-  //       setCurrentView("jobs");
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  // };
+  handleOnClickBack = () => {
+    const { currentView, navigate, setCurrentView } = this.props;
+    switch (currentView) {
+      case "main":
+        navigate("/");
+        setCurrentView("main");
+        break;
+      //     case "existingMaker":
+      //     case "newMaker":
+      //       setCurrentView("main");
+      //       break;
+      //     case "newJob":
+      //       setCurrentView("jobs");
+      //       break;
+      default:
+        break;
+    }
+  };
 
   render() {
     const { currentView } = this.props;
@@ -53,11 +52,11 @@ class Maker extends Component<MakerProps> {
       <Container maxWidth="sm" sx={{ display: "flex", flexDirection: "column", flex: 1 }}>
         <AppBar position="static">
           <Toolbar>
-            {/* {currentView !== "jobs" && (
+            {currentView !== "jobs" && (
               <IconButton onClick={this.handleOnClickBack}>
                 <ArrowBackIcon sx={{ color: "white" }} />
               </IconButton>
-            )} */}
+            )}
             <Typography variant="h6" component="div" sx={{ flex: 1, ml: 1 }}>
               Maker dashboard
             </Typography>

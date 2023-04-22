@@ -33,6 +33,7 @@ const styles = {
   title: {
     textAlign: "left",
     width: "100%",
+    mb: 2,
   },
   btn: { mt: 2 },
 };

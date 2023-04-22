@@ -9,13 +9,13 @@ declare global {
     appReducer: {
       isLoading: boolean;
       currentView: string;
-      client: ClientType;
+      user: UserType;
+    };
+    userReducer: {
+      formNewUser: FormUserType;
+      userEmail: ValidationType;
     };
     clientReducer: {
-      formNewClient: FormClientType;
-      existing_customer_email: ValidationType;
-    };
-    jobReducer: {
       formNewJob: FormJobType;
       jobs: JobType[];
     };
@@ -30,7 +30,7 @@ declare global {
     helperText: string;
   };
 
-  type FormClientType = {
+  type FormUserType = {
     name: ValidationType;
     lastname: ValidationType;
     phone: ValidationType;
@@ -40,7 +40,7 @@ declare global {
     postcode: ValidationType;
   };
 
-  type ClientType = {
+  type UserType = {
     name: string;
     lastname: string;
     phone: string;
@@ -48,6 +48,7 @@ declare global {
     address: string;
     state: string;
     postcode: string;
+    user_type: "CLIENT" | "MAKER";
   };
 
   type FormJobType = {
@@ -61,6 +62,7 @@ declare global {
     description: string;
     budget: number;
     quote?: number;
+    user?: UserType;
     created_at: string;
   };
 

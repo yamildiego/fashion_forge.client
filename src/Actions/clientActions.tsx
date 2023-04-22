@@ -9,67 +9,57 @@ import handleCatchGeneric from "../Functions/handleCatchGeneric";
 const server = axios.create({ withCredentials: true });
 
 const initValidationType = { value: "", error: false, helperText: "" };
-const initValidationTypeTEMP = { value: "yamildiego@gmail.com", error: false, helperText: "" };
 
-export const setEmail = (value: ValidationType) => ({ type: Types.SET_EMAIL, value });
+export const setFormNewJob = (value: FormJobType) => ({ type: Types.SET_FORM_NEW_JOB, value });
 
-export const mergeEmail = (value: ValidationType) => ({ type: Types.MERGE_EMAIL, value });
+export const mergeFormNewJob = (value: Partial<FormJobType>) => ({ type: Types.MERGE_FORM_NEW_JOB, value });
 
-export const cleanEmail = () => (dispatch: any) => dispatch(setEmail(initValidationTypeTEMP));
-
-export const setFormNewClient = (value: FormClientType) => ({ type: Types.SET_FORM_NEW_CLIENT, value });
-
-export const mergeFormNewClient = (value: Partial<FormClientType>) => ({ type: Types.MERGE_FORM_NEW_CLIENT, value });
-
-export const cleanFormNewClient = () => (dispatch: any) =>
+export const cleanFormNewJob = () => (dispatch: any) =>
   dispatch(
-    setFormNewClient({
-      name: initValidationType,
-      lastname: initValidationType,
-      phone: initValidationType,
-      email: initValidationType,
-      address: initValidationType,
-      state: initValidationType,
-      postcode: initValidationType,
+    setFormNewJob({
+      type_of_clothing: initValidationType,
+      description: initValidationType,
+      budget: initValidationType,
     })
   );
 
-export const newClient = (client: ClientType) => {
+export const setJobs = (value: JobType[]) => ({ type: Types.SET_JOBS, value });
+
+export const getJobs = () => {
   return async (dispatch: any) => {
     dispatch(appActions.setIsLoading(true));
     await server
-      .post(`${Urls.newClient}`, { ...client })
+      .get(`${Urls.getJobs}`)
       .then((response) => {
         if (response.statusText === "OK") {
-          dispatch(appActions.setCurrentView("jobs"));
+          dispatch(setJobs(response.data));
           dispatch(appActions.setIsLoading(false));
-          dispatch(appActions.setCurrentClient(response.data));
         } else console.log("ERROR 200");
       })
-      .catch((error) =>
-        handleCatchGeneric(error, (formValidation: Partial<FormClientType>) => {
-          dispatch(mergeFormNewClient(formValidation));
-          dispatch(appActions.setIsLoading(false));
-        })
-      );
+      .catch((error) => {
+        // handleCatchGeneric(error, (formValidation: Partial<FormJobType>) => {
+        //   // dispatch(mergeFormNewJob(formValidation));
+        //   // dispatch(appActions.setIsLoading(false));
+        // })
+      });
   };
 };
 
-export const getCreatedClient = (email: string) => {
+export const newJob = (job: JobType) => {
   return async (dispatch: any) => {
     dispatch(appActions.setIsLoading(true));
     await server
-      .post(`${Urls.getCreatedClient}`, { email })
+      .post(`${Urls.newJob}`, { ...job })
       .then((response) => {
         if (response.statusText === "OK") {
           dispatch(appActions.setCurrentView("jobs"));
           dispatch(appActions.setIsLoading(false));
-          dispatch(appActions.setCurrentClient(response.data));
+          dispatch(cleanFormNewJob());
         } else console.log("ERROR 200");
       })
       .catch((error) =>
-        handleCatchGeneric(error, (formValidation: Partial<FormClientType>) => {
-          if (formValidation?.email) dispatch(mergeEmail(formValidation.email));
+        handleCatchGeneric(error, (formValidation: Partial<FormJobType>) => {
+          dispatch(mergeFormNewJob(formValidation));
           dispatch(appActions.setIsLoading(false));
         })
       );

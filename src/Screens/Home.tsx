@@ -39,6 +39,7 @@ const styles = {
   },
   title: {
     userSelect: "none",
+    mb: 8,
   },
 };
 

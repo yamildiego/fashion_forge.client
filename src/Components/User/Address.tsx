@@ -1,16 +1,16 @@
 import React, { Component, createRef } from "react";
-import withParamsAndNavigate from "../Hooks/withParamsAndNavigate";
+import withParamsAndNavigate from "../../Hooks/withParamsAndNavigate";
 
 import { TextField, Grid, Button } from "@mui/material";
 
-import genericValidation from "../Functions/genericValidation";
+import genericValidation from "../../Functions/genericValidation";
 
-import * as clientActions from "../Actions/clientActions";
+import * as userActions from "../../Actions/userActions";
 
 interface AddressProps {
   submitted: boolean;
-  formNewClient: FormClientType;
-  setFormNewClient: (view: FormClientType) => void;
+  formNewUser: FormUserType;
+  setFormNewUser: (view: FormUserType) => void;
 }
 
 class Address extends Component<AddressProps> {
@@ -39,8 +39,8 @@ class Address extends Component<AddressProps> {
 
       this.widget.on("result:select", (fullAddress: any, metaData: any) => {
         const addressValue = `${metaData.address_line_1}${metaData.address_line_2 ? `, ${metaData.address_line_2}` : ``}`;
-        this.props.setFormNewClient({
-          ...this.props.formNewClient,
+        this.props.setFormNewUser({
+          ...this.props.formNewUser,
           address: genericValidation(addressValue, "required", "Address"),
           state: genericValidation(metaData.state_territory, "required", "State"),
           postcode: genericValidation(metaData.postcode, "required", "Postal code"),
@@ -51,15 +51,15 @@ class Address extends Component<AddressProps> {
 
   handleButtonModifyAddress = () => {
     if (this.props.submitted)
-      this.props.setFormNewClient({
-        ...this.props.formNewClient,
+      this.props.setFormNewUser({
+        ...this.props.formNewUser,
         address: genericValidation("", "required", "Address"),
         state: genericValidation("", "", "State"),
         postcode: genericValidation("", "", "Postal code"),
       });
     else
-      this.props.setFormNewClient({
-        ...this.props.formNewClient,
+      this.props.setFormNewUser({
+        ...this.props.formNewUser,
         address: genericValidation("", "", "Address"),
         state: genericValidation("", "", "State"),
         postcode: genericValidation("", "", "Postal code"),
@@ -72,7 +72,7 @@ class Address extends Component<AddressProps> {
   };
 
   render() {
-    const { formNewClient, submitted } = this.props;
+    const { formNewUser, submitted } = this.props;
     return (
       <>
         <Grid item sm={8}>
@@ -84,9 +84,9 @@ class Address extends Component<AddressProps> {
             id="address_line_1"
             placeholder="Search address here..."
             inputRef={this.address_line_1}
-            disabled={formNewClient.address.value !== ""}
-            error={formNewClient.address.error && submitted}
-            helperText={submitted && formNewClient.address.error ? formNewClient.address.helperText : ""}
+            disabled={formNewUser.address.value !== ""}
+            error={formNewUser.address.error && submitted}
+            helperText={submitted && formNewUser.address.error ? formNewUser.address.helperText : ""}
           />
         </Grid>
         <Grid item sm={4} sx={styles.btnChangeAddress}>
@@ -98,7 +98,7 @@ class Address extends Component<AddressProps> {
             label="State"
             disabled
             placeholder="State"
-            value={formNewClient.address.value ? formNewClient.state.value : ""}
+            value={formNewUser.address.value ? formNewUser.state.value : ""}
           />
         </Grid>
         <Grid item sm={6}>
@@ -107,7 +107,7 @@ class Address extends Component<AddressProps> {
             label="Postal Code"
             disabled
             placeholder="Postal Code"
-            value={formNewClient.address.value ? formNewClient.postcode.value : ""}
+            value={formNewUser.address.value ? formNewUser.postcode.value : ""}
           />
         </Grid>
       </>
@@ -125,12 +125,12 @@ const styles = {
 
 const mapStateToProps = (state: StateType) => {
   return {
-    formNewClient: state.clientReducer.formNewClient,
+    formNewUser: state.userReducer.formNewUser,
   };
 };
 
 const mapDispatchToProps: MyMapDispatchToProps = {
-  setFormNewClient: clientActions.setFormNewClient,
+  setFormNewUser: userActions.setFormNewUser,
 };
 
 export default withParamsAndNavigate(Address, mapStateToProps, mapDispatchToProps);

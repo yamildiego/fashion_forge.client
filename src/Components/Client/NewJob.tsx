@@ -4,9 +4,9 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 import withParamsAndNavigate from "../../Hooks/withParamsAndNavigate";
 import genericValidation from "../../Functions/genericValidation";
-import * as jobActions from "../../Actions/jobActions";
+import * as clientActions from "../../Actions/clientActions";
 
-import FormView from "../FormView";
+import FormView from "../Common/FormView";
 
 import TypesOfClothing from "../../TypesOfClothing.json";
 
@@ -115,13 +115,13 @@ const Jobs = (props: JobsProps) => {
 
 const mapStateToProps = (state: StateType) => {
   return {
-    formNewJob: state.jobReducer.formNewJob,
+    formNewJob: state.clientReducer.formNewJob,
   };
 };
 
 const mapDispatchToProps: MyMapDispatchToProps = {
-  setFormNewJob: jobActions.setFormNewJob,
-  newJob: jobActions.newJob,
+  setFormNewJob: clientActions.setFormNewJob,
+  newJob: clientActions.newJob,
 };
 
 export default withParamsAndNavigate(Jobs, mapStateToProps, mapDispatchToProps);

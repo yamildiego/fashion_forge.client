@@ -79,7 +79,7 @@ const styles = {
 
 const mapStateToProps = (state: StateType) => {
   return {
-    jobs: state.jobReducer.jobs,
+    jobs: state.clientReducer.jobs,
   };
 };
 

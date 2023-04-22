@@ -5,9 +5,9 @@ const baseUrl = "http://localhost:3333";
 const Urls = {
   baseUrl,
 
-  // Client
-  newClient: baseUrl + "/client",
-  getCreatedClient: baseUrl + "/client/getCreatedClient",
+  // User
+  newUser: baseUrl + "/user",
+  signInUser: baseUrl + "/user/signInUser",
 
   // Job
   newJob: baseUrl + "/job",

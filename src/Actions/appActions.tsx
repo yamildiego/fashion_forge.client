@@ -4,4 +4,4 @@ export const setIsLoading = (value: boolean) => ({ type: Types.SET_IS_LOADING, v
 
 export const setCurrentView = (value: string) => ({ type: Types.SET_CURRENT_VIEW, value });
 
-export const setCurrentClient = (value: ClientType) => ({ type: Types.SET_CURRENT_CLIENT, value });
+export const setCurrentUser = (value: UserType) => ({ type: Types.SET_CURRENT_USER, value });
