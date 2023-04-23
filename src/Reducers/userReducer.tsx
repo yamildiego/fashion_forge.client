@@ -4,6 +4,7 @@ const initValidationType = { value: "", error: false, helperText: "" };
 
 const initialState = {
   formNewUser: {
+    business_name: initValidationType,
     name: initValidationType,
     lastname: initValidationType,
     phone: initValidationType,

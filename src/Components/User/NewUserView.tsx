@@ -19,7 +19,7 @@ interface NewUserViewProps {
 
 const NewUserView = (props: NewUserViewProps) => {
   const [submitted, setSubmitted] = useState<boolean>(false);
-  const { formNewUser } = props;
+  const { formNewUser, userType } = props;
 
   const handleOnChange = (value: FormUserType) => {
     if (submitted) props.setFormNewUser(runValidation(value));
@@ -35,17 +35,18 @@ const NewUserView = (props: NewUserViewProps) => {
     let hasError = Object.values(formValidated).some((field) => field.error);
     let clientFormatted = Object.entries(formValidated).reduce((acc, [key, value]) => ({ ...acc, [key]: value.value }), {} as UserType);
 
-    if (!hasError) props.newUser(clientFormatted, props.userType);
+    if (!hasError) props.newUser(clientFormatted, userType);
   };
 
   const runValidation = (formNew: FormUserType) => {
     let formValidated: FormUserType = {
       ...formNew,
-      name: genericValidation(formNew.name.value, "required", "Name"),
-      lastname: genericValidation(formNew.lastname.value, "required", "Lastname"),
+      business_name: genericValidation(formNew.business_name.value, userType == "MAKER" ? "required" : "", "Name"),
+      name: genericValidation(formNew.name.value, userType == "CLIENT" ? "required" : "", "Name"),
+      lastname: genericValidation(formNew.lastname.value, userType == "CLIENT" ? "required" : "", "Lastname"),
       phone: genericValidation(formNew.phone.value, "required", "Phone"),
       email: genericValidation(formNew.email.value, "required", "Email"),
-      address: genericValidation(formNew.address.value, "required", "Address"),
+      address: genericValidation(formNew.address.value, userType == "CLIENT" ? "required" : "", "Address"),
     };
 
     if (!formValidated.email.error) formValidated.email = genericValidation(formNew.email.value, "email", "Email");
@@ -56,37 +57,60 @@ const NewUserView = (props: NewUserViewProps) => {
   return (
     <FormView title={props.title} submitText="Create client" handleSubmit={handleSubmit}>
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            autoFocus={true}
-            required
-            id="name"
-            name="name"
-            label="Name"
-            fullWidth
-            value={formNewUser.name.value}
-            onChange={(event: ChangeEvent<HTMLInputElement>) =>
-              handleOnChange({ ...formNewUser, name: { ...formNewUser.name, value: event.target.value } })
-            }
-            error={formNewUser.name.error && submitted}
-            helperText={submitted && formNewUser.name.error ? formNewUser.name.helperText : ""}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="lastname"
-            name="lastname"
-            label="Last Name"
-            fullWidth
-            value={formNewUser.lastname.value}
-            onChange={(event: ChangeEvent<HTMLInputElement>) =>
-              handleOnChange({ ...formNewUser, lastname: { ...formNewUser.lastname, value: event.target.value } })
-            }
-            error={formNewUser.lastname.error && submitted}
-            helperText={submitted && formNewUser.lastname.error ? formNewUser.lastname.helperText : ""}
-          />
-        </Grid>
+        {userType === "MAKER" && (
+          <Grid item xs={12}>
+            <TextField
+              autoFocus={userType === "MAKER"}
+              required
+              id="business"
+              name="business"
+              label="Business Name"
+              fullWidth
+              value={formNewUser.business_name.value}
+              onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                handleOnChange({ ...formNewUser, business_name: { ...formNewUser.business_name, value: event.target.value } })
+              }
+              error={formNewUser.business_name.error && submitted}
+              helperText={submitted && formNewUser.business_name.error ? formNewUser.business_name.helperText : ""}
+            />
+          </Grid>
+        )}
+        {userType === "CLIENT" && (
+          <>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                autoFocus={userType === "CLIENT"}
+                required
+                id="name"
+                name="name"
+                label="Name"
+                fullWidth
+                value={formNewUser.name.value}
+                onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                  handleOnChange({ ...formNewUser, name: { ...formNewUser.name, value: event.target.value } })
+                }
+                error={formNewUser.name.error && submitted}
+                helperText={submitted && formNewUser.name.error ? formNewUser.name.helperText : ""}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                required
+                id="lastname"
+                name="lastname"
+                label="Last Name"
+                fullWidth
+                value={formNewUser.lastname.value}
+                onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                  handleOnChange({ ...formNewUser, lastname: { ...formNewUser.lastname, value: event.target.value } })
+                }
+                error={formNewUser.lastname.error && submitted}
+                helperText={submitted && formNewUser.lastname.error ? formNewUser.lastname.helperText : ""}
+              />
+            </Grid>
+          </>
+        )}
+
         <Grid item xs={12} sm={6}>
           <TextField
             required
@@ -117,7 +141,7 @@ const NewUserView = (props: NewUserViewProps) => {
             helperText={submitted && formNewUser.email.error ? formNewUser.email.helperText : ""}
           />
         </Grid>
-        <Address submitted={submitted} />
+        {userType === "CLIENT" && <Address submitted={submitted} />}
       </Grid>
     </FormView>
   );

@@ -14,8 +14,10 @@ const handleCatchGeneric = (error: any, callback: (formValidation: Partial<any>)
 
     let formValidation = {};
 
+    const errorsType = ["required", "email", "unique", "existsUser", "maxLength"];
+
     errors.forEach((error: any) => {
-      if (error.rule === "required" || error.rule === "email" || error.rule === "unique" || error.rule === "exists") {
+      if (errorsType.includes(error.rule)) {
         //@ts-ignore
         formValidation[error.field] = {
           ...initValidationType,
@@ -27,8 +29,7 @@ const handleCatchGeneric = (error: any, callback: (formValidation: Partial<any>)
         formValidation[error.field] = {
           ...initValidationType,
           error: true,
-          helperText: "unexpecter error",
-          // helperText: getMsgError(error.rule, capitalizeFirstLetter(error.field)),
+          helperText: "Unexpecter Error",
         };
       }
     });

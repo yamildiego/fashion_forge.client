@@ -24,6 +24,7 @@ export const mergeFormNewUser = (value: Partial<FormUserType>) => ({ type: Types
 export const cleanFormNewUser = () => (dispatch: any) =>
   dispatch(
     setFormNewUser({
+      business_name: initValidationType,
       name: initValidationType,
       lastname: initValidationType,
       phone: initValidationType,

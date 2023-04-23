@@ -31,6 +31,7 @@ declare global {
   };
 
   type FormUserType = {
+    business_name: ValidationType;
     name: ValidationType;
     lastname: ValidationType;
     phone: ValidationType;
@@ -41,13 +42,14 @@ declare global {
   };
 
   type UserType = {
-    name: string;
-    lastname: string;
+    business_name?: string;
+    name?: string;
+    lastname?: string;
     phone: string;
     email: string;
-    address: string;
-    state: string;
-    postcode: string;
+    address?: string;
+    state?: string;
+    postcode?: string;
     user_type: "CLIENT" | "MAKER";
   };
 
@@ -67,6 +69,7 @@ declare global {
   };
 
   type TypeOfClothing = "t_shirt" | "jeans" | "swimsuit" | "cocktail_dress" | "tracksuit" | "leather_jacket" | "business_suit" | "skirt";
+  type ErrorIdType = "required" | "email" | "email" | "unique" | "existsUser" | "maxLength";
 
   export type MyMapDispatchToProps<TDispatchProps = {}, TOwnProps = {}> = MapDispatchToProps<TDispatchProps, TOwnProps>;
 }
