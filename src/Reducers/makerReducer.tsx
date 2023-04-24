@@ -1,16 +1,20 @@
 import * as Types from "../Constants/Types";
 
 const initialState = {
+  job: null,
   jobs: [],
 };
 
 type SetAllJobsAction = { type: typeof Types.SET_ALL_JOBS; value: JobType[] };
-// type MergeFormNewJobAction = { type: typeof Types.MERGE_FORM_NEW_JOB; value: Partial<FormJobType> };
+type SetJobAction = { type: typeof Types.SET_JOB; value: JobType };
 
-type JobReducerAction = SetAllJobsAction | SetAllJobsAction;
+type JobReducerAction = SetAllJobsAction | SetJobAction;
 
-export default function markerReducer(state = initialState, action: JobReducerAction) {
+export default function makerReducer(state = initialState, action: JobReducerAction) {
   switch (action.type) {
+    case Types.SET_JOB: {
+      return { ...state, job: action.value };
+    }
     case Types.SET_ALL_JOBS: {
       return { ...state, jobs: action.value };
     }

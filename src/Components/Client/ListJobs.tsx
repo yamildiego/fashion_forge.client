@@ -16,9 +16,9 @@ interface ListJobsProps {
 const ListJobs = (props: ListJobsProps) => {
   return (
     <>
-      {props.jobs.map((job: JobType) => {
+      {props.jobs.map((job: JobType, index: number) => {
         return (
-          <Card sx={{ width: "100%", boxShadow: "1px 1px 5px #ccc", position: "relative" }}>
+          <Card key={`key_client_${index}`} sx={{ width: "100%", boxShadow: "1px 1px 5px #ccc", position: "relative" }}>
             <CardContent>
               <Typography sx={{ mb: 0.5 }} color="text.secondary">
                 Type of clothing:

@@ -9,23 +9,23 @@ import withParamsAndNavigate from "../Hooks/withParamsAndNavigate";
 import MainUserView from "../Components/User/MainUserView";
 import NewUserView from "../Components/User/NewUserView";
 import SignInUserView from "../Components/User/SignInUserView";
-// import Jobs from "../Components/Client/Jobs";
-// import NewJob from "../Components/Client/NewJob";
+import Jobs from "../Components/Maker/Jobs";
+import View from "../Components/Maker/View";
 
 import * as appActions from "../Actions/appActions";
-import * as clientActions from "../Actions/clientActions";
+import * as makerActions from "../Actions/makerActions";
 
-interface ClientProps {
+interface MakerProps {
   user: UserType;
   currentView: string;
   navigate: NavigateFunction;
   setCurrentView: (view: string) => void;
-  getJobs: () => void;
+  getAllJobs: () => void;
 }
 
-class Client extends Component<ClientProps> {
-  componentDidUpdate(oldProps: ClientProps) {
-    if (oldProps.currentView !== this.props.currentView && this.props.currentView === "jobs") this.props.getJobs();
+class Maker extends Component<MakerProps> {
+  componentDidUpdate(oldProps: MakerProps) {
+    if (oldProps.currentView !== this.props.currentView && this.props.currentView === "jobs") this.props.getAllJobs();
   }
 
   handleOnClickBack = () => {
@@ -78,8 +78,8 @@ class Client extends Component<ClientProps> {
         {currentView === "main" && <MainUserView />}
         {currentView === "newUser" && <NewUserView title="Become Our Partner" userType="MAKER" />}
         {currentView === "signInUser" && <SignInUserView userType="MAKER" />}
-        {/* {currentView === "jobs" && <Jobs />} */}
-        {/* {currentView === "newJob" && <NewJob />} */}
+        {currentView === "jobs" && <Jobs />}
+        {currentView === "view" && <View />}
       </Container>
     );
   }
@@ -94,38 +94,10 @@ const mapStateToProps = (state: StateType) => {
 
 const mapDispatchToProps: MyMapDispatchToProps = {
   setCurrentView: appActions.setCurrentView,
-  getJobs: clientActions.getJobs,
+  getAllJobs: makerActions.getAllJobs,
 };
 
-export default withParamsAndNavigate(Client, mapStateToProps, mapDispatchToProps);
-
-// import { Component } from "react";
-// import { NavigateFunction } from "react-router-dom";
-// import { AppBar, Toolbar, Typography, Container, IconButton } from "@mui/material";
-// import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-
-// import withParamsAndNavigate from "../Hooks/withParamsAndNavigate";
-
-// import MainMakerView from "../Components/Maker/MainMakerView";
-
-// import * as appActions from "../Actions/appActions";
-// import * as makerActions from "../Actions/makerActions";
-
-// interface MakerProps {
-//   currentView: string;
-//   navigate: NavigateFunction;
-//   setCurrentView: (view: string) => void;
-//   getAllJobs: () => void;
-// }
-
-// class Maker extends Component<MakerProps> {
-//   componentDidMount() {
-//     this.props.getAllJobs();
-//   }
-
-//   componentDidUpdate(oldProps: MakerProps) {
-//     if (oldProps.currentView !== this.props.currentView && this.props.currentView === "main") this.props.getAllJobs();
-//   }
+export default withParamsAndNavigate(Maker, mapStateToProps, mapDispatchToProps);
 
 //   handleOnClickBack = () => {
 //     const { currentView, navigate, setCurrentView } = this.props;
@@ -174,7 +146,7 @@ export default withParamsAndNavigate(Client, mapStateToProps, mapDispatchToProps
 
 //         {currentView === "main" && <MainMakerView />}
 //         {/* {currentView === "viewJob" && <ViewJob />} */}
-//         {/* {currentView === "viewClient" && <ViewClient />} */}
+//         {/* {currentView === "viewMaker" && <ViewMaker />} */}
 //       </Container>
 //     );
 //   }

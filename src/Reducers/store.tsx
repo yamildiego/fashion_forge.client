@@ -6,7 +6,7 @@ import thunk from "redux-thunk";
 import appReducer from "./appReducer";
 import userReducer from "./userReducer";
 import clientReducer from "./clientReducer";
-import markerReducer from "./markerReducer";
+import makerReducer from "./makerReducer";
 
 export type StateType = ReturnType<typeof rootReducer>;
 
@@ -14,7 +14,7 @@ const rootReducer = combineReducers({
   appReducer,
   userReducer,
   clientReducer,
-  markerReducer,
+  makerReducer,
 });
 
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));

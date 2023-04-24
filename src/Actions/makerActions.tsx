@@ -6,6 +6,8 @@ import * as appActions from "./appActions";
 
 const server = axios.create({ withCredentials: true });
 
+export const setJob = (value: JobType) => ({ type: Types.SET_JOB, value });
+
 export const setAllJobs = (value: JobType[]) => ({ type: Types.SET_ALL_JOBS, value });
 
 export const getAllJobs = () => {

@@ -10,15 +10,20 @@ import Modal from "@mui/material/Modal";
 
 import { Dialog, DialogTitle, DialogContent } from "@mui/material";
 
-import withParamsAndNavigate from "../../../Hooks/withParamsAndNavigate";
+import withParamsAndNavigate from "../../Hooks/withParamsAndNavigate";
 
-import TypesOfClothing from "../../../TypesOfClothing.json";
+import TypesOfClothing from "../../TypesOfClothing.json";
 import moment from "moment";
+
+import * as appActions from "../../Actions/appActions";
+import * as makerActions from "../../Actions/makerActions";
 
 const MAX_LENGTH = 80;
 
 interface ListJobsProps {
   jobs: JobType[];
+  setJob: (view: JobType) => void;
+  setCurrentView: (view: string) => void;
 }
 
 const ListJobs = (props: ListJobsProps) => {
@@ -27,12 +32,17 @@ const ListJobs = (props: ListJobsProps) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const handleOnClickView = (job: JobType) => {
+    props.setJob(job);
+    props.setCurrentView("view");
+  };
+
   return (
     <>
-      {props.jobs.map((job: JobType) => {
+      {props.jobs.map((job: JobType, index: number) => {
         const location = job.user ? `${job?.user?.address} ${job?.user?.state} ${job?.user?.postcode}` : "-";
         return (
-          <Card sx={{ width: "100%", boxShadow: "1px 1px 5px #ccc", position: "relative" }}>
+          <Card key={`key_maker_${index}`} sx={{ width: "100%", boxShadow: "1px 1px 5px #ccc", position: "relative" }}>
             <CardContent>
               <Grid container spacing={2} sx={{ minHeight: "150px" }}>
                 <Grid item xs={9}>
@@ -73,7 +83,7 @@ const ListJobs = (props: ListJobsProps) => {
                     <Button variant="contained" color="warning">
                       Quote
                     </Button>
-                    <Button variant="contained" color="info">
+                    <Button onClick={() => handleOnClickView(job)} variant="contained" color="info">
                       View
                     </Button>
                   </Stack>
@@ -144,10 +154,13 @@ const styles = {
 
 const mapStateToProps = (state: StateType) => {
   return {
-    jobs: state.markerReducer.jobs,
+    jobs: state.makerReducer.jobs,
   };
 };
 
-const mapDispatchToProps: MyMapDispatchToProps = {};
+const mapDispatchToProps: MyMapDispatchToProps = {
+  setCurrentView: appActions.setCurrentView,
+  setJob: makerActions.setJob,
+};
 
 export default withParamsAndNavigate(ListJobs, mapStateToProps, mapDispatchToProps);

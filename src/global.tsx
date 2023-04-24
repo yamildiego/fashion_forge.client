@@ -19,7 +19,8 @@ declare global {
       formNewJob: FormJobType;
       jobs: JobType[];
     };
-    markerReducer: {
+    makerReducer: {
+      job: JobType;
       jobs: JobType[];
     };
   };

@@ -1,24 +1,21 @@
 import React from "react";
 
-import { Stack, Box, Typography } from "@mui/material";
+import { Stack, Box, Button, Typography } from "@mui/material";
 
 import withParamsAndNavigate from "../../Hooks/withParamsAndNavigate";
 
-import * as appActions from "../../Actions/appActions";
-
 import ListJobs from "./ListJobs";
 
-interface MainMakerViewProps {
+interface JobsProps {
   jobs: JobType[];
-  setCurrentView: (view: string) => void;
 }
 
-const MainMakerView = (props: MainMakerViewProps) => {
+const Jobs = (props: JobsProps) => {
   return (
     <Stack spacing={2} direction="column">
       <Stack spacing={2} direction="row" sx={styles.header}>
         <Typography variant="h4" sx={styles.title}>
-          Jobs
+          My jobs
         </Typography>
       </Stack>
       {props.jobs.length === 0 && <Box sx={styles.noElements}>No jobs added</Box>}
@@ -51,8 +48,6 @@ const mapStateToProps = (state: StateType) => {
   };
 };
 
-const mapDispatchToProps: MyMapDispatchToProps = {
-  setCurrentView: appActions.setCurrentView,
-};
+const mapDispatchToProps: MyMapDispatchToProps = {};
 
-export default withParamsAndNavigate(MainMakerView, mapStateToProps, mapDispatchToProps);
+export default withParamsAndNavigate(Jobs, mapStateToProps, mapDispatchToProps);

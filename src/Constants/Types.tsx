@@ -15,4 +15,5 @@ export const MERGE_FORM_NEW_JOB = "MERGE_FORM_NEW_JOB";
 export const SET_JOBS = "SET_JOBS";
 
 //Maker
+export const SET_JOB = "SET_JOB";
 export const SET_ALL_JOBS = "SET_ALL_JOBS";
