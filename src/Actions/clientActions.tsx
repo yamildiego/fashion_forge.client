@@ -37,10 +37,7 @@ export const getJobs = () => {
         } else console.log("ERROR 200");
       })
       .catch((error) => {
-        // handleCatchGeneric(error, (formValidation: Partial<FormJobType>) => {
-        //   // dispatch(mergeFormNewJob(formValidation));
-        //   // dispatch(appActions.setIsLoading(false));
-        // })
+        console.log(error);
       });
   };
 };
