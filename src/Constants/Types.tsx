@@ -4,10 +4,8 @@ export const SET_CURRENT_VIEW = "SET_CURRENT_VIEW";
 export const SET_CURRENT_USER = "SET_CURRENT_USER";
 
 //User
-export const SET_FORM_NEW_USER = "SET_FORM_NEW_USER";
-export const MERGE_FORM_NEW_USER = "MERGE_FORM_NEW_USER";
-export const SET_EMAIL = "SET_EMAIL";
-export const MERGE_EMAIL = "MERGE_EMAIL";
+export const SET_FORM_USER = "SET_FORM_USER";
+export const MERGE_FORM_USER = "MERGE_FORM_USER";
 
 //Job
 export const SET_FORM_NEW_JOB = "SET_FORM_NEW_JOB";

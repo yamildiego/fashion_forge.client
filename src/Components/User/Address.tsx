@@ -9,8 +9,8 @@ import * as userActions from "../../Actions/userActions";
 
 interface AddressProps {
   submitted: boolean;
-  formNewUser: FormUserType;
-  setFormNewUser: (view: FormUserType) => void;
+  formUser: FormUserType;
+  setFormUser: (view: FormUserType) => void;
 }
 
 class Address extends Component<AddressProps> {
@@ -39,8 +39,8 @@ class Address extends Component<AddressProps> {
 
       this.widget.on("result:select", (fullAddress: any, metaData: any) => {
         const addressValue = `${metaData.address_line_1}${metaData.address_line_2 ? `, ${metaData.address_line_2}` : ``}`;
-        this.props.setFormNewUser({
-          ...this.props.formNewUser,
+        this.props.setFormUser({
+          ...this.props.formUser,
           address: genericValidation(addressValue, "required", "Address"),
           state: genericValidation(metaData.state_territory, "required", "State"),
           postcode: genericValidation(metaData.postcode, "required", "Postal code"),
@@ -51,15 +51,15 @@ class Address extends Component<AddressProps> {
 
   handleButtonModifyAddress = () => {
     if (this.props.submitted)
-      this.props.setFormNewUser({
-        ...this.props.formNewUser,
+      this.props.setFormUser({
+        ...this.props.formUser,
         address: genericValidation("", "required", "Address"),
         state: genericValidation("", "", "State"),
         postcode: genericValidation("", "", "Postal code"),
       });
     else
-      this.props.setFormNewUser({
-        ...this.props.formNewUser,
+      this.props.setFormUser({
+        ...this.props.formUser,
         address: genericValidation("", "", "Address"),
         state: genericValidation("", "", "State"),
         postcode: genericValidation("", "", "Postal code"),
@@ -72,7 +72,7 @@ class Address extends Component<AddressProps> {
   };
 
   render() {
-    const { formNewUser, submitted } = this.props;
+    const { formUser, submitted } = this.props;
     return (
       <>
         <Grid item sm={8}>
@@ -84,22 +84,16 @@ class Address extends Component<AddressProps> {
             id="address_line_1"
             placeholder="Search address here..."
             inputRef={this.address_line_1}
-            disabled={formNewUser.address.value !== ""}
-            error={formNewUser.address.error && submitted}
-            helperText={submitted && formNewUser.address.error ? formNewUser.address.helperText : ""}
+            disabled={formUser.address.value !== ""}
+            error={formUser.address.error && submitted}
+            helperText={submitted && formUser.address.error ? formUser.address.helperText : ""}
           />
         </Grid>
         <Grid item sm={4} sx={styles.btnChangeAddress}>
           <Button onClick={this.handleButtonModifyAddress}>Modify address</Button>
         </Grid>
         <Grid item sm={6}>
-          <TextField
-            fullWidth
-            label="State"
-            disabled
-            placeholder="State"
-            value={formNewUser.address.value ? formNewUser.state.value : ""}
-          />
+          <TextField fullWidth label="State" disabled placeholder="State" value={formUser.address.value ? formUser.state.value : ""} />
         </Grid>
         <Grid item sm={6}>
           <TextField
@@ -107,7 +101,7 @@ class Address extends Component<AddressProps> {
             label="Postal Code"
             disabled
             placeholder="Postal Code"
-            value={formNewUser.address.value ? formNewUser.postcode.value : ""}
+            value={formUser.address.value ? formUser.postcode.value : ""}
           />
         </Grid>
       </>
@@ -125,12 +119,12 @@ const styles = {
 
 const mapStateToProps = (state: StateType) => {
   return {
-    formNewUser: state.userReducer.formNewUser,
+    formUser: state.userReducer.formUser,
   };
 };
 
 const mapDispatchToProps: MyMapDispatchToProps = {
-  setFormNewUser: userActions.setFormNewUser,
+  setFormUser: userActions.setFormUser,
 };
 
 export default withParamsAndNavigate(Address, mapStateToProps, mapDispatchToProps);

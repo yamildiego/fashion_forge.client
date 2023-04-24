@@ -9,31 +9,23 @@ import handleCatchGeneric from "../Functions/handleCatchGeneric";
 const server = axios.create({ withCredentials: true });
 
 const initValidationType = { value: "", error: false, helperText: "" };
-const initValidationTypeTEMP = { value: "yamildiego@gmail.com", error: false, helperText: "" };
+const initFormUser = {
+  business_name: initValidationType,
+  name: initValidationType,
+  lastname: initValidationType,
+  phone: initValidationType,
+  email: initValidationType,
+  password: initValidationType,
+  address: initValidationType,
+  state: initValidationType,
+  postcode: initValidationType,
+};
 
-export const setEmail = (value: ValidationType) => ({ type: Types.SET_EMAIL, value });
+export const setFormUser = (value: FormUserType) => ({ type: Types.SET_FORM_USER, value });
 
-export const mergeEmail = (value: ValidationType) => ({ type: Types.MERGE_EMAIL, value });
+export const mergeFormUser = (value: Partial<FormUserType>) => ({ type: Types.MERGE_FORM_USER, value });
 
-export const cleanEmail = () => (dispatch: any) => dispatch(setEmail(initValidationTypeTEMP));
-
-export const setFormNewUser = (value: FormUserType) => ({ type: Types.SET_FORM_NEW_USER, value });
-
-export const mergeFormNewUser = (value: Partial<FormUserType>) => ({ type: Types.MERGE_FORM_NEW_USER, value });
-
-export const cleanFormNewUser = () => (dispatch: any) =>
-  dispatch(
-    setFormNewUser({
-      business_name: initValidationType,
-      name: initValidationType,
-      lastname: initValidationType,
-      phone: initValidationType,
-      email: initValidationType,
-      address: initValidationType,
-      state: initValidationType,
-      postcode: initValidationType,
-    })
-  );
+export const cleanFormUser = () => (dispatch: any) => dispatch(setFormUser(initFormUser));
 
 export const newUser = (user: UserType, userType: string) => {
   return async (dispatch: any) => {
@@ -49,18 +41,18 @@ export const newUser = (user: UserType, userType: string) => {
       })
       .catch((error) =>
         handleCatchGeneric(error, (formValidation: Partial<FormUserType>) => {
-          dispatch(mergeFormNewUser(formValidation));
+          dispatch(mergeFormUser(formValidation));
           dispatch(appActions.setIsLoading(false));
         })
       );
   };
 };
 
-export const signInUser = (email: string, userType: string) => {
+export const signInUser = (email: string, password: string, userType: string) => {
   return async (dispatch: any) => {
     dispatch(appActions.setIsLoading(true));
     await server
-      .post(`${Urls.signInUser}`, { email, user_type: userType })
+      .post(`${Urls.signInUser}`, { email, password, user_type: userType })
       .then((response) => {
         if (response.statusText === "OK") {
           dispatch(appActions.setCurrentView("jobs"));
@@ -70,7 +62,7 @@ export const signInUser = (email: string, userType: string) => {
       })
       .catch((error) =>
         handleCatchGeneric(error, (formValidation: Partial<FormUserType>) => {
-          if (formValidation?.email) dispatch(mergeEmail(formValidation.email));
+          if (formValidation?.email) dispatch(mergeFormUser({ ...initFormUser, email: formValidation.email }));
           dispatch(appActions.setIsLoading(false));
         })
       );

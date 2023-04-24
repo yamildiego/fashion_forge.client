@@ -7,19 +7,18 @@ import * as userActions from "../../Actions/userActions";
 
 interface MainUserViewProps {
   setCurrentView: (view: string) => void;
-  cleanFormNewUser: () => void;
-  cleanEmail: () => void;
+  cleanFormUser: () => void;
 }
 
 const MainUserView = (props: MainUserViewProps) => {
-  const { setCurrentView, cleanFormNewUser, cleanEmail } = props;
+  const { setCurrentView, cleanFormUser } = props;
   const handleNewUser = () => {
-    cleanFormNewUser();
+    cleanFormUser();
     setCurrentView("newUser");
   };
 
   const handleSignInUser = () => {
-    cleanEmail();
+    cleanFormUser();
     setCurrentView("signInUser");
   };
 
@@ -52,8 +51,7 @@ const mapStateToProps = (state: StateType) => {
 
 const mapDispatchToProps: MyMapDispatchToProps = {
   setCurrentView: appActions.setCurrentView,
-  cleanFormNewUser: userActions.cleanFormNewUser,
-  cleanEmail: userActions.cleanEmail,
+  cleanFormUser: userActions.cleanFormUser,
 };
 
 export default withParamsAndNavigate(MainUserView, mapStateToProps, mapDispatchToProps);

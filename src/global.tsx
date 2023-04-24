@@ -12,8 +12,7 @@ declare global {
       user: UserType;
     };
     userReducer: {
-      formNewUser: FormUserType;
-      userEmail: ValidationType;
+      formUser: FormUserType;
     };
     clientReducer: {
       formNewJob: FormJobType;
@@ -37,6 +36,7 @@ declare global {
     lastname: ValidationType;
     phone: ValidationType;
     email: ValidationType;
+    password: ValidationType;
     address: ValidationType;
     state: ValidationType;
     postcode: ValidationType;
@@ -48,6 +48,7 @@ declare global {
     lastname?: string;
     phone: string;
     email: string;
+    password?: string;
     address?: string;
     state?: string;
     postcode?: string;
@@ -70,7 +71,7 @@ declare global {
   };
 
   type TypeOfClothing = "t_shirt" | "jeans" | "swimsuit" | "cocktail_dress" | "tracksuit" | "leather_jacket" | "business_suit" | "skirt";
-  type ErrorIdType = "required" | "email" | "email" | "unique" | "existsUser" | "maxLength";
+  type ErrorIdType = "required" | "email" | "email" | "unique" | "existsUser" | "maxLength" | "minLength";
 
   export type MyMapDispatchToProps<TDispatchProps = {}, TOwnProps = {}> = MapDispatchToProps<TDispatchProps, TOwnProps>;
 }

@@ -3,56 +3,41 @@ import * as Types from "../Constants/Types";
 const initValidationType = { value: "", error: false, helperText: "" };
 
 const initialState = {
-  formNewUser: {
+  formUser: {
     business_name: initValidationType,
     name: initValidationType,
     lastname: initValidationType,
     phone: initValidationType,
     email: initValidationType,
+    password: initValidationType,
     address: initValidationType,
     state: initValidationType,
     postcode: initValidationType,
   },
-  userEmail: { value: "", error: false, helperText: "" },
 };
 
-type SetFormNewUserAction = { type: typeof Types.SET_FORM_NEW_USER; value: FormUserType };
-type MergeFormNewUserAction = { type: typeof Types.MERGE_FORM_NEW_USER; value: Partial<FormUserType> };
-type SetEmailAction = { type: typeof Types.SET_EMAIL; value: ValidationType };
-type MergeEmailAction = { type: typeof Types.MERGE_EMAIL; value: ValidationType };
+type SetFormUserAction = { type: typeof Types.SET_FORM_USER; value: FormUserType };
+type MergeFormUserAction = { type: typeof Types.MERGE_FORM_USER; value: Partial<FormUserType> };
 
-type UserReducerAction = SetFormNewUserAction | MergeFormNewUserAction | SetEmailAction | MergeEmailAction;
+type UserReducerAction = SetFormUserAction | MergeFormUserAction;
 
 export default function userReducer(state = initialState, action: UserReducerAction) {
   switch (action.type) {
-    case Types.SET_FORM_NEW_USER: {
-      return { ...state, formNewUser: action.value };
+    case Types.SET_FORM_USER: {
+      return { ...state, formUser: action.value };
     }
-    case Types.MERGE_FORM_NEW_USER: {
-      let formNewUser = Object.keys(state.formNewUser).reduce((obj, key) => {
+    case Types.MERGE_FORM_USER: {
+      let formUser = Object.keys(state.formUser).reduce((obj, key) => {
         //@ts-ignore
         obj[key] = action.value[key]
           ? //@ts-ignore
-            { ...state.formNewUser[key], error: action.value[key].error, helperText: action.value[key].helperText }
+            { ...state.formUser[key], error: action.value[key].error, helperText: action.value[key].helperText }
           : //@ts-ignore
-            { ...state.formNewUser[key], error: false, helperText: "" };
+            { ...state.formUser[key], error: false, helperText: "" };
         return obj;
       }, {});
 
-      return { ...state, formNewUser };
-    }
-    case Types.SET_EMAIL: {
-      return { ...state, userEmail: action.value };
-    }
-    case Types.MERGE_EMAIL: {
-      return {
-        ...state,
-        userEmail: {
-          ...state.userEmail,
-          error: action.value.error,
-          helperText: action.value.helperText,
-        },
-      };
+      return { ...state, formUser };
     }
 
     default:
