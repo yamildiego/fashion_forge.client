@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 
 import withParamsAndNavigate from "../../Hooks/withParamsAndNavigate";
 import { Dialog, DialogTitle, DialogContent } from "@mui/material";
