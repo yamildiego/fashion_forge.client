@@ -62,7 +62,7 @@ export const signInUser = (email: string, password: string, userType: string) =>
       })
       .catch((error) =>
         handleCatchGeneric(error, (formValidation: Partial<FormUserType>) => {
-          if (formValidation?.email) dispatch(mergeFormUser({ ...initFormUser, email: formValidation.email }));
+          dispatch(mergeFormUser(formValidation));
           dispatch(appActions.setIsLoading(false));
         })
       );

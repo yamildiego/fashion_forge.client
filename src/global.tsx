@@ -71,7 +71,7 @@ declare global {
   };
 
   type TypeOfClothing = "t_shirt" | "jeans" | "swimsuit" | "cocktail_dress" | "tracksuit" | "leather_jacket" | "business_suit" | "skirt";
-  type ErrorIdType = "required" | "email" | "email" | "unique" | "existsUser" | "maxLength" | "minLength";
+  type ErrorIdType = "required" | "email" | "email" | "unique" | "wrongData" | "maxLength" | "minLength";
 
   export type MyMapDispatchToProps<TDispatchProps = {}, TOwnProps = {}> = MapDispatchToProps<TDispatchProps, TOwnProps>;
 }
