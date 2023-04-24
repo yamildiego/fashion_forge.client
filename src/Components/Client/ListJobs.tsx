@@ -1,10 +1,11 @@
-import * as React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 
 import withParamsAndNavigate from "../../Hooks/withParamsAndNavigate";
+import { Dialog, DialogTitle, DialogContent } from "@mui/material";
 
 import TypesOfClothing from "../../TypesOfClothing.json";
 import moment from "moment";
@@ -13,7 +14,14 @@ interface ListJobsProps {
   jobs: JobType[];
 }
 
+const MAX_LENGTH = 80;
+
 const ListJobs = (props: ListJobsProps) => {
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   return (
     <>
       {props.jobs.map((job: JobType, index: number) => {
@@ -34,8 +42,18 @@ const ListJobs = (props: ListJobsProps) => {
                 <span style={{ marginLeft: "15px", color: "#333" }}>{job.budget == null ? "-" : `$ ${job.budget.toFixed(2)}`}</span>
               </Typography>
               <Typography sx={{ mb: 0.5 }} color="text.secondary">
-                Description
-                <span style={{ marginLeft: "15px", color: "#333" }}>{job.description}</span>
+                {`Description: `}
+
+                <span style={{ marginLeft: "15px", color: "#333" }}>{job.description.substring(0, MAX_LENGTH)}</span>
+                {job.description.substring(MAX_LENGTH) && (
+                  <>
+                    <Button onClick={handleOpen}>Read more</Button>
+                    <Dialog open={open} onClose={handleClose}>
+                      <DialogTitle>Description</DialogTitle>
+                      <DialogContent>{job.description}</DialogContent>
+                    </Dialog>
+                  </>
+                )}
               </Typography>
             </CardContent>
             <Box sx={styles.date_created}>{`Datetime created: ${moment(new Date(job.created_at).getTime()).format(
