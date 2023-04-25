@@ -4,13 +4,15 @@ const initialState = {
   isLoading: false,
   currentView: "main",
   user: null,
+  openModal: false,
 };
 
 type SetLoadingAction = { type: typeof Types.SET_IS_LOADING; value: boolean };
 type SetCurrentViewAction = { type: typeof Types.SET_CURRENT_VIEW; value: string };
 type SetCurrentClientAction = { type: typeof Types.SET_CURRENT_USER; value: UserType };
+type SetOpenModalAction = { type: typeof Types.SET_OPEN_MODAL; value: boolean };
 
-type AppReducerAction = SetLoadingAction | SetCurrentViewAction | SetCurrentClientAction;
+type AppReducerAction = SetLoadingAction | SetCurrentViewAction | SetCurrentClientAction | SetOpenModalAction;
 
 export default function appReducer(state = initialState, action: AppReducerAction) {
   switch (action.type) {
@@ -22,6 +24,9 @@ export default function appReducer(state = initialState, action: AppReducerActio
     }
     case Types.SET_CURRENT_USER: {
       return { ...state, user: action.value };
+    }
+    case Types.SET_OPEN_MODAL: {
+      return { ...state, openModal: action.value };
     }
     default:
       return state;

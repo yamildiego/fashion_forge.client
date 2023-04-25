@@ -26,6 +26,7 @@ interface MakerProps {
 class Maker extends Component<MakerProps> {
   componentDidUpdate(oldProps: MakerProps) {
     if (oldProps.currentView !== this.props.currentView && this.props.currentView === "jobs") this.props.getAllJobs();
+    if (oldProps.currentView !== this.props.currentView && this.props.currentView === "reload") this.props.setCurrentView("jobs");
   }
 
   handleOnClickBack = () => {
@@ -41,7 +42,7 @@ class Maker extends Component<MakerProps> {
       case "newUser":
         setCurrentView("main");
         break;
-      case "newJob":
+      case "view":
         setCurrentView("jobs");
         break;
       default:

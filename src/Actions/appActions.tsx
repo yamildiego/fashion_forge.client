@@ -5,3 +5,5 @@ export const setIsLoading = (value: boolean) => ({ type: Types.SET_IS_LOADING, v
 export const setCurrentView = (value: string) => ({ type: Types.SET_CURRENT_VIEW, value });
 
 export const setCurrentUser = (value: UserType) => ({ type: Types.SET_CURRENT_USER, value });
+
+export const setOpenModal = (value: boolean) => ({ type: Types.SET_OPEN_MODAL, value });

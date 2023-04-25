@@ -3,7 +3,7 @@ import { Typography, Box, Stack, Button } from "@mui/material";
 
 interface FormViewProps {
   title: string;
-  submitText: string;
+  submitText?: string;
   children: ReactNode;
   handleSubmit: (event: React.FormEvent<EventTarget>) => void;
 }
@@ -16,9 +16,11 @@ const FormView = (props: FormViewProps) => {
       </Typography>
       <Box component="form" onSubmit={props.handleSubmit} noValidate sx={{ mt: 1, width: "100%" }}>
         {props.children}
-        <Button type="submit" variant="contained" color="primary" sx={styles.btn}>
-          {props.submitText}
-        </Button>
+        {props.submitText && (
+          <Button type="submit" variant="contained" color="primary" sx={styles.btn}>
+            {props.submitText}
+          </Button>
+        )}
       </Box>
     </Stack>
   );

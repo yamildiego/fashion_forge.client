@@ -9,13 +9,17 @@ import handleCatchGeneric from "../Functions/handleCatchGeneric";
 const server = axios.create({ withCredentials: true });
 
 const initValidationType = { value: "", error: false, helperText: "" };
+
+const initValidationTypeTEMP1 = { value: "yamildiego@gmail.com", error: false, helperText: "" };
+const initValidationTypeTEMP2 = { value: "0466273586", error: false, helperText: "" };
+
 const initFormUser = {
   business_name: initValidationType,
   name: initValidationType,
   lastname: initValidationType,
   phone: initValidationType,
-  email: initValidationType,
-  password: initValidationType,
+  email: initValidationTypeTEMP1,
+  password: initValidationTypeTEMP2,
   confirm_password: initValidationType,
   address: initValidationType,
   state: initValidationType,

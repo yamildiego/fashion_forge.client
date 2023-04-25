@@ -10,6 +10,7 @@ declare global {
       isLoading: boolean;
       currentView: string;
       user: UserType;
+      openModal: boolean;
     };
     userReducer: {
       formUser: FormUserType;
@@ -21,6 +22,7 @@ declare global {
     makerReducer: {
       job: JobType;
       jobs: JobType[];
+      formQuote: FormQuoteType;
     };
   };
 
@@ -28,6 +30,19 @@ declare global {
     value: string;
     error: boolean;
     helperText: string;
+  };
+
+  type FormQuoteType = {
+    quote: ValidationType;
+    estimated_time: ValidationType;
+    comments: ValidationType;
+  };
+
+  type QuoteType = {
+    quote: number;
+    estimated_time: number;
+    comments: string;
+    user_id?: number;
   };
 
   type FormUserType = {
@@ -44,6 +59,7 @@ declare global {
   };
 
   type UserType = {
+    id: number;
     business_name?: string;
     name?: string;
     lastname?: string;
@@ -64,11 +80,14 @@ declare global {
   };
 
   type JobType = {
-    type_of_clothing: string;
+    id: number;
+    type_of_clothing: TypeOfClothing;
     description: string;
     budget: number;
     quote?: number;
+    quotes?: QuoteType[];
     user?: UserType;
+    user_id?: number;
     created_at: string;
   };
 

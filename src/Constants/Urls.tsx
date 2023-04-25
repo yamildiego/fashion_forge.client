@@ -13,6 +13,7 @@ const Urls = {
 
   // Maker
   getAllJobs: baseUrl + "/getAllJobs",
+  newQuote: baseUrl + "/newQuote",
 };
 
 export default Urls;

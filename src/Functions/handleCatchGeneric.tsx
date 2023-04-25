@@ -8,7 +8,7 @@ const initValidationType = {
 };
 
 const handleCatchGeneric = (error: any, callback: (formValidation: Partial<any>) => void) => {
-  // console.log(error);
+  console.log(error);
   if (error.code === "ERR_BAD_REQUEST") {
     let errors = JSON.parse(error.request.response).errors;
 

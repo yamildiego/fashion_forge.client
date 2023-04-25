@@ -1,19 +1,23 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
+import moment from "moment";
+
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
-import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
 
 import { Dialog, DialogTitle, DialogContent } from "@mui/material";
 
 import withParamsAndNavigate from "../../Hooks/withParamsAndNavigate";
 
+import Status from "../Status";
+import ModalQuote from "../ModalQuote";
+
 import TypesOfClothing from "../../TypesOfClothing.json";
-import moment from "moment";
 
 import * as appActions from "../../Actions/appActions";
 import * as makerActions from "../../Actions/makerActions";
@@ -22,11 +26,16 @@ const MAX_LENGTH = 80;
 
 interface ListJobsProps {
   jobs: JobType[];
-  setJob: (view: JobType) => void;
+  user: UserType;
+  BORRAR: JobType;
+  setJob: (view: JobType | null) => void;
   setCurrentView: (view: string) => void;
+  setOpenModal: (value: boolean) => void;
+  cleanFormQuote: () => void;
 }
 
 const ListJobs = (props: ListJobsProps) => {
+  const { user, cleanFormQuote, setOpenModal } = props;
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -37,10 +46,21 @@ const ListJobs = (props: ListJobsProps) => {
     props.setCurrentView("view");
   };
 
+  const handleOpenModal = (job: JobType) => {
+    cleanFormQuote();
+    props.setJob(job);
+    setOpenModal(true);
+  };
+
   return (
     <>
       {props.jobs.map((job: JobType, index: number) => {
         const location = job.user ? `${job?.user?.address} ${job?.user?.state} ${job?.user?.postcode}` : "-";
+        const hasQuoted = job.quotes && job.quotes.length > 0;
+        const wasQuoted = job.quotes && job.quotes.some((x) => x.user_id == user.id);
+
+        const status = hasQuoted && wasQuoted ? "quoted" : hasQuoted ? "with_quotes" : "new";
+
         return (
           <Card key={`key_maker_${index}`} sx={{ width: "100%", boxShadow: "1px 1px 5px #ccc", position: "relative" }}>
             <CardContent>
@@ -80,9 +100,8 @@ const ListJobs = (props: ListJobsProps) => {
                 </Grid>
                 <Grid item xs={3} sx={{ justifyContent: "center", alignItems: "flex-end", display: "flex", pb: 1 }}>
                   <Stack spacing={2}>
-                    <Button variant="contained" color="warning">
-                      Quote
-                    </Button>
+                    {!wasQuoted && <ModalQuote handleOpenModal={() => handleOpenModal(job)} />}
+
                     <Button onClick={() => handleOnClickView(job)} variant="contained" color="info">
                       View
                     </Button>
@@ -93,45 +112,11 @@ const ListJobs = (props: ListJobsProps) => {
             <Box sx={styles.date_created}>{`Datetime created: ${moment(new Date(job.created_at).getTime()).format(
               "HH:mm DD-MM-YYYY"
             )}`}</Box>
-
-            <Quote quote={job?.quote} />
-            {/* 
-            <Button onClick={handleOpen}>Open modal</Button>
-            <Modal open={open} onClose={handleClose} aria-labelledby="parent-modal-title" aria-describedby="parent-modal-description">
-              <Box sx={{ ...style, width: 400 }}>
-                <h2 id="parent-modal-title">Text in a modal</h2>
-                <p id="parent-modal-description">Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
-                <ChildModal />
-              </Box>
-            </Modal> */}
+            <Status status={status} len={job?.quotes?.length ?? 0} />
           </Card>
         );
       })}
     </>
-  );
-};
-
-const style = {
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  pt: 2,
-  px: 4,
-  pb: 3,
-};
-
-const Quote = (props: { quote: number | undefined }) => {
-  const { quote = null } = props;
-  const quoteIsValid = quote !== null;
-  return (
-    <Box sx={{ ...styles.label, background: quoteIsValid ? "#93ea99" : "#cad7ff" }}>
-      <span style={{ fontWeight: "bold" }}>{quoteIsValid ? `QUOTED ($ ${quote.toFixed(2)})` : "TO PROCESS"}</span>
-    </Box>
   );
 };
 
@@ -144,23 +129,22 @@ const styles = {
     color: "#b4b3b3",
     padding: "2px 4px",
   },
-  label: {
-    position: "absolute",
-    top: "0",
-    right: "0",
-    padding: "12px",
-  },
+  btn: { mt: 2, width: "100%" },
 };
 
 const mapStateToProps = (state: StateType) => {
   return {
+    user: state.appReducer.user,
     jobs: state.makerReducer.jobs,
+    BORRAR: state.makerReducer.job,
   };
 };
 
 const mapDispatchToProps: MyMapDispatchToProps = {
   setCurrentView: appActions.setCurrentView,
   setJob: makerActions.setJob,
+  setOpenModal: appActions.setOpenModal,
+  cleanFormQuote: makerActions.cleanFormQuote,
 };
 
 export default withParamsAndNavigate(ListJobs, mapStateToProps, mapDispatchToProps);

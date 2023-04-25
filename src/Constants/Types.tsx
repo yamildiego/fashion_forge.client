@@ -2,6 +2,7 @@
 export const SET_IS_LOADING = "SET_IS_LOADING";
 export const SET_CURRENT_VIEW = "SET_CURRENT_VIEW";
 export const SET_CURRENT_USER = "SET_CURRENT_USER";
+export const SET_OPEN_MODAL = "SET_OPEN_MODAL";
 
 //User
 export const SET_FORM_USER = "SET_FORM_USER";
@@ -15,3 +16,5 @@ export const SET_JOBS = "SET_JOBS";
 //Maker
 export const SET_JOB = "SET_JOB";
 export const SET_ALL_JOBS = "SET_ALL_JOBS";
+export const SET_FORM_QUOTE = "SET_FORM_QUOTE";
+export const MERGE_FORM_QUOTE = "MERGE_FORM_QUOTE";
