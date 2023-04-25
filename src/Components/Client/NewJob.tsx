@@ -51,7 +51,7 @@ const Jobs = (props: JobsProps) => {
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <FormControl fullWidth required>
-            <InputLabel id="demo-simple-select-label" sx={{ backgroundColor: "white" }}>
+            <InputLabel id="clothing-select-label" sx={{ backgroundColor: "white" }}>
               Type of clothing
             </InputLabel>
             <Select
@@ -60,9 +60,8 @@ const Jobs = (props: JobsProps) => {
               onChange={(event: SelectChangeEvent<string>) => {
                 handleOnChange({ ...formNewJob, type_of_clothing: { ...formNewJob.type_of_clothing, value: event.target?.value || "" } });
               }}
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              label="Age"
+              labelId="clothing-select-label"
+              id="clothing-select"
             >
               {Object.keys(TypesOfClothing).map((cloth: string) => {
                 return <MenuItem value={cloth}>{TypesOfClothing[cloth as TypeOfClothing]}</MenuItem>;

@@ -10,14 +10,20 @@ const initialState = {
     estimated_time: initValidationType,
     comments: initValidationType,
   },
+  filter: {
+    type_of_clothing: "All",
+    state: "All",
+    postcode: "",
+  },
 };
 
 type SetAllJobsAction = { type: typeof Types.SET_ALL_JOBS; value: JobType[] };
 type SetJobAction = { type: typeof Types.SET_JOB; value: JobType };
-type SetFormQuoteType = { type: typeof Types.SET_FORM_QUOTE; value: FormQuoteType };
-type MergeFormQuoteType = { type: typeof Types.MERGE_FORM_QUOTE; value: FormQuoteType };
+type SetFormQuoteTypeAction = { type: typeof Types.SET_FORM_QUOTE; value: FormQuoteType };
+type MergeFormQuoteTypeAction = { type: typeof Types.MERGE_FORM_QUOTE; value: FormQuoteType };
+type SetFilterTypeAction = { type: typeof Types.SET_FILTER; value: FilterType };
 
-type JobReducerAction = SetAllJobsAction | SetJobAction | SetFormQuoteType | MergeFormQuoteType;
+type JobReducerAction = SetAllJobsAction | SetJobAction | SetFormQuoteTypeAction | MergeFormQuoteTypeAction | SetFilterTypeAction;
 
 export default function makerReducer(state = initialState, action: JobReducerAction) {
   switch (action.type) {
@@ -42,6 +48,9 @@ export default function makerReducer(state = initialState, action: JobReducerAct
       }, {});
 
       return { ...state, formQuote };
+    }
+    case Types.SET_FILTER: {
+      return { ...state, filter: { ...state.filter, ...action.value } };
     }
 
     default:

@@ -18,7 +18,7 @@ interface ListJobsProps {
 const MAX_LENGTH = 80;
 
 const ListJobs = (props: ListJobsProps) => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);

@@ -10,11 +10,9 @@ const server = axios.create({ withCredentials: true });
 
 const initValidationType = { value: "", error: false, helperText: "" };
 
-const initFormQuote = {
-  quote: initValidationType,
-  estimated_time: initValidationType,
-  comments: initValidationType,
-};
+const initFormQuote = { quote: initValidationType, estimated_time: initValidationType, comments: initValidationType };
+
+const initFilter = { type_of_clothing: "All" as "All", state: "All" as "All", postcode: "" };
 
 export const setFormQuote = (value: FormQuoteType) => ({ type: Types.SET_FORM_QUOTE, value });
 
@@ -26,11 +24,15 @@ export const setJob = (value: JobType) => ({ type: Types.SET_JOB, value });
 
 export const setAllJobs = (value: JobType[]) => ({ type: Types.SET_ALL_JOBS, value });
 
-export const getAllJobs = () => {
+export const setFilter = (value: FilterType) => ({ type: Types.SET_FILTER, value });
+
+export const cleanFilter = () => (dispatch: any) => dispatch(setFilter(initFilter));
+
+export const getJobsByFilter = (filter: FilterType) => {
   return async (dispatch: any) => {
     dispatch(appActions.setIsLoading(true));
     await server
-      .get(`${Urls.getAllJobs}`)
+      .post(`${Urls.getJobsByFilter}`, filter)
       .then((response) => {
         if (response.statusText === "OK") {
           dispatch(setAllJobs(response.data));

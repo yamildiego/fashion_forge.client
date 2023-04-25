@@ -1,7 +1,6 @@
 import withParamsAndNavigate from "../../Hooks/withParamsAndNavigate";
 
-import { Grid, TextField, FormHelperText, InputLabel, MenuItem, FormControl } from "@mui/material";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { Grid, TextField } from "@mui/material";
 
 import FormView from "../Common/FormView";
 
@@ -16,7 +15,7 @@ interface ViewProps {
 
 const View = (props: ViewProps) => {
   const { job, user } = props;
-  const wasQuoted = job.quotes && job.quotes.some((x) => x.user_id == user.id);
+  const wasQuoted = job.quotes && job.quotes.some((x) => x.user_id === user.id);
 
   return (
     <>

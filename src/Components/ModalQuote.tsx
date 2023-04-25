@@ -15,14 +15,13 @@ interface ModalQuoteProps {
   setFormQuote: (value: FormQuoteType) => void;
   setOpenModal: (value: boolean) => void;
   newQuote: (value: QuoteType, job_id: number) => void;
-  cleanFormQuote: () => void;
   handleOpenModal: () => void;
 }
 
 const ModalQuote = (props: ModalQuoteProps) => {
   const [submitted, setSubmitted] = useState<boolean>(false);
 
-  const { job, openModal, setOpenModal, formQuote, cleanFormQuote } = props;
+  const { job, openModal, setOpenModal, formQuote } = props;
 
   const handleCloseModal = () => {
     setOpenModal(false);
@@ -197,7 +196,6 @@ const mapStateToProps = (state: StateType) => {
 const mapDispatchToProps: MyMapDispatchToProps = {
   setFormQuote: makerActions.setFormQuote,
   newQuote: makerActions.newQuote,
-  cleanFormQuote: makerActions.cleanFormQuote,
   setOpenModal: appActions.setOpenModal,
 };
 

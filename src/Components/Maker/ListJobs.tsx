@@ -1,16 +1,7 @@
-import * as React from "react";
+import React from "react";
 import moment from "moment";
 
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-
-import { Dialog, DialogTitle, DialogContent } from "@mui/material";
+import { Box, Stack, Grid, Button, Card, CardContent, Typography, Dialog, DialogTitle, DialogContent } from "@mui/material";
 
 import withParamsAndNavigate from "../../Hooks/withParamsAndNavigate";
 
@@ -57,7 +48,7 @@ const ListJobs = (props: ListJobsProps) => {
       {props.jobs.map((job: JobType, index: number) => {
         const location = job.user ? `${job?.user?.address} ${job?.user?.state} ${job?.user?.postcode}` : "-";
         const hasQuoted = job.quotes && job.quotes.length > 0;
-        const wasQuoted = job.quotes && job.quotes.some((x) => x.user_id == user.id);
+        const wasQuoted = job.quotes && job.quotes.some((x) => x.user_id === user.id);
 
         const status = hasQuoted && wasQuoted ? "quoted" : hasQuoted ? "with_quotes" : "new";
 

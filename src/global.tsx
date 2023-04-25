@@ -23,7 +23,14 @@ declare global {
       job: JobType;
       jobs: JobType[];
       formQuote: FormQuoteType;
+      filter: FilterType;
     };
+  };
+
+  type FilterType = {
+    type_of_clothing: TypeOfClothing | "All";
+    state: States | "All";
+    postcode: string;
   };
 
   type ValidationType = {
@@ -91,6 +98,7 @@ declare global {
     created_at: string;
   };
 
+  type States = "VIC" | "QLD" | "SA" | "NT" | "WA" | "TAS" | "NSW" | "ACT";
   type TypeOfClothing = "t_shirt" | "jeans" | "swimsuit" | "cocktail_dress" | "tracksuit" | "leather_jacket" | "business_suit" | "skirt";
   type ErrorIdType = "required" | "email" | "email" | "unique" | "wrongData" | "maxLength" | "minLength" | "matchPassword";
 

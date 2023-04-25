@@ -19,13 +19,14 @@ interface MakerProps {
   user: UserType;
   currentView: string;
   navigate: NavigateFunction;
+  filter: FilterType;
   setCurrentView: (view: string) => void;
-  getAllJobs: () => void;
+  getJobsByFilter: (filter: FilterType) => void;
 }
 
 class Maker extends Component<MakerProps> {
   componentDidUpdate(oldProps: MakerProps) {
-    if (oldProps.currentView !== this.props.currentView && this.props.currentView === "jobs") this.props.getAllJobs();
+    if (oldProps.currentView !== this.props.currentView && this.props.currentView === "jobs") this.props.getJobsByFilter(this.props.filter);
     if (oldProps.currentView !== this.props.currentView && this.props.currentView === "reload") this.props.setCurrentView("jobs");
   }
 
@@ -77,78 +78,13 @@ const mapStateToProps = (state: StateType) => {
   return {
     currentView: state.appReducer.currentView,
     user: state.appReducer.user,
+    filter: state.makerReducer.filter,
   };
 };
 
 const mapDispatchToProps: MyMapDispatchToProps = {
   setCurrentView: appActions.setCurrentView,
-  getAllJobs: makerActions.getAllJobs,
+  getJobsByFilter: makerActions.getJobsByFilter,
 };
 
 export default withParamsAndNavigate(Maker, mapStateToProps, mapDispatchToProps);
-
-//   handleOnClickBack = () => {
-//     const { currentView, navigate, setCurrentView } = this.props;
-//     switch (currentView) {
-//       case "main":
-//         navigate("/");
-//         setCurrentView("main");
-//         break;
-//       //     case "existingMaker":
-//       //     case "newMaker":
-//       //       setCurrentView("main");
-//       //       break;
-//       //     case "newJob":
-//       //       setCurrentView("jobs");
-//       //       break;
-//       default:
-//         break;
-//     }
-//   };
-
-//   render() {
-//     const { currentView } = this.props;
-
-//     return (
-//       <Container maxWidth="sm" sx={{ display: "flex", flexDirection: "column", flex: 1 }}>
-//         <AppBar position="static">
-//           <Toolbar>
-//             {currentView !== "jobs" && (
-//               <IconButton onClick={this.handleOnClickBack}>
-//                 <ArrowBackIcon sx={{ color: "white" }} />
-//               </IconButton>
-//             )}
-//             <Typography variant="h6" component="div" sx={{ flex: 1, ml: 1 }}>
-//               Maker dashboard
-//             </Typography>
-//             {/* {currentView == "jobs" && (
-//               <>
-//                 <Box sx={{ mr: 1 }}>{`${Maker?.name ?? ""} ${Maker?.lastname ?? ""}`}</Box>
-//                 <IconButton onClick={this.handleOnClickBack}>
-//                   <ExitToAppIcon sx={{ color: "white" }} />
-//                 </IconButton>
-//               </>
-//             )} */}
-//           </Toolbar>
-//         </AppBar>
-
-//         {currentView === "main" && <MainMakerView />}
-//         {/* {currentView === "viewJob" && <ViewJob />} */}
-//         {/* {currentView === "viewMaker" && <ViewMaker />} */}
-//       </Container>
-//     );
-//   }
-// }
-
-// const mapStateToProps = (state: StateType) => {
-//   return {
-//     currentView: state.appReducer.currentView,
-//   };
-// };
-
-// const mapDispatchToProps: MyMapDispatchToProps = {
-//   setCurrentView: appActions.setCurrentView,
-//   getAllJobs: makerActions.getAllJobs,
-// };
-
-// export default withParamsAndNavigate(Maker, mapStateToProps, mapDispatchToProps);
