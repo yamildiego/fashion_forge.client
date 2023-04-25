@@ -37,6 +37,7 @@ declare global {
     phone: ValidationType;
     email: ValidationType;
     password: ValidationType;
+    confirm_password: ValidationType;
     address: ValidationType;
     state: ValidationType;
     postcode: ValidationType;
@@ -49,6 +50,7 @@ declare global {
     phone: string;
     email: string;
     password?: string;
+    confirm_password?: string;
     address?: string;
     state?: string;
     postcode?: string;
@@ -71,7 +73,7 @@ declare global {
   };
 
   type TypeOfClothing = "t_shirt" | "jeans" | "swimsuit" | "cocktail_dress" | "tracksuit" | "leather_jacket" | "business_suit" | "skirt";
-  type ErrorIdType = "required" | "email" | "email" | "unique" | "wrongData" | "maxLength" | "minLength";
+  type ErrorIdType = "required" | "email" | "email" | "unique" | "wrongData" | "maxLength" | "minLength" | "matchPassword";
 
   export type MyMapDispatchToProps<TDispatchProps = {}, TOwnProps = {}> = MapDispatchToProps<TDispatchProps, TOwnProps>;
 }

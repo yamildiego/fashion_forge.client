@@ -16,6 +16,7 @@ const initFormUser = {
   phone: initValidationType,
   email: initValidationType,
   password: initValidationType,
+  confirm_password: initValidationType,
   address: initValidationType,
   state: initValidationType,
   postcode: initValidationType,

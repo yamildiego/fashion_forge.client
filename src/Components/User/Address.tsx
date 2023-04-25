@@ -75,7 +75,7 @@ class Address extends Component<AddressProps> {
     const { formUser, submitted } = this.props;
     return (
       <>
-        <Grid item sm={8}>
+        <Grid item xs={6} sm={8}>
           <TextField
             fullWidth
             required={true}
@@ -89,13 +89,13 @@ class Address extends Component<AddressProps> {
             helperText={submitted && formUser.address.error ? formUser.address.helperText : ""}
           />
         </Grid>
-        <Grid item sm={4} sx={styles.btnChangeAddress}>
+        <Grid item xs={6} sm={4} sx={styles.btnChangeAddress}>
           <Button onClick={this.handleButtonModifyAddress}>Modify address</Button>
         </Grid>
-        <Grid item sm={6}>
+        <Grid item xs={6}>
           <TextField fullWidth label="State" disabled placeholder="State" value={formUser.address.value ? formUser.state.value : ""} />
         </Grid>
-        <Grid item sm={6}>
+        <Grid item xs={6}>
           <TextField
             fullWidth
             label="Postal Code"

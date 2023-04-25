@@ -47,6 +47,7 @@ const NewUserView = (props: NewUserViewProps) => {
       phone: genericValidation(formNew.phone.value, "required", "Phone"),
       email: genericValidation(formNew.email.value, "required", "Email"),
       password: genericValidation(formNew.password.value, "required", "Password"),
+      confirm_password: genericValidation(formNew.confirm_password.value, "required", "Confirm password"),
       address: genericValidation(formNew.address.value, userType === "CLIENT" ? "required" : "", "Address"),
     };
 
@@ -130,6 +131,21 @@ const NewUserView = (props: NewUserViewProps) => {
         <Grid item xs={12} sm={6}>
           <TextField
             required
+            id="phone"
+            name="phone"
+            label="Phone Number"
+            fullWidth
+            value={formUser.phone.value}
+            onChange={(event: ChangeEvent<HTMLInputElement>) =>
+              handleOnChange({ ...formUser, phone: { ...formUser.phone, value: event.target.value } })
+            }
+            error={formUser.phone.error && submitted}
+            helperText={submitted && formUser.phone.error ? formUser.phone.helperText : ""}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            required
             id="password"
             name="password"
             label="Password"
@@ -143,22 +159,22 @@ const NewUserView = (props: NewUserViewProps) => {
             helperText={submitted && formUser.password.error ? formUser.password.helperText : ""}
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} sm={6}>
           <TextField
             required
-            id="phone"
-            name="phone"
-            label="Phone Number"
+            id="confirm_password"
+            name="confirm_password"
+            label="Confirm password"
+            type="password"
             fullWidth
-            value={formUser.phone.value}
+            value={formUser.confirm_password.value}
             onChange={(event: ChangeEvent<HTMLInputElement>) =>
-              handleOnChange({ ...formUser, phone: { ...formUser.phone, value: event.target.value } })
+              handleOnChange({ ...formUser, confirm_password: { ...formUser.confirm_password, value: event.target.value } })
             }
-            error={formUser.phone.error && submitted}
-            helperText={submitted && formUser.phone.error ? formUser.phone.helperText : ""}
+            error={formUser.confirm_password.error && submitted}
+            helperText={submitted && formUser.confirm_password.error ? formUser.confirm_password.helperText : ""}
           />
         </Grid>
-
         {userType === "CLIENT" && <Address submitted={submitted} />}
       </Grid>
     </FormView>

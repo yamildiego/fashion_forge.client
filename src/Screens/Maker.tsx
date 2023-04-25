@@ -1,8 +1,6 @@
 import { Component } from "react";
 import { NavigateFunction } from "react-router-dom";
-import { AppBar, Toolbar, Typography, Container, IconButton, Box } from "@mui/material";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import { Container, Box } from "@mui/material";
 
 import withParamsAndNavigate from "../Hooks/withParamsAndNavigate";
 
@@ -11,6 +9,8 @@ import NewUserView from "../Components/User/NewUserView";
 import SignInUserView from "../Components/User/SignInUserView";
 import Jobs from "../Components/Maker/Jobs";
 import View from "../Components/Maker/View";
+
+import CustomAppBar from "../Components/Common/CustomAppBar";
 
 import * as appActions from "../Actions/appActions";
 import * as makerActions from "../Actions/makerActions";
@@ -53,33 +53,20 @@ class Maker extends Component<MakerProps> {
     const { currentView, user } = this.props;
 
     return (
-      <Container maxWidth="sm" sx={{ display: "flex", flexDirection: "column", flex: 1 }}>
-        <AppBar position="static">
-          <Toolbar>
-            {currentView !== "jobs" && (
-              <IconButton onClick={this.handleOnClickBack}>
-                <ArrowBackIcon sx={{ color: "white" }} />
-              </IconButton>
-            )}
-            <Typography variant="h6" component="div" sx={{ flex: 1, ml: 1 }}>
-              Maker dashboard
-            </Typography>
-            {currentView === "jobs" && (
-              <>
-                <Box sx={{ mr: 1 }}>{`${user?.business_name ?? ""}`}</Box>
-                <IconButton onClick={this.handleOnClickBack}>
-                  <ExitToAppIcon sx={{ color: "white" }} />
-                </IconButton>
-              </>
-            )}
-          </Toolbar>
-        </AppBar>
-
-        {currentView === "main" && <MainUserView />}
-        {currentView === "newUser" && <NewUserView title="Become Our Partner" userType="MAKER" />}
-        {currentView === "signInUser" && <SignInUserView userType="MAKER" />}
-        {currentView === "jobs" && <Jobs />}
-        {currentView === "view" && <View />}
+      <Container maxWidth="sm" sx={{ display: "flex", flexDirection: "column", flex: 1, p: 0 }}>
+        <CustomAppBar
+          currentView={currentView}
+          title="Maker dashboard"
+          user={`${user?.business_name ?? ""}`}
+          handleOnClickBack={this.handleOnClickBack}
+        />
+        <Box sx={{ padding: "0 10px" }}>
+          {currentView === "main" && <MainUserView />}
+          {currentView === "newUser" && <NewUserView title="Become Our Partner" userType="MAKER" />}
+          {currentView === "signInUser" && <SignInUserView userType="MAKER" />}
+          {currentView === "jobs" && <Jobs />}
+          {currentView === "view" && <View />}
+        </Box>
       </Container>
     );
   }
