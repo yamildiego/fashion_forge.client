@@ -12,7 +12,7 @@ const Urls = {
   getJobs: baseUrl + "/jobs",
 
   // Maker
-  getJobsByFilter: baseUrl + "/getJobsByFilter",
+  jobsByFilter: baseUrl + "/jobsByFilter",
   newQuote: baseUrl + "/newQuote",
 };
 

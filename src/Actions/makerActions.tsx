@@ -32,7 +32,7 @@ export const getJobsByFilter = (filter: FilterType) => {
   return async (dispatch: any) => {
     dispatch(appActions.setIsLoading(true));
     await server
-      .post(`${Urls.getJobsByFilter}`, filter)
+      .post(`${Urls.jobsByFilter}`, filter)
       .then((response) => {
         if (response.statusText === "OK") {
           dispatch(setAllJobs(response.data));
