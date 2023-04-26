@@ -15,4 +15,4 @@ artifacts:
   base-directory: build
 env:
   variables:
-    REACT_APP_API_URL: "http://tmis-env.eba-75dbz5yv.ap-southeast-2.elasticbeanstalk.com"
+    REACT_APP_API_URL: "http://d2mvgaty7wpv6n.cloudfront.net"
