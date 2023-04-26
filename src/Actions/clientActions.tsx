@@ -6,6 +6,11 @@ import * as appActions from "./appActions";
 
 import handleCatchGeneric from "../Functions/handleCatchGeneric";
 
+axios.interceptors.request.use(
+  (config) => ({ ...config, withCredentials: true }),
+  (error) => Promise.reject(error)
+);
+
 const server = axios.create({ withCredentials: true });
 
 const initValidationType = { value: "", error: false, helperText: "" };
