@@ -15,4 +15,4 @@ artifacts:
   base-directory: build
 env:
   variables:
-    REACT_APP_API_URL: "http://d2mvgaty7wpv6n.cloudfront.net"
+    REACT_APP_API_URL: "https://tmiserver.yamildiego.com"
