@@ -36,10 +36,8 @@ export const getJobs = () => {
     await server
       .get(`${Urls.getJobs}`)
       .then((response) => {
-        if (response.statusText === "OK") {
-          dispatch(setJobs(response.data));
-          dispatch(appActions.setIsLoading(false));
-        } else console.log("ERROR 200");
+        dispatch(setJobs(response.data));
+        dispatch(appActions.setIsLoading(false));
       })
       .catch((error) => {
         console.log(error);
@@ -53,11 +51,9 @@ export const newJob = (job: JobType) => {
     await server
       .post(`${Urls.newJob}`, { ...job })
       .then((response) => {
-        if (response.statusText === "OK") {
-          dispatch(appActions.setCurrentView("jobs"));
-          dispatch(appActions.setIsLoading(false));
-          dispatch(cleanFormNewJob());
-        } else console.log("ERROR 200");
+        dispatch(appActions.setCurrentView("jobs"));
+        dispatch(appActions.setIsLoading(false));
+        dispatch(cleanFormNewJob());
       })
       .catch((error) =>
         handleCatchGeneric(error, (formValidation: Partial<FormJobType>) => {

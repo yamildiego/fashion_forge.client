@@ -39,10 +39,8 @@ export const getJobsByFilter = (filter: FilterType) => {
     await server
       .post(`${Urls.jobsByFilter}`, filter)
       .then((response) => {
-        if (response.statusText === "OK") {
-          dispatch(setAllJobs(response.data));
-          dispatch(appActions.setIsLoading(false));
-        } else console.log("ERROR 200");
+        dispatch(setAllJobs(response.data));
+        dispatch(appActions.setIsLoading(false));
       })
       .catch((error) => {});
   };
@@ -54,10 +52,8 @@ export const newQuote = (quote: QuoteType, job_id: number) => {
     await server
       .post(`${Urls.newQuote}`, { ...quote, job_id })
       .then((response) => {
-        if (response.statusText === "OK") {
-          dispatch(appActions.setCurrentView("reload"));
-          dispatch(appActions.setIsLoading(false));
-        } else console.log("ERROR 200");
+        dispatch(appActions.setCurrentView("reload"));
+        dispatch(appActions.setIsLoading(false));
       })
       .catch((error) =>
         handleCatchGeneric(error, (formValidation: Partial<FormQuoteType>) => {

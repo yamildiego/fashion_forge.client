@@ -44,12 +44,10 @@ export const newUser = (user: UserType, userType: string) => {
     await server
       .post(`${Urls.newUser}`, { ...user, user_type: userType })
       .then((response) => {
-        if (response.statusText === "OK") {
-          dispatch(makerActions.cleanFilter());
-          dispatch(appActions.setCurrentView("jobs"));
-          dispatch(appActions.setIsLoading(false));
-          dispatch(appActions.setCurrentUser(response.data));
-        } else console.log("ERROR 200");
+        dispatch(makerActions.cleanFilter());
+        dispatch(appActions.setCurrentView("jobs"));
+        dispatch(appActions.setIsLoading(false));
+        dispatch(appActions.setCurrentUser(response.data));
       })
       .catch((error) =>
         handleCatchGeneric(error, (formValidation: Partial<FormUserType>) => {
@@ -66,12 +64,10 @@ export const signInUser = (email: string, password: string, userType: string) =>
     await server
       .post(`${Urls.signInUser}`, { email, password, user_type: userType })
       .then((response) => {
-        if (response.statusText === "OK") {
-          dispatch(makerActions.cleanFilter());
-          dispatch(appActions.setCurrentView("jobs"));
-          dispatch(appActions.setIsLoading(false));
-          dispatch(appActions.setCurrentUser(response.data));
-        } else console.log("ERROR 200");
+        dispatch(makerActions.cleanFilter());
+        dispatch(appActions.setCurrentView("jobs"));
+        dispatch(appActions.setIsLoading(false));
+        dispatch(appActions.setCurrentUser(response.data));
       })
       .catch((error) =>
         handleCatchGeneric(error, (formValidation: Partial<FormUserType>) => {
