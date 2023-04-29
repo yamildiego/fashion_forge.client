@@ -14,7 +14,7 @@ const handleCatchGeneric = (error: any, callback: (formValidation: Partial<any>)
 
     let formValidation = {};
 
-    const errorsType = ["required", "email", "unique", "wrongData", "maxLength", "minLength", "matchPassword"];
+    const errorsType = ["required", "email", "unique", "wrongData", "maxLength", "minLength", "matchPassword", "number"];
 
     errors.forEach((error: any) => {
       if (errorsType.includes(error.rule)) {

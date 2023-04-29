@@ -100,7 +100,7 @@ declare global {
 
   type States = "VIC" | "QLD" | "SA" | "NT" | "WA" | "TAS" | "NSW" | "ACT";
   type TypeOfClothing = "t_shirt" | "jeans" | "swimsuit" | "cocktail_dress" | "tracksuit" | "leather_jacket" | "business_suit" | "skirt";
-  type ErrorIdType = "required" | "email" | "email" | "unique" | "wrongData" | "maxLength" | "minLength" | "matchPassword";
+  type ErrorIdType = "required" | "email" | "email" | "unique" | "wrongData" | "maxLength" | "minLength" | "matchPassword" | "number";
   type StatusType = "DRAFT" | "PUBLISHED" | "ASSINGNED" | "SHIPPED" | "FINISHED";
 
   export type MyMapDispatchToProps<TDispatchProps = {}, TOwnProps = {}> = MapDispatchToProps<TDispatchProps, TOwnProps>;
