@@ -4,14 +4,20 @@ import { Box, Stack, Grid, Button, Card, CardContent, Typography, Dialog, Dialog
 
 import withParamsAndNavigate from "../../Hooks/withParamsAndNavigate";
 
+import Status from "../Common/Status";
+
 import TypesOfClothing from "../../TypesOfClothing.json";
 import moment from "moment";
 
 import * as clientActions from "../../Actions/clientActions";
+import * as appActions from "../../Actions/appActions";
 
 interface ListJobsProps {
   jobs: JobType[];
+  setJob: (view: JobType | null) => void;
+  setCurrentView: (view: string) => void;
   publishJob: (jobId: number) => void;
+  setFormNewJob: (view: FormJobType) => void;
 }
 
 const MAX_LENGTH = 80;
@@ -23,6 +29,23 @@ const ListJobs = (props: ListJobsProps) => {
   const handleClose = () => setOpen(false);
   const handlePublish = (job: JobType) => {
     if (job.status === "DRAFT") props.publishJob(job.id);
+  };
+
+  const handleOnClickAction = (job: JobType) => {
+    props.setJob(job);
+
+    if (job.status === "DRAFT") {
+      let formJob = {
+        type_of_clothing: { value: job.type_of_clothing, error: false, helperText: "" },
+        description: { value: job.description, error: false, helperText: "" },
+        budget: { value: String(job.budget), error: false, helperText: "" },
+      };
+
+      props.setFormNewJob(formJob);
+      props.setCurrentView("editJob");
+    } else {
+      props.setCurrentView("view");
+    }
   };
 
   return (
@@ -60,13 +83,8 @@ const ListJobs = (props: ListJobsProps) => {
                       </>
                     )}
                   </Typography>
-                  <Typography sx={{ mb: 0.5 }} color="text.secondary">
-                    Location
-                    {/* <span style={{ marginLeft: "15px", color: "#333" }}>{location}</span> */}
-                  </Typography>
                 </Grid>
                 <Grid item xs={4} sx={{ justifyContent: "center", alignItems: "flex-end", display: "flex", pb: 1 }}>
-                  {/* handleOnClickView(job) */}
                   <Stack direction={"row"} spacing={2}>
                     <Button
                       sx={{ ...(job.status === "DRAFT" ? {} : { opacity: 0 }) }}
@@ -76,8 +94,8 @@ const ListJobs = (props: ListJobsProps) => {
                     >
                       Publish
                     </Button>
-                    <Button onClick={() => {}} variant="contained" color="info">
-                      View
+                    <Button onClick={() => handleOnClickAction(job)} variant="contained" color="info">
+                      {job.status === "DRAFT" ? "Edit" : "View"}
                     </Button>
                   </Stack>
                 </Grid>
@@ -86,25 +104,12 @@ const ListJobs = (props: ListJobsProps) => {
             <Box sx={styles.date_created}>{`Datetime created: ${moment(new Date(job.created_at).getTime()).format(
               "HH:mm DD-MM-YYYY"
             )}`}</Box>
-            <Quote status={job.status as StatusType} />
+            <Status status={job.status as StatusType} />
           </Card>
         );
       })}
     </>
   );
-};
-
-const Quote = (props: { status: StatusType }) => {
-  const { status } = props;
-  const colors: { [key: string]: string } = {
-    DRAFT: "#AAAAAA",
-    PUBLISHED: "#17eba0",
-    ASSINGNED: "#00e7ce",
-    SHIPPED: "#ff8300",
-    FINISHED: "#7630ea",
-  };
-
-  return <Box sx={{ ...styles.label, background: `${colors[status]}33`, color: colors[status] }}>{status}</Box>;
 };
 
 const styles = {
@@ -116,14 +121,6 @@ const styles = {
     color: "#b4b3b3",
     padding: "2px 4px",
   },
-  label: {
-    position: "absolute",
-    top: "0",
-    right: "0",
-    padding: "12px",
-    cursor: "default",
-    userSelect: "none",
-  },
 };
 
 const mapStateToProps = (state: StateType) => {
@@ -133,7 +130,10 @@ const mapStateToProps = (state: StateType) => {
 };
 
 const mapDispatchToProps: MyMapDispatchToProps = {
+  setCurrentView: appActions.setCurrentView,
   publishJob: clientActions.publishJob,
+  setFormNewJob: clientActions.setFormNewJob,
+  setJob: appActions.setJob,
 };
 
 export default withParamsAndNavigate(ListJobs, mapStateToProps, mapDispatchToProps);

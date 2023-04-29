@@ -11,6 +11,7 @@ declare global {
       currentView: string;
       user: UserType;
       openModal: boolean;
+      job: JobType;
     };
     userReducer: {
       formUser: FormUserType;
@@ -20,7 +21,6 @@ declare global {
       jobs: JobType[];
     };
     makerReducer: {
-      job: JobType;
       jobs: JobType[];
       formQuote: FormQuoteType;
       filter: FilterType;

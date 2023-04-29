@@ -10,6 +10,7 @@ const Urls = {
 
   // Job
   newJob: baseUrl + "/job",
+  editJob: baseUrl + "/job/editJob",
   getJobs: baseUrl + "/jobs",
   publishJob: baseUrl + "/job/publishJob",
 

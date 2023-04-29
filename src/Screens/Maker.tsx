@@ -63,7 +63,7 @@ class Maker extends Component<MakerProps> {
           handleOnClickBack={this.handleOnClickBack}
         />
         <Box sx={{ justifyContent: "center", display: "flex" }}>
-          <Box maxWidth="sm" sx={{ padding: "0 10px" }}>
+          <Box maxWidth="sm" sx={{ padding: "0 10px", width: "100%" }}>
             {currentView === "main" && <MainUserView />}
             {currentView === "newUser" && <NewUserView title="Become Our Partner" userType="MAKER" />}
             {currentView === "signInUser" && <SignInUserView userType="MAKER" />}

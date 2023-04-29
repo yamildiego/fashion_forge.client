@@ -7,3 +7,5 @@ export const setCurrentView = (value: string) => ({ type: Types.SET_CURRENT_VIEW
 export const setCurrentUser = (value: UserType | null) => ({ type: Types.SET_CURRENT_USER, value });
 
 export const setOpenModal = (value: boolean) => ({ type: Types.SET_OPEN_MODAL, value });
+
+export const setJob = (value: JobType) => ({ type: Types.SET_JOB, value });

@@ -64,6 +64,25 @@ export const newJob = (job: JobType, status?: string) => {
   };
 };
 
+export const editJob = (id: number, job: JobType, status?: string) => {
+  return async (dispatch: any) => {
+    dispatch(appActions.setIsLoading(true));
+    await server
+      .post(`${Urls.editJob}`, { ...job, status, id })
+      .then((response) => {
+        dispatch(appActions.setCurrentView("jobs"));
+        dispatch(appActions.setIsLoading(false));
+        dispatch(cleanFormNewJob());
+      })
+      .catch((error) =>
+        handleCatchGeneric(error, (formValidation: Partial<FormJobType>) => {
+          dispatch(mergeFormNewJob(formValidation));
+          dispatch(appActions.setIsLoading(false));
+        })
+      );
+  };
+};
+
 export const publishJob = (jobId: number) => {
   return async (dispatch: any) => {
     dispatch(appActions.setIsLoading(true));

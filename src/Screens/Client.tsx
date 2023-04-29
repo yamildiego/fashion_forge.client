@@ -9,6 +9,8 @@ import NewUserView from "../Components/User/NewUserView";
 import SignInUserView from "../Components/User/SignInUserView";
 import Jobs from "../Components/Client/Jobs";
 import NewJob from "../Components/Client/NewJob";
+import EditJob from "../Components/Client/EditJob";
+import View from "../Components/Client/View";
 
 import CustomAppBar from "../Components/Common/CustomAppBar";
 
@@ -43,6 +45,7 @@ class Client extends Component<ClientProps> {
         setCurrentView("main");
         break;
       case "newJob":
+      case "view":
         setCurrentView("jobs");
         break;
       default:
@@ -61,7 +64,6 @@ class Client extends Component<ClientProps> {
           user={`${user?.name ?? ""} ${user?.lastname ?? ""}`}
           handleOnClickBack={this.handleOnClickBack}
         />
-        {currentView}
         <Box sx={{ justifyContent: "center", display: "flex" }}>
           <Box maxWidth="sm" sx={{ padding: "0 10px", width: "100%" }}>
             {currentView === "main" && <MainUserView />}
@@ -69,6 +71,8 @@ class Client extends Component<ClientProps> {
             {currentView === "signInUser" && <SignInUserView userType="CLIENT" />}
             {currentView === "jobs" && <Jobs />}
             {currentView === "newJob" && <NewJob />}
+            {currentView === "editJob" && <EditJob />}
+            {currentView === "view" && <View />}
           </Box>
         </Box>
       </Container>

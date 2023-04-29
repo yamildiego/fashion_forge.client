@@ -6,6 +6,8 @@ import FormView from "../Common/FormView";
 
 import TypesOfClothing from "../../TypesOfClothing.json";
 
+import JobView from "../Common/JobView";
+
 import ModalQuote from "../ModalQuote";
 
 interface ViewProps {
@@ -45,34 +47,7 @@ const View = (props: ViewProps) => {
           <Grid item xs={6}>
             <TextField fullWidth label="Postal Code" disabled placeholder="Postal Code" value={job?.user?.postcode ?? ""} />
           </Grid>
-          <Grid item xs={12}>
-            Job details
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              disabled
-              id="type_of_clothing"
-              name="type_of_clothing"
-              label="Type of clothing"
-              fullWidth
-              value={TypesOfClothing[job.type_of_clothing]}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              disabled
-              id="description"
-              name="description"
-              label="Description"
-              fullWidth
-              multiline
-              rows={4}
-              value={job.description}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField disabled type="number" id="budget" name="budget" label="Budget" fullWidth value={job.budget} />
-          </Grid>
+          <JobView job={job} />
           {!wasQuoted && (
             <Grid item xs={12}>
               <ModalQuote job={job} />
@@ -87,7 +62,7 @@ const View = (props: ViewProps) => {
 const mapStateToProps = (state: StateType) => {
   return {
     user: state.appReducer.user,
-    job: state.makerReducer.job,
+    job: state.appReducer.job,
   };
 };
 

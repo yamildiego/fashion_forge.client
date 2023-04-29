@@ -3,7 +3,6 @@ import * as Types from "../Constants/Types";
 const initValidationType = { value: "", error: false, helperText: "" };
 
 const initialState = {
-  job: null,
   jobs: [],
   formQuote: {
     quote: initValidationType,
@@ -18,18 +17,14 @@ const initialState = {
 };
 
 type SetAllJobsAction = { type: typeof Types.SET_ALL_JOBS; value: JobType[] };
-type SetJobAction = { type: typeof Types.SET_JOB; value: JobType };
 type SetFormQuoteTypeAction = { type: typeof Types.SET_FORM_QUOTE; value: FormQuoteType };
 type MergeFormQuoteTypeAction = { type: typeof Types.MERGE_FORM_QUOTE; value: FormQuoteType };
 type SetFilterTypeAction = { type: typeof Types.SET_FILTER; value: FilterType };
 
-type JobReducerAction = SetAllJobsAction | SetJobAction | SetFormQuoteTypeAction | MergeFormQuoteTypeAction | SetFilterTypeAction;
+type JobReducerAction = SetAllJobsAction | SetFormQuoteTypeAction | MergeFormQuoteTypeAction | SetFilterTypeAction;
 
 export default function makerReducer(state = initialState, action: JobReducerAction) {
   switch (action.type) {
-    case Types.SET_JOB: {
-      return { ...state, job: action.value };
-    }
     case Types.SET_ALL_JOBS: {
       return { ...state, jobs: action.value };
     }

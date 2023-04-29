@@ -18,7 +18,6 @@ const MAX_LENGTH = 80;
 interface ListJobsProps {
   jobs: JobType[];
   user: UserType;
-  BORRAR: JobType;
   setJob: (view: JobType | null) => void;
   setCurrentView: (view: string) => void;
   setOpenModal: (value: boolean) => void;
@@ -127,13 +126,12 @@ const mapStateToProps = (state: StateType) => {
   return {
     user: state.appReducer.user,
     jobs: state.makerReducer.jobs,
-    BORRAR: state.makerReducer.job,
   };
 };
 
 const mapDispatchToProps: MyMapDispatchToProps = {
   setCurrentView: appActions.setCurrentView,
-  setJob: makerActions.setJob,
+  setJob: appActions.setJob,
   setOpenModal: appActions.setOpenModal,
   cleanFormQuote: makerActions.cleanFormQuote,
 };

@@ -187,7 +187,7 @@ const styles = {
 
 const mapStateToProps = (state: StateType) => {
   return {
-    job: state.makerReducer.job,
+    job: state.appReducer.job,
     formQuote: state.makerReducer.formQuote,
     openModal: state.appReducer.openModal,
   };

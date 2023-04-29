@@ -25,8 +25,6 @@ export const mergeFormQuote = (value: Partial<FormQuoteType>) => ({ type: Types.
 
 export const cleanFormQuote = () => (dispatch: any) => dispatch(setFormQuote(initFormQuote));
 
-export const setJob = (value: JobType) => ({ type: Types.SET_JOB, value });
-
 export const setAllJobs = (value: JobType[]) => ({ type: Types.SET_ALL_JOBS, value });
 
 export const setFilter = (value: FilterType) => ({ type: Types.SET_FILTER, value });
