@@ -77,3 +77,21 @@ export const signInUser = (email: string, password: string, userType: string) =>
       );
   };
 };
+
+export const signOutUser = () => {
+  return async (dispatch: any) => {
+    dispatch(appActions.setIsLoading(true));
+    await server
+      .post(`${Urls.signOutUser}`)
+      .then((response) => {
+        dispatch(makerActions.cleanFilter());
+        dispatch(appActions.setCurrentView("main"));
+        dispatch(appActions.setIsLoading(false));
+        dispatch(appActions.setCurrentUser(null));
+      })
+      .catch((error) => {
+        dispatch(appActions.setCurrentUser(null));
+        dispatch(appActions.setIsLoading(false));
+      });
+  };
+};

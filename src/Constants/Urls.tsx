@@ -6,6 +6,7 @@ const Urls = {
   // User
   newUser: baseUrl + "/user",
   signInUser: baseUrl + "/user/signInUser",
+  signOutUser: baseUrl + "/user/signOutUser",
 
   // Job
   newJob: baseUrl + "/job",
