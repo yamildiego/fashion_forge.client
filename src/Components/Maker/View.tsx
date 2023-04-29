@@ -33,7 +33,7 @@ const View = (props: ViewProps) => {
 
   return (
     <>
-      <FormView title="Job infotmation" handleSubmit={() => {}}>
+      <FormView title="Job information" handleSubmit={() => {}}>
         <Grid container spacing={2} sx={{ mb: 5 }}>
           <Grid item xs={12}>
             User details
