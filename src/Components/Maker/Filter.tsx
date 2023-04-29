@@ -84,8 +84,10 @@ const Filter = (props: FilterProps) => {
                   id="clothing-select"
                 >
                   <MenuItem value={"All"}>All</MenuItem>
-                  {Object.keys(TypesOfClothing).map((cloth: string) => (
-                    <MenuItem value={cloth}>{TypesOfClothing[cloth as TypeOfClothing]}</MenuItem>
+                  {Object.keys(TypesOfClothing).map((cloth: string, index: number) => (
+                    <MenuItem key={`menu_item_clothing_${index}`} value={cloth}>
+                      {TypesOfClothing[cloth as TypeOfClothing]}
+                    </MenuItem>
                   ))}
                 </Select>
               </FormControl>
@@ -104,8 +106,10 @@ const Filter = (props: FilterProps) => {
                   id="state-select"
                 >
                   <MenuItem value={"All"}>All</MenuItem>
-                  {Object.keys(States).map((state: string) => (
-                    <MenuItem value={state}>{States[state as States]}</MenuItem>
+                  {Object.keys(States).map((state: string, index: number) => (
+                    <MenuItem key={`menu_item_state_${index}`} value={state}>
+                      {States[state as States]}
+                    </MenuItem>
                   ))}
                 </Select>
               </FormControl>
