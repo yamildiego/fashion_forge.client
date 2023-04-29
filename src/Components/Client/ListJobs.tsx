@@ -35,10 +35,12 @@ const ListJobs = (props: ListJobsProps) => {
     props.setJob(job);
 
     if (job.status === "DRAFT") {
+      let valueBudget = job.budget === null ? "" : job.budget.toString();
+
       let formJob = {
         type_of_clothing: { value: job.type_of_clothing, error: false, helperText: "" },
         description: { value: job.description, error: false, helperText: "" },
-        budget: { value: String(job.budget), error: false, helperText: "" },
+        budget: { value: valueBudget, error: false, helperText: "" },
       };
 
       props.setFormNewJob(formJob);
