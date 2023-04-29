@@ -1,5 +1,6 @@
 const validations = {
   required: "The %F field is required.",
+  number: "The %F field must be numeric.",
   email: "The %F field must contain a valid email address.",
   unique: "The %F is already registered.",
   wrongData: "Invalid email or password. Please try again.",
