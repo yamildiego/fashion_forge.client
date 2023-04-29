@@ -55,19 +55,21 @@ class Maker extends Component<MakerProps> {
     const { currentView, user } = this.props;
 
     return (
-      <Container maxWidth="sm" sx={{ display: "flex", flexDirection: "column", flex: 1, p: 0 }}>
+      <Container sx={{ display: "flex", flexDirection: "column", flex: 1, p: 0 }}>
         <CustomAppBar
           currentView={currentView}
           title="Maker dashboard"
           user={`${user?.business_name ?? ""}`}
           handleOnClickBack={this.handleOnClickBack}
         />
-        <Box sx={{ padding: "0 10px" }}>
-          {currentView === "main" && <MainUserView />}
-          {currentView === "newUser" && <NewUserView title="Become Our Partner" userType="MAKER" />}
-          {currentView === "signInUser" && <SignInUserView userType="MAKER" />}
-          {currentView === "jobs" && <Jobs />}
-          {currentView === "view" && <View />}
+        <Box sx={{ justifyContent: "center", display: "flex" }}>
+          <Box maxWidth="sm" sx={{ padding: "0 10px" }}>
+            {currentView === "main" && <MainUserView />}
+            {currentView === "newUser" && <NewUserView title="Become Our Partner" userType="MAKER" />}
+            {currentView === "signInUser" && <SignInUserView userType="MAKER" />}
+            {currentView === "jobs" && <Jobs />}
+            {currentView === "view" && <View />}
+          </Box>
         </Box>
       </Container>
     );

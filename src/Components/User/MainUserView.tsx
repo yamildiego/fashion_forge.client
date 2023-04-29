@@ -28,7 +28,7 @@ const MainUserView = (props: MainUserViewProps) => {
         Create Account
       </Button>
       <Button sx={styles.btn} onClick={handleSignInUser}>
-        Sign in instead
+        Sign in
       </Button>
     </Stack>
   );

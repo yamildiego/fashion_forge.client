@@ -49,7 +49,7 @@ const SignInUserView = (props: SignInUserViewProps) => {
   };
 
   return (
-    <FormView title="Sign in" submitText="Enter" handleSubmit={handleSubmit}>
+    <FormView title="Sign in" submitText="Sign in" handleSubmit={handleSubmit}>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <TextField

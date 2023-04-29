@@ -53,19 +53,21 @@ class Client extends Component<ClientProps> {
     const { currentView, user } = this.props;
 
     return (
-      <Container maxWidth="sm" sx={{ display: "flex", flexDirection: "column", flex: 1, p: 0 }}>
+      <Container sx={{ display: "flex", flexDirection: "column", flex: 1, p: 0 }}>
         <CustomAppBar
           currentView={currentView}
           title="Client dashboard"
           user={`${user?.name ?? ""} ${user?.lastname ?? ""}`}
           handleOnClickBack={this.handleOnClickBack}
         />
-        <Box sx={{ padding: "0 10px" }}>
-          {currentView === "main" && <MainUserView />}
-          {currentView === "newUser" && <NewUserView title="Create your Meyd.it Account" userType="CLIENT" />}
-          {currentView === "signInUser" && <SignInUserView userType="CLIENT" />}
-          {currentView === "jobs" && <Jobs />}
-          {currentView === "newJob" && <NewJob />}
+        <Box sx={{ justifyContent: "center", display: "flex" }}>
+          <Box maxWidth="sm" sx={{ padding: "0 10px" }}>
+            {currentView === "main" && <MainUserView />}
+            {currentView === "newUser" && <NewUserView title="Create your Meyd.it Account" userType="CLIENT" />}
+            {currentView === "signInUser" && <SignInUserView userType="CLIENT" />}
+            {currentView === "jobs" && <Jobs />}
+            {currentView === "newJob" && <NewJob />}
+          </Box>
         </Box>
       </Container>
     );

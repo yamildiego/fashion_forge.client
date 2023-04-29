@@ -13,17 +13,19 @@ interface HomeProps {
 const Home = (props: HomeProps) => {
   const { navigate } = props;
   return (
-    <Container maxWidth="sm" sx={{ display: "flex", flexDirection: "column", flex: 1, p: 0 }}>
+    <Container sx={{ display: "flex", flexDirection: "column", flex: 1, p: 0 }}>
       <CustomAppBar title="Test Meyd.it Internship" />
-      <Box sx={styles.container}>
-        <Stack spacing={2} direction="column">
-          <Button variant="contained" onClick={() => navigate("/client")}>
-            Entry as Client
-          </Button>
-          <Button variant="contained" onClick={() => navigate("/maker")}>
-            Entry as Maker
-          </Button>
-        </Stack>
+      <Box sx={{ justifyContent: "center", display: "flex" }}>
+        <Box maxWidth="sm" sx={styles.container}>
+          <Stack spacing={2} direction="column">
+            <Button variant="contained" onClick={() => navigate("/client")}>
+              Entry as Client
+            </Button>
+            <Button variant="contained" onClick={() => navigate("/maker")}>
+              Entry as Maker
+            </Button>
+          </Stack>
+        </Box>
       </Box>
     </Container>
   );
