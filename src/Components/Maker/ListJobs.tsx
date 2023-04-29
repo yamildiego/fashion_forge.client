@@ -5,7 +5,7 @@ import { Box, Stack, Grid, Button, Card, CardContent, Typography, Dialog, Dialog
 
 import withParamsAndNavigate from "../../Hooks/withParamsAndNavigate";
 
-import Status from "../Status";
+import Status from "../Common/Status";
 import ModalQuote from "../ModalQuote";
 
 import TypesOfClothing from "../../TypesOfClothing.json";
@@ -46,10 +46,7 @@ const ListJobs = (props: ListJobsProps) => {
     <>
       {props.jobs.map((job: JobType, index: number) => {
         const location = job.user ? `${job?.user?.address} ${job?.user?.state} ${job?.user?.postcode}` : "-";
-        const hasQuoted = job.quotes && job.quotes.length > 0;
-        const wasQuoted = job.quotes && job.quotes.some((x) => x.user_id === user.id);
-
-        const status = hasQuoted && wasQuoted ? "quoted" : hasQuoted ? "with_quotes" : "new";
+        const wasQuoted: boolean = job.quotes ? job.quotes.length > 0 && job.quotes.some((x) => x.user_id === user.id) : false;
 
         return (
           <Card key={`key_maker_${index}`} sx={{ width: "100%", boxShadow: "1px 1px 5px #ccc", position: "relative" }}>
@@ -102,7 +99,7 @@ const ListJobs = (props: ListJobsProps) => {
             <Box sx={styles.date_created}>{`Datetime created: ${moment(new Date(job.created_at).getTime()).format(
               "HH:mm DD-MM-YYYY"
             )}`}</Box>
-            <Status status={status} len={job?.quotes?.length ?? 0} />
+            <Status status={job.status as StatusType} showLabel={true} wasQuoted={wasQuoted} />
           </Card>
         );
       })}

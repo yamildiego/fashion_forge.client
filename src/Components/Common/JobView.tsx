@@ -6,14 +6,19 @@ import Status from "../Common/Status";
 
 interface JobViewProps {
   job: JobType;
+  user?: UserType;
 }
 
 const JobView = (props: JobViewProps) => {
-  const { job } = props;
+  const { job, user = null } = props;
+
+  let wasQuoted: boolean = false;
+  if (user !== null) wasQuoted = job.quotes ? job.quotes.length > 0 && job.quotes.some((x) => x.user_id === user.id) : false;
+
   return (
     <>
       <Grid item xs={12} sx={{ position: "relative" }}>
-        Job details <Status status={job.status as StatusType} />
+        Job details <Status status={job.status as StatusType} showLabel={true} wasQuoted={wasQuoted} />
       </Grid>
       <Grid item xs={12}>
         <TextField

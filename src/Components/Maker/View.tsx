@@ -10,14 +10,26 @@ import JobView from "../Common/JobView";
 
 import ModalQuote from "../ModalQuote";
 
+import * as appActions from "../../Actions/appActions";
+import * as makerActions from "../../Actions/makerActions";
+
 interface ViewProps {
   job: JobType;
   user: UserType;
+  setJob: (view: JobType | null) => void;
+  setOpenModal: (value: boolean) => void;
+  cleanFormQuote: () => void;
 }
 
 const View = (props: ViewProps) => {
-  const { job, user } = props;
-  const wasQuoted = job.quotes && job.quotes.some((x) => x.user_id === user.id);
+  const { job, user, cleanFormQuote, setOpenModal, setJob } = props;
+  const wasQuoted: boolean = job.quotes ? job.quotes.length > 0 && job.quotes.some((x) => x.user_id === user.id) : false;
+
+  const handleOpenModal = (job: JobType) => {
+    cleanFormQuote();
+    setJob(job);
+    setOpenModal(true);
+  };
 
   return (
     <>
@@ -47,10 +59,10 @@ const View = (props: ViewProps) => {
           <Grid item xs={6}>
             <TextField fullWidth label="Postal Code" disabled placeholder="Postal Code" value={job?.user?.postcode ?? ""} />
           </Grid>
-          <JobView job={job} />
+          <JobView job={job} user={user} />
           {!wasQuoted && (
             <Grid item xs={12}>
-              <ModalQuote job={job} />
+              <ModalQuote handleOpenModal={() => handleOpenModal(job)} />
             </Grid>
           )}
         </Grid>
@@ -66,6 +78,10 @@ const mapStateToProps = (state: StateType) => {
   };
 };
 
-const mapDispatchToProps: MyMapDispatchToProps = {};
+const mapDispatchToProps: MyMapDispatchToProps = {
+  setJob: appActions.setJob,
+  setOpenModal: appActions.setOpenModal,
+  cleanFormQuote: makerActions.cleanFormQuote,
+};
 
 export default withParamsAndNavigate(View, mapStateToProps, mapDispatchToProps);
