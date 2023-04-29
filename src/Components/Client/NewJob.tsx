@@ -4,6 +4,7 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 import withParamsAndNavigate from "../../Hooks/withParamsAndNavigate";
 import genericValidation from "../../Functions/genericValidation";
+import * as appActions from "../../Actions/appActions";
 import * as clientActions from "../../Actions/clientActions";
 
 import FormView from "../Common/FormView";
@@ -13,20 +14,20 @@ import TypesOfClothing from "../../TypesOfClothing.json";
 interface JobsProps {
   formNewJob: FormJobType;
   setFormNewJob: (view: FormJobType) => void;
-  newJob: (job: JobType) => void;
+  newJob: (job: JobType, status?: string) => void;
+  setCurrentView: (view: string) => void;
 }
 
 const Jobs = (props: JobsProps) => {
   const [submitted, setSubmitted] = useState<boolean>(false);
-  const { formNewJob } = props;
+  const { formNewJob, setCurrentView } = props;
 
   const handleOnChange = (value: FormJobType) => {
     if (submitted) props.setFormNewJob(runValidation(value));
     else props.setFormNewJob(value);
   };
 
-  const handleSubmit = (event: React.FormEvent<EventTarget>) => {
-    event.preventDefault();
+  const handleSaveDraft = () => {
     setSubmitted(true);
     let formValidated = runValidation(formNewJob);
     props.setFormNewJob(formValidated);
@@ -46,8 +47,27 @@ const Jobs = (props: JobsProps) => {
     return formValidated;
   };
 
+  const handleSaveAndPublish = (event: React.FormEvent<EventTarget>) => {
+    event.preventDefault();
+    setSubmitted(true);
+    let formValidated = runValidation(formNewJob);
+    props.setFormNewJob(formValidated);
+    let hasError = Object.values(formValidated).some((field) => field.error);
+    let jobFormatted = Object.entries(formValidated).reduce((acc, [key, value]) => ({ ...acc, [key]: value.value }), {} as JobType);
+
+    if (!hasError) props.newJob(jobFormatted, "PUBLISHED");
+  };
+
   return (
-    <FormView title="New job" submitText="Create job" handleSubmit={handleSubmit}>
+    <FormView
+      title="New job"
+      submitText="Save and publish"
+      handleSubmit={handleSaveAndPublish}
+      firstExtraBtnText="Save as draft"
+      handleActionFirstExtraBtn={handleSaveDraft}
+      secondExtraBtnText="Cancel"
+      handleActionSecondExtraBtn={() => setCurrentView("jobs")}
+    >
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <FormControl fullWidth required>
@@ -63,8 +83,12 @@ const Jobs = (props: JobsProps) => {
               labelId="clothing-select-label"
               id="clothing-select"
             >
-              {Object.keys(TypesOfClothing).map((cloth: string) => {
-                return <MenuItem value={cloth}>{TypesOfClothing[cloth as TypeOfClothing]}</MenuItem>;
+              {Object.keys(TypesOfClothing).map((cloth: string, index: number) => {
+                return (
+                  <MenuItem key={`menu_item_cloth_${index}`} value={cloth}>
+                    {TypesOfClothing[cloth as TypeOfClothing]}
+                  </MenuItem>
+                );
               })}
             </Select>
             {submitted && formNewJob.type_of_clothing.error && (
@@ -104,9 +128,6 @@ const Jobs = (props: JobsProps) => {
             helperText={submitted && formNewJob.budget.error ? formNewJob.budget.helperText : ""}
           />
         </Grid>
-        <Grid item xs={12}>
-          {/* <UploadImages /> */}
-        </Grid>
       </Grid>
     </FormView>
   );
@@ -121,6 +142,7 @@ const mapStateToProps = (state: StateType) => {
 const mapDispatchToProps: MyMapDispatchToProps = {
   setFormNewJob: clientActions.setFormNewJob,
   newJob: clientActions.newJob,
+  setCurrentView: appActions.setCurrentView,
 };
 
 export default withParamsAndNavigate(Jobs, mapStateToProps, mapDispatchToProps);

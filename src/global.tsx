@@ -91,7 +91,7 @@ declare global {
     type_of_clothing: TypeOfClothing;
     description: string;
     budget: number;
-    quote?: number;
+    status: string;
     quotes?: QuoteType[];
     user?: UserType;
     user_id?: number;
@@ -101,6 +101,7 @@ declare global {
   type States = "VIC" | "QLD" | "SA" | "NT" | "WA" | "TAS" | "NSW" | "ACT";
   type TypeOfClothing = "t_shirt" | "jeans" | "swimsuit" | "cocktail_dress" | "tracksuit" | "leather_jacket" | "business_suit" | "skirt";
   type ErrorIdType = "required" | "email" | "email" | "unique" | "wrongData" | "maxLength" | "minLength" | "matchPassword";
+  type StatusType = "DRAFT" | "PUBLISHED" | "ASSINGNED" | "SHIPPED" | "FINISHED";
 
   export type MyMapDispatchToProps<TDispatchProps = {}, TOwnProps = {}> = MapDispatchToProps<TDispatchProps, TOwnProps>;
 }

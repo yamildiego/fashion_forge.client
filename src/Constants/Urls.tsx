@@ -11,6 +11,7 @@ const Urls = {
   // Job
   newJob: baseUrl + "/job",
   getJobs: baseUrl + "/jobs",
+  publishJob: baseUrl + "/job/publishJob",
 
   // Maker
   jobsByFilter: baseUrl + "/jobsByFilter",

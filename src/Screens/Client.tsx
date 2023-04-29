@@ -26,6 +26,7 @@ interface ClientProps {
 class Client extends Component<ClientProps> {
   componentDidUpdate(oldProps: ClientProps) {
     if (oldProps.currentView !== this.props.currentView && this.props.currentView === "jobs") this.props.getJobs();
+    if (oldProps.currentView !== this.props.currentView && this.props.currentView === "reload") this.props.setCurrentView("jobs");
   }
 
   handleOnClickBack = () => {
@@ -60,8 +61,9 @@ class Client extends Component<ClientProps> {
           user={`${user?.name ?? ""} ${user?.lastname ?? ""}`}
           handleOnClickBack={this.handleOnClickBack}
         />
+        {currentView}
         <Box sx={{ justifyContent: "center", display: "flex" }}>
-          <Box maxWidth="sm" sx={{ padding: "0 10px" }}>
+          <Box maxWidth="sm" sx={{ padding: "0 10px", width: "100%" }}>
             {currentView === "main" && <MainUserView />}
             {currentView === "newUser" && <NewUserView title="Create your Meyd.it Account" userType="CLIENT" />}
             {currentView === "signInUser" && <SignInUserView userType="CLIENT" />}
