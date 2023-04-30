@@ -13,6 +13,7 @@ const Urls = {
   editJob: baseUrl + "/job/editJob",
   getJobs: baseUrl + "/jobs",
   publishJob: baseUrl + "/job/publishJob",
+  uploadImages: baseUrl + "/job/uploadImages",
 
   // Maker
   jobsByFilter: baseUrl + "/jobsByFilter",

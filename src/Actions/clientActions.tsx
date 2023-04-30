@@ -3,6 +3,7 @@ import * as Types from "../Constants/Types";
 import Urls from "../Constants/Urls";
 
 import * as appActions from "./appActions";
+import * as imageActions from "./imageActions";
 
 import handleCatchGeneric from "../Functions/handleCatchGeneric";
 
@@ -19,14 +20,12 @@ export const setFormNewJob = (value: FormJobType) => ({ type: Types.SET_FORM_NEW
 
 export const mergeFormNewJob = (value: Partial<FormJobType>) => ({ type: Types.MERGE_FORM_NEW_JOB, value });
 
-export const cleanFormNewJob = () => (dispatch: any) =>
-  dispatch(
-    setFormNewJob({
-      type_of_clothing: initValidationType,
-      description: initValidationType,
-      budget: initValidationType,
-    })
-  );
+export const cleanFormNewJob = () => {
+  return async (dispatch: any) => {
+    dispatch(setFormNewJob({ type_of_clothing: initValidationType, description: initValidationType, budget: initValidationType }));
+    dispatch(imageActions.cleanImages());
+  };
+};
 
 export const setJobs = (value: JobType[]) => ({ type: Types.SET_JOBS, value });
 
@@ -45,11 +44,11 @@ export const getJobs = () => {
   };
 };
 
-export const newJob = (job: JobType, status?: string) => {
+export const newJob = (job: JobType, images: ImageType[], status?: string) => {
   return async (dispatch: any) => {
     dispatch(appActions.setIsLoading(true));
     await server
-      .post(`${Urls.newJob}`, { ...job, status })
+      .post(`${Urls.newJob}`, { ...job, images, status })
       .then((response) => {
         dispatch(appActions.setCurrentView("jobs"));
         dispatch(appActions.setIsLoading(false));
@@ -64,11 +63,11 @@ export const newJob = (job: JobType, status?: string) => {
   };
 };
 
-export const editJob = (id: number, job: JobType, status?: string) => {
+export const editJob = (id: number, job: JobType, images: ImageType[], status?: string) => {
   return async (dispatch: any) => {
     dispatch(appActions.setIsLoading(true));
     await server
-      .post(`${Urls.editJob}`, { ...job, status, id })
+      .post(`${Urls.editJob}`, { ...job, status, images, id })
       .then((response) => {
         dispatch(appActions.setCurrentView("jobs"));
         dispatch(appActions.setIsLoading(false));

@@ -11,6 +11,7 @@ import moment from "moment";
 
 import * as clientActions from "../../Actions/clientActions";
 import * as appActions from "../../Actions/appActions";
+import * as imageActions from "../../Actions/imageActions";
 
 interface ListJobsProps {
   jobs: JobType[];
@@ -18,6 +19,7 @@ interface ListJobsProps {
   setCurrentView: (view: string) => void;
   publishJob: (jobId: number) => void;
   setFormNewJob: (view: FormJobType) => void;
+  setImages: (images: ImageType[]) => void;
 }
 
 const MAX_LENGTH = 80;
@@ -43,6 +45,7 @@ const ListJobs = (props: ListJobsProps) => {
         budget: { value: valueBudget, error: false, helperText: "" },
       };
 
+      props.setImages(job.images ? job.images : []);
       props.setFormNewJob(formJob);
       props.setCurrentView("editJob");
     } else {
@@ -88,14 +91,17 @@ const ListJobs = (props: ListJobsProps) => {
                 </Grid>
                 <Grid item xs={4} sx={{ justifyContent: "center", alignItems: "flex-end", display: "flex", pb: 1 }}>
                   <Stack direction={"row"} spacing={2}>
-                    <Button
-                      sx={{ ...(job.status === "DRAFT" ? {} : { opacity: 0 }) }}
-                      onClick={() => handlePublish(job)}
-                      variant="contained"
-                      color="primary"
-                    >
-                      Publish
-                    </Button>
+                    {job?.quotes ? job.quotes.length : 0}
+                    {job.status === "PUBLISHED" && job.quotes && job.quotes.length > 0 && (
+                      <Button onClick={() => handlePublish(job)} variant="contained" color="primary">
+                        Quotes
+                      </Button>
+                    )}
+                    {job.status === "DRAFT" && (
+                      <Button onClick={() => handlePublish(job)} variant="contained" color="primary">
+                        Publish
+                      </Button>
+                    )}
                     <Button onClick={() => handleOnClickAction(job)} variant="contained" color="info">
                       {job.status === "DRAFT" ? "Edit" : "View"}
                     </Button>
@@ -136,6 +142,7 @@ const mapDispatchToProps: MyMapDispatchToProps = {
   publishJob: clientActions.publishJob,
   setFormNewJob: clientActions.setFormNewJob,
   setJob: appActions.setJob,
+  setImages: imageActions.setImages,
 };
 
 export default withParamsAndNavigate(ListJobs, mapStateToProps, mapDispatchToProps);

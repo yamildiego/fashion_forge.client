@@ -19,3 +19,8 @@ export const SET_ALL_JOBS = "SET_ALL_JOBS";
 export const SET_FORM_QUOTE = "SET_FORM_QUOTE";
 export const MERGE_FORM_QUOTE = "MERGE_FORM_QUOTE";
 export const SET_FILTER = "SET_FILTER";
+
+// Images
+export const SET_IMAGES = "SET_IMAGES";
+export const ADD_IMAGES = "ADD_IMAGES";
+export const REMOVE_IMAGE = "REMOVE_IMAGE";

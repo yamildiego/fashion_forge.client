@@ -8,19 +8,22 @@ import * as appActions from "../../Actions/appActions";
 import * as clientActions from "../../Actions/clientActions";
 
 import FormView from "../Common/FormView";
+import UploadImages from "../UploadImages";
 
 import TypesOfClothing from "../../TypesOfClothing.json";
 
 interface JobsProps {
+  images: ImageType[];
   formNewJob: FormJobType;
   setFormNewJob: (view: FormJobType) => void;
-  newJob: (job: JobType, status?: string) => void;
+  cleanFormNewJob: () => void;
+  newJob: (job: JobType, images: ImageType[], status?: string) => void;
   setCurrentView: (view: string) => void;
 }
 
 const Jobs = (props: JobsProps) => {
   const [submitted, setSubmitted] = useState<boolean>(false);
-  const { formNewJob, setCurrentView } = props;
+  const { images, formNewJob, setCurrentView, cleanFormNewJob } = props;
 
   const handleOnChange = (value: FormJobType) => {
     if (submitted) props.setFormNewJob(runValidation(value));
@@ -34,7 +37,7 @@ const Jobs = (props: JobsProps) => {
     let hasError = Object.values(formValidated).some((field) => field.error);
     let jobFormatted = Object.entries(formValidated).reduce((acc, [key, value]) => ({ ...acc, [key]: value.value }), {} as JobType);
 
-    if (!hasError) props.newJob(jobFormatted);
+    if (!hasError) props.newJob(jobFormatted, images);
   };
 
   const runValidation = (formNew: FormJobType) => {
@@ -55,7 +58,12 @@ const Jobs = (props: JobsProps) => {
     let hasError = Object.values(formValidated).some((field) => field.error);
     let jobFormatted = Object.entries(formValidated).reduce((acc, [key, value]) => ({ ...acc, [key]: value.value }), {} as JobType);
 
-    if (!hasError) props.newJob(jobFormatted, "PUBLISHED");
+    if (!hasError) props.newJob(jobFormatted, images, "PUBLISHED");
+  };
+
+  const handleCancel = () => {
+    cleanFormNewJob();
+    setCurrentView("jobs");
   };
 
   return (
@@ -66,7 +74,7 @@ const Jobs = (props: JobsProps) => {
       firstExtraBtnText="Save as draft"
       handleActionFirstExtraBtn={handleSaveDraft}
       secondExtraBtnText="Cancel"
-      handleActionSecondExtraBtn={() => setCurrentView("jobs")}
+      handleActionSecondExtraBtn={handleCancel}
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>
@@ -129,6 +137,9 @@ const Jobs = (props: JobsProps) => {
           />
         </Grid>
       </Grid>
+      <Grid item xs={12}>
+        <UploadImages />
+      </Grid>
     </FormView>
   );
 };
@@ -136,11 +147,13 @@ const Jobs = (props: JobsProps) => {
 const mapStateToProps = (state: StateType) => {
   return {
     formNewJob: state.clientReducer.formNewJob,
+    images: state.imageReducer.images,
   };
 };
 
 const mapDispatchToProps: MyMapDispatchToProps = {
   setFormNewJob: clientActions.setFormNewJob,
+  cleanFormNewJob: clientActions.cleanFormNewJob,
   newJob: clientActions.newJob,
   setCurrentView: appActions.setCurrentView,
 };

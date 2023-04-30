@@ -25,6 +25,9 @@ declare global {
       formQuote: FormQuoteType;
       filter: FilterType;
     };
+    imageReducer: {
+      images: ImageType[];
+    };
   };
 
   type FilterType = {
@@ -91,11 +94,23 @@ declare global {
     type_of_clothing: TypeOfClothing;
     description: string;
     budget: number;
+    images?: ImageType[];
     status: string;
     quotes?: QuoteType[];
     user?: UserType;
     user_id?: number;
     created_at: string;
+  };
+
+  type ImageType = {
+    index?: number;
+    id?: number;
+    error?: string;
+    lastModified: number;
+    path: string;
+    name: string;
+    size: string;
+    type: string;
   };
 
   type States = "VIC" | "QLD" | "SA" | "NT" | "WA" | "TAS" | "NSW" | "ACT";

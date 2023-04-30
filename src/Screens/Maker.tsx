@@ -15,6 +15,8 @@ import CustomAppBar from "../Components/Common/CustomAppBar";
 import * as appActions from "../Actions/appActions";
 import * as makerActions from "../Actions/makerActions";
 
+import UploadImages from "../Components/UploadImages";
+
 interface MakerProps {
   user: UserType;
   currentView: string;
