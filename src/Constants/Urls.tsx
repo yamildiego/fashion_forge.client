@@ -5,10 +5,12 @@ const Urls = {
 
   // User
   newUser: baseUrl + "/user",
+  getCurrentUser: baseUrl + "/user",
   signInUser: baseUrl + "/user/signInUser",
   signOutUser: baseUrl + "/user/signOutUser",
 
   // Job
+  getJobById: baseUrl + "/job",
   newJob: baseUrl + "/job",
   editJob: baseUrl + "/job/editJob",
   getJobs: baseUrl + "/jobs",

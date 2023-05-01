@@ -4,7 +4,7 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 import withParamsAndNavigate from "../../Hooks/withParamsAndNavigate";
 import genericValidation from "../../Functions/genericValidation";
-import * as appActions from "../../Actions/appActions";
+
 import * as clientActions from "../../Actions/clientActions";
 
 import FormView from "../Common/FormView";
@@ -19,12 +19,12 @@ interface JobsProps {
   setFormNewJob: (view: FormJobType) => void;
   cleanFormNewJob: () => void;
   editJob: (id: number, job: JobType, images: ImageType[], status?: string) => void;
-  setCurrentView: (view: string) => void;
+  navigate: NavigateFunction;
 }
 
 const Jobs = (props: JobsProps) => {
   const [submitted, setSubmitted] = useState<boolean>(false);
-  const { job, images, formNewJob, setCurrentView, cleanFormNewJob } = props;
+  const { job, images, formNewJob, cleanFormNewJob, navigate } = props;
 
   const handleOnChange = (value: FormJobType) => {
     if (submitted) props.setFormNewJob(runValidation(value));
@@ -64,7 +64,7 @@ const Jobs = (props: JobsProps) => {
 
   const handleCancel = () => {
     cleanFormNewJob();
-    setCurrentView("jobs");
+    navigate("/client/home");
   };
 
   return (
@@ -157,7 +157,6 @@ const mapDispatchToProps: MyMapDispatchToProps = {
   setFormNewJob: clientActions.setFormNewJob,
   cleanFormNewJob: clientActions.cleanFormNewJob,
   editJob: clientActions.editJob,
-  setCurrentView: appActions.setCurrentView,
 };
 
 export default withParamsAndNavigate(Jobs, mapStateToProps, mapDispatchToProps);

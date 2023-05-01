@@ -19,22 +19,19 @@ interface ListJobsProps {
   jobs: JobType[];
   user: UserType;
   setJob: (view: JobType | null) => void;
-  setCurrentView: (view: string) => void;
   setOpenModal: (value: boolean) => void;
   cleanFormQuote: () => void;
+  navigate: NavigateFunction;
 }
 
 const ListJobs = (props: ListJobsProps) => {
-  const { user, cleanFormQuote, setOpenModal } = props;
+  const { navigate, user, cleanFormQuote, setOpenModal } = props;
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const handleOnClickView = (job: JobType) => {
-    props.setJob(job);
-    props.setCurrentView("view");
-  };
+  const handleOnClickView = (job: JobType) => navigate(`/maker/viewJob/${job.id}`);
 
   const handleOpenModal = (job: JobType) => {
     cleanFormQuote();
@@ -127,7 +124,6 @@ const mapStateToProps = (state: StateType) => {
 };
 
 const mapDispatchToProps: MyMapDispatchToProps = {
-  setCurrentView: appActions.setCurrentView,
   setJob: appActions.setJob,
   setOpenModal: appActions.setOpenModal,
   cleanFormQuote: makerActions.cleanFormQuote,

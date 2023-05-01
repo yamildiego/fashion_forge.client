@@ -19,28 +19,27 @@ import IconButton from "@mui/material/IconButton";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
 import * as makerActions from "../../Actions/makerActions";
-import * as appActions from "../../Actions/appActions";
 
 interface FilterProps {
   filter: FilterType;
   setFilter: (value: FilterType) => void;
   cleanFilter: () => void;
-  setCurrentView: (view: string) => void;
+  getJobsByFilter: (filter: FilterType) => void;
 }
 
 const Filter = (props: FilterProps) => {
-  const { filter, setFilter, cleanFilter, setCurrentView } = props;
+  const { filter, setFilter, cleanFilter, getJobsByFilter } = props;
   const [expanded, setExpanded] = useState(true);
   const [postcodeChanged, setPostcodeChanged] = useState(false);
 
   const handleOnChange = (filter: FilterType) => {
     setFilter(filter);
-    setCurrentView("reload");
+    getJobsByFilter(filter);
   };
 
   const handleCleanFilter = () => {
     cleanFilter();
-    setCurrentView("reload");
+    getJobsByFilter(filter);
   };
 
   return (
@@ -127,7 +126,7 @@ const Filter = (props: FilterProps) => {
             </Grid>
             {postcodeChanged && (
               <Grid item xs={12}>
-                <Button onClick={() => setCurrentView("reload")}> Filter</Button>
+                <Button onClick={() => handleOnChange(filter)}> Filter</Button>
               </Grid>
             )}
           </Grid>
@@ -146,7 +145,7 @@ const mapStateToProps = (state: StateType) => {
 const mapDispatchToProps: MyMapDispatchToProps = {
   setFilter: makerActions.setFilter,
   cleanFilter: makerActions.cleanFilter,
-  setCurrentView: appActions.setCurrentView,
+  getJobsByFilter: makerActions.getJobsByFilter,
 };
 
 export default withParamsAndNavigate(Filter, mapStateToProps, mapDispatchToProps);

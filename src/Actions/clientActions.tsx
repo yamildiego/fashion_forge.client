@@ -50,9 +50,10 @@ export const newJob = (job: JobType, images: ImageType[], status?: string) => {
     await server
       .post(`${Urls.newJob}`, { ...job, images, status })
       .then((response) => {
-        dispatch(appActions.setCurrentView("jobs"));
-        dispatch(appActions.setIsLoading(false));
+        dispatch(getJobs());
         dispatch(cleanFormNewJob());
+        dispatch(appActions.setIsLoading(false));
+        dispatch(appActions.setJob(null));
       })
       .catch((error) =>
         handleCatchGeneric(error, dispatch, (formValidation: Partial<FormJobType>) => {
@@ -69,9 +70,9 @@ export const editJob = (id: number, job: JobType, images: ImageType[], status?: 
     await server
       .post(`${Urls.editJob}`, { ...job, status, images, id })
       .then((response) => {
-        dispatch(appActions.setCurrentView("jobs"));
-        dispatch(appActions.setIsLoading(false));
         dispatch(cleanFormNewJob());
+        dispatch(appActions.setIsLoading(false));
+        dispatch(appActions.setJob(null));
       })
       .catch((error) =>
         handleCatchGeneric(error, dispatch, (formValidation: Partial<FormJobType>) => {
@@ -82,13 +83,39 @@ export const editJob = (id: number, job: JobType, images: ImageType[], status?: 
   };
 };
 
+export const getJobById = (id: number) => {
+  return async (dispatch: any) => {
+    dispatch(appActions.setIsLoading(true));
+    await server
+      .get(`${Urls.getJobById}/${id}`)
+      .then((response) => {
+        console.log(response);
+        const job = response.data;
+        dispatch(appActions.setJob(job));
+
+        let valueBudget = job.budget === null ? "" : job.budget.toString();
+
+        let formJob = {
+          type_of_clothing: { value: job.type_of_clothing, error: false, helperText: "" },
+          description: { value: job.description, error: false, helperText: "" },
+          budget: { value: valueBudget, error: false, helperText: "" },
+        };
+
+        dispatch(setFormNewJob(formJob));
+        dispatch(imageActions.setImages(job.images ? job.images : []));
+        dispatch(appActions.setIsLoading(false));
+      })
+      .catch((error) => handleCatchGeneric(error, dispatch));
+  };
+};
+
 export const publishJob = (jobId: number) => {
   return async (dispatch: any) => {
     dispatch(appActions.setIsLoading(true));
     await server
       .post(`${Urls.publishJob}`, { job_id: jobId })
       .then((response) => {
-        dispatch(appActions.setCurrentView("reload"));
+        dispatch(getJobs());
         dispatch(appActions.setIsLoading(false));
       })
       .catch((error) => handleCatchGeneric(error, dispatch));

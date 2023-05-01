@@ -2,25 +2,16 @@ import { Stack, Button } from "@mui/material";
 
 import withParamsAndNavigate from "../../Hooks/withParamsAndNavigate";
 
-import * as appActions from "../../Actions/appActions";
-import * as userActions from "../../Actions/userActions";
-
 interface MainUserViewProps {
-  setCurrentView: (view: string) => void;
-  cleanFormUser: () => void;
+  userType: string;
+  navigate: NavigateFunction;
 }
 
 const MainUserView = (props: MainUserViewProps) => {
-  const { setCurrentView, cleanFormUser } = props;
-  const handleNewUser = () => {
-    cleanFormUser();
-    setCurrentView("newUser");
-  };
+  const { navigate, userType } = props;
+  const handleNewUser = () => navigate(userType === "MAKER" ? "/maker/newUser" : "/client/newUser");
 
-  const handleSignInUser = () => {
-    cleanFormUser();
-    setCurrentView("signInUser");
-  };
+  const handleSignInUser = () => navigate(userType === "MAKER" ? "/maker/signInUser" : "/client/signInUser");
 
   return (
     <Stack spacing={2} direction="column" sx={styles.container}>
@@ -45,13 +36,4 @@ const styles = {
   },
 };
 
-const mapStateToProps = (state: StateType) => {
-  return {};
-};
-
-const mapDispatchToProps: MyMapDispatchToProps = {
-  setCurrentView: appActions.setCurrentView,
-  cleanFormUser: userActions.cleanFormUser,
-};
-
-export default withParamsAndNavigate(MainUserView, mapStateToProps, mapDispatchToProps);
+export default withParamsAndNavigate(MainUserView);

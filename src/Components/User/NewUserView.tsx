@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 
 import { TextField, Grid } from "@mui/material";
 
@@ -7,6 +7,7 @@ import FormView from "../Common/FormView";
 
 import withParamsAndNavigate from "../../Hooks/withParamsAndNavigate";
 import genericValidation from "../../Functions/genericValidation";
+
 import * as userActions from "../../Actions/userActions";
 
 interface NewUserViewProps {
@@ -15,11 +16,16 @@ interface NewUserViewProps {
   userType: string;
   setFormUser: (view: FormUserType) => void;
   newUser: (user: UserType, userType: string) => void;
+  cleanFormUser: () => void;
 }
 
 const NewUserView = (props: NewUserViewProps) => {
+  const { formUser, userType, cleanFormUser } = props;
   const [submitted, setSubmitted] = useState<boolean>(false);
-  const { formUser, userType } = props;
+
+  useEffect(() => {
+    cleanFormUser();
+  }, [cleanFormUser]);
 
   const handleOnChange = (value: FormUserType) => {
     if (submitted) props.setFormUser(runValidation(value));
@@ -190,6 +196,7 @@ const mapStateToProps = (state: StateType) => {
 const mapDispatchToProps: MyMapDispatchToProps = {
   setFormUser: userActions.setFormUser,
   newUser: userActions.newUser,
+  cleanFormUser: userActions.cleanFormUser,
 };
 
 export default withParamsAndNavigate(NewUserView, mapStateToProps, mapDispatchToProps);

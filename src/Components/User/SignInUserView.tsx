@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 
 import { TextField, Grid } from "@mui/material";
 
@@ -12,11 +12,16 @@ interface SignInUserViewProps {
   userType: string;
   setFormUser: (userForm: FormUserType) => void;
   signInUser: (email: string, password: string, userType: string) => void;
+  cleanFormUser: () => void;
 }
 
 const SignInUserView = (props: SignInUserViewProps) => {
-  const { formUser } = props;
+  const { formUser, cleanFormUser } = props;
   const [submitted, setSubmitted] = useState<boolean>(false);
+
+  useEffect(() => {
+    cleanFormUser();
+  }, [cleanFormUser]);
 
   const handleOnChange = (formUser: FormUserType) => {
     if (submitted) props.setFormUser(runValidation(formUser));
@@ -99,6 +104,7 @@ const mapStateToProps = (state: StateType) => {
 const mapDispatchToProps: MyMapDispatchToProps = {
   setFormUser: userActions.setFormUser,
   signInUser: userActions.signInUser,
+  cleanFormUser: userActions.cleanFormUser,
 };
 
 export default withParamsAndNavigate(SignInUserView, mapStateToProps, mapDispatchToProps);

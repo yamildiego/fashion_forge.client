@@ -28,6 +28,4 @@ const mapStateToProps = (state: StateType) => {
   };
 };
 
-const mapDispatchToProps: MyMapDispatchToProps = {};
-
-export default withParamsAndNavigate(View, mapStateToProps, mapDispatchToProps);
+export default withParamsAndNavigate(View, mapStateToProps);

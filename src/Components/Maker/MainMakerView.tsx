@@ -4,13 +4,10 @@ import { Stack, Box, Typography } from "@mui/material";
 
 import withParamsAndNavigate from "../../Hooks/withParamsAndNavigate";
 
-import * as appActions from "../../Actions/appActions";
-
 import ListJobs from "./ListJobs";
 
 interface MainMakerViewProps {
   jobs: JobType[];
-  setCurrentView: (view: string) => void;
 }
 
 const MainMakerView = (props: MainMakerViewProps) => {
@@ -51,8 +48,4 @@ const mapStateToProps = (state: StateType) => {
   };
 };
 
-const mapDispatchToProps: MyMapDispatchToProps = {
-  setCurrentView: appActions.setCurrentView,
-};
-
-export default withParamsAndNavigate(MainMakerView, mapStateToProps, mapDispatchToProps);
+export default withParamsAndNavigate(MainMakerView, mapStateToProps);

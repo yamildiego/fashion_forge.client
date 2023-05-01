@@ -1,25 +1,29 @@
 import React from "react";
 
-import { Stack, Box, Typography } from "@mui/material";
+import { Stack, Box, Button, Typography } from "@mui/material";
 
 import withParamsAndNavigate from "../../Hooks/withParamsAndNavigate";
 
 import ListJobs from "./ListJobs";
-import Filter from "./Filter";
 
-interface JobsProps {
+interface HomeClientViewProps {
   jobs: JobType[];
+  navigate: NavigateFunction;
 }
 
-const Jobs = (props: JobsProps) => {
+const HomeClientView = (props: HomeClientViewProps) => {
+  const { navigate } = props;
+
   return (
     <Stack spacing={2} direction="column">
       <Stack spacing={2} direction="row" sx={styles.header}>
         <Typography variant="h4" sx={styles.title}>
-          Jobs for quoting
+          My jobs
         </Typography>
+        <Button onClick={() => navigate("/client/newJob")} variant="contained" color="primary" sx={styles.btn}>
+          New job
+        </Button>
       </Stack>
-      {<Filter />}
       {props.jobs.length === 0 && <Box sx={styles.noElements}>No jobs added</Box>}
       {props.jobs.length > 0 && <ListJobs />}
     </Stack>
@@ -46,10 +50,8 @@ const styles = {
 
 const mapStateToProps = (state: StateType) => {
   return {
-    jobs: state.makerReducer.jobs,
+    jobs: state.clientReducer.jobs,
   };
 };
 
-const mapDispatchToProps: MyMapDispatchToProps = {};
-
-export default withParamsAndNavigate(Jobs, mapStateToProps, mapDispatchToProps);
+export default withParamsAndNavigate(HomeClientView, mapStateToProps);

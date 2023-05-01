@@ -4,12 +4,27 @@ import CssBaseline from "@mui/material/CssBaseline";
 
 import withParamsAndNavigate from "./Hooks/withParamsAndNavigate";
 
+import Template from "./Screens/Template";
+
 import Home from "./Screens/Home";
-import Client from "./Screens/Client";
-import Maker from "./Screens/Maker";
+
+import MainUserView from "./Components/User/MainUserView";
+import NewUserView from "./Components/User/NewUserView";
+import SignInUserView from "./Components/User/SignInUserView";
+
+import HomeClientView from "./Components/Client/HomeClientView";
+import NewJob from "./Components/Client/NewJob";
+import EditJob from "./Components/Client/EditJob";
+import ViewJob from "./Components/Client/View";
+
+import HomeMakerView from "./Components/Maker/HomeMakerView";
+import ViewUserAndJob from "./Components/Maker/View";
 
 import Loading from "./Components/Loading";
 import Errors from "./Components/Errors";
+
+import * as clientActions from "./Actions/clientActions";
+import * as makerActions from "./Actions/makerActions";
 
 const theme = {
   palette: {
@@ -26,7 +41,12 @@ const theme = {
 };
 
 interface AppProps {
+  filter: FilterType;
   isLoading: boolean;
+  getJobs: () => void;
+  getJobById: (id: number) => void;
+  cleanFormNewJob: () => void;
+  getJobsByFilter: (filter: FilterType) => void;
 }
 
 const App = (props: AppProps) => {
@@ -38,8 +58,47 @@ const App = (props: AppProps) => {
       <CssBaseline />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/client" element={<Client />} />
-        <Route path="/maker" element={<Maker />} />
+        {/* CLIENT */}
+        <Route path="/client" element={<Template myProps={{ userType: "CLIENT" }} mainView={MainUserView} />} />
+        <Route
+          path="/client/newUser"
+          element={<Template myProps={{ title: "Create your Meyd.it Account", userType: "CLIENT" }} mainView={NewUserView} />}
+        />
+        <Route path="/client/signInUser" element={<Template myProps={{ userType: "CLIENT" }} mainView={SignInUserView} />} />
+        <Route
+          path="/client/home"
+          element={<Template myProps={{ userType: "CLIENT" }} didMount={() => props.getJobs()} mainView={HomeClientView} />}
+        />
+        <Route
+          path="/client/newJob"
+          element={<Template myProps={{ userType: "CLIENT" }} didMount={() => props.cleanFormNewJob()} mainView={NewJob} />}
+        />
+        <Route
+          path="/client/editJob/:id"
+          element={<Template myProps={{ userType: "CLIENT" }} didMount={(id: number) => props.getJobById(id)} mainView={EditJob} />}
+        />
+        <Route
+          path="/client/viewJob/:id"
+          element={<Template myProps={{ userType: "CLIENT" }} didMount={(id: number) => props.getJobById(id)} mainView={ViewJob} />}
+        />
+
+        {/* MAKER */}
+        <Route path="/maker" element={<Template myProps={{ userType: "MAKER" }} mainView={MainUserView} />} />
+        <Route
+          path="/maker/newUser"
+          element={<Template myProps={{ title: "Become Our Partner", userType: "MAKER" }} mainView={NewUserView} />}
+        />
+        <Route path="/maker/signInUser" element={<Template myProps={{ userType: "MAKER" }} mainView={SignInUserView} />} />
+        <Route
+          path="/maker/home"
+          element={
+            <Template myProps={{ userType: "MAKER" }} didMount={() => props.getJobsByFilter(props.filter)} mainView={HomeMakerView} />
+          }
+        />
+        <Route
+          path="/maker/viewJob/:id"
+          element={<Template myProps={{ userType: "MAKER" }} didMount={(id: number) => props.getJobById(id)} mainView={ViewUserAndJob} />}
+        />
       </Routes>
       {isLoading && <Loading />}
       <Errors />
@@ -50,7 +109,15 @@ const App = (props: AppProps) => {
 const mapStateToProps = (state: StateType) => {
   return {
     isLoading: state.appReducer.isLoading,
+    filter: state.makerReducer.filter,
   };
 };
 
-export default withParamsAndNavigate(App, mapStateToProps);
+const mapDispatchToProps: MyMapDispatchToProps = {
+  getJobs: clientActions.getJobs,
+  getJobById: clientActions.getJobById,
+  cleanFormNewJob: clientActions.cleanFormNewJob,
+  getJobsByFilter: makerActions.getJobsByFilter,
+};
+
+export default withParamsAndNavigate(App, mapStateToProps, mapDispatchToProps);

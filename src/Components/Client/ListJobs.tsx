@@ -16,15 +16,16 @@ import * as imageActions from "../../Actions/imageActions";
 interface ListJobsProps {
   jobs: JobType[];
   setJob: (view: JobType | null) => void;
-  setCurrentView: (view: string) => void;
   publishJob: (jobId: number) => void;
   setFormNewJob: (view: FormJobType) => void;
   setImages: (images: ImageType[]) => void;
+  navigate: NavigateFunction;
 }
 
 const MAX_LENGTH = 80;
 
 const ListJobs = (props: ListJobsProps) => {
+  const { navigate } = props;
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -34,23 +35,8 @@ const ListJobs = (props: ListJobsProps) => {
   };
 
   const handleOnClickAction = (job: JobType) => {
-    props.setJob(job);
-
-    if (job.status === "DRAFT") {
-      let valueBudget = job.budget === null ? "" : job.budget.toString();
-
-      let formJob = {
-        type_of_clothing: { value: job.type_of_clothing, error: false, helperText: "" },
-        description: { value: job.description, error: false, helperText: "" },
-        budget: { value: valueBudget, error: false, helperText: "" },
-      };
-
-      props.setImages(job.images ? job.images : []);
-      props.setFormNewJob(formJob);
-      props.setCurrentView("editJob");
-    } else {
-      props.setCurrentView("view");
-    }
+    if (job.status === "DRAFT") navigate(`/client/editJob/${job.id}`);
+    else navigate(`/client/viewJob/${job.id}`);
   };
 
   return (
@@ -137,7 +123,6 @@ const mapStateToProps = (state: StateType) => {
 };
 
 const mapDispatchToProps: MyMapDispatchToProps = {
-  setCurrentView: appActions.setCurrentView,
   publishJob: clientActions.publishJob,
   setFormNewJob: clientActions.setFormNewJob,
   setJob: appActions.setJob,

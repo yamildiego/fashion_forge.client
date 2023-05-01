@@ -50,7 +50,7 @@ export const newQuote = (quote: QuoteType, job_id: number) => {
     await server
       .post(`${Urls.newQuote}`, { ...quote, job_id })
       .then((response) => {
-        dispatch(appActions.setCurrentView("reload"));
+        // dispatch(appActions.setCurrentView("reload"));
         dispatch(appActions.setIsLoading(false));
       })
       .catch((error) =>

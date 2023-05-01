@@ -1,10 +1,9 @@
+import { useEffect, useState, useRef } from "react";
 import withParamsAndNavigate from "../../Hooks/withParamsAndNavigate";
 
 import { Grid, TextField } from "@mui/material";
 
 import FormView from "../Common/FormView";
-
-import TypesOfClothing from "../../TypesOfClothing.json";
 
 import JobView from "../Common/JobView";
 
@@ -23,7 +22,13 @@ interface ViewProps {
 
 const View = (props: ViewProps) => {
   const { job, user, cleanFormQuote, setOpenModal, setJob } = props;
-  const wasQuoted: boolean = job.quotes ? job.quotes.length > 0 && job.quotes.some((x) => x.user_id === user.id) : false;
+  const [wasQuoted, setWasQuoted] = useState(false);
+  const wasQuotedRef = useRef<boolean>(wasQuoted);
+
+  useEffect(() => {
+    wasQuotedRef.current = job && job.quotes ? job.quotes.length > 0 && job.quotes.some((x) => user && x.user_id === user.id) : false;
+    setWasQuoted(wasQuotedRef.current);
+  }, [job, user]);
 
   const handleOpenModal = (job: JobType) => {
     cleanFormQuote();

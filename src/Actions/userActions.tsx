@@ -45,7 +45,7 @@ export const newUser = (user: UserType, userType: string) => {
       .post(`${Urls.newUser}`, { ...user, user_type: userType })
       .then((response) => {
         dispatch(makerActions.cleanFilter());
-        dispatch(appActions.setCurrentView("jobs"));
+        // dispatch(appActions.setCurrentView("jobs"));
         dispatch(appActions.setIsLoading(false));
         dispatch(appActions.setCurrentUser(response.data));
       })
@@ -65,7 +65,6 @@ export const signInUser = (email: string, password: string, userType: string) =>
       .post(`${Urls.signInUser}`, { email, password, user_type: userType })
       .then((response) => {
         dispatch(makerActions.cleanFilter());
-        dispatch(appActions.setCurrentView("jobs"));
         dispatch(appActions.setIsLoading(false));
         dispatch(appActions.setCurrentUser(response.data));
       })
@@ -85,7 +84,7 @@ export const signOutUser = () => {
       .post(`${Urls.signOutUser}`)
       .then((response) => {
         dispatch(makerActions.cleanFilter());
-        dispatch(appActions.setCurrentView("main"));
+        // dispatch(appActions.setCurrentView("main"));
         dispatch(appActions.setIsLoading(false));
         dispatch(appActions.setCurrentUser(null));
       })

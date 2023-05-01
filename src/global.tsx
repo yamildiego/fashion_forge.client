@@ -1,15 +1,17 @@
 import { MapDispatchToProps } from "react-redux";
 import { AlertColor } from "@mui/material";
+import { NavigateFunction as MUINavigateFunction } from "react-router-dom";
 
 declare global {
   interface Window {
     AddressFinder: any;
   }
 
+  type NavigateFunction = MUINavigateFunction;
+
   type StateType = {
     appReducer: {
       isLoading: boolean;
-      currentView: string;
       user: UserType;
       openModal: boolean;
       job: JobType | null;

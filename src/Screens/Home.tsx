@@ -1,5 +1,3 @@
-import { NavigateFunction } from "react-router-dom";
-
 import { Stack, Box, Container, Button } from "@mui/material";
 
 import withParamsAndNavigate from "../Hooks/withParamsAndNavigate";

@@ -4,6 +4,7 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 import withParamsAndNavigate from "../../Hooks/withParamsAndNavigate";
 import genericValidation from "../../Functions/genericValidation";
+
 import * as appActions from "../../Actions/appActions";
 import * as clientActions from "../../Actions/clientActions";
 
@@ -18,12 +19,13 @@ interface JobsProps {
   setFormNewJob: (view: FormJobType) => void;
   cleanFormNewJob: () => void;
   newJob: (job: JobType, images: ImageType[], status?: string) => void;
-  setCurrentView: (view: string) => void;
+  setJob: (job: JobType | null) => void;
+  navigate: NavigateFunction;
 }
 
 const Jobs = (props: JobsProps) => {
   const [submitted, setSubmitted] = useState<boolean>(false);
-  const { images, formNewJob, setCurrentView, cleanFormNewJob } = props;
+  const { navigate, images, formNewJob, cleanFormNewJob, setJob } = props;
 
   const handleOnChange = (value: FormJobType) => {
     if (submitted) props.setFormNewJob(runValidation(value));
@@ -36,6 +38,8 @@ const Jobs = (props: JobsProps) => {
     props.setFormNewJob(formValidated);
     let hasError = Object.values(formValidated).some((field) => field.error);
     let jobFormatted = Object.entries(formValidated).reduce((acc, [key, value]) => ({ ...acc, [key]: value.value }), {} as JobType);
+
+    setJob(jobFormatted);
 
     if (!hasError) props.newJob(jobFormatted, images);
   };
@@ -58,12 +62,14 @@ const Jobs = (props: JobsProps) => {
     let hasError = Object.values(formValidated).some((field) => field.error);
     let jobFormatted = Object.entries(formValidated).reduce((acc, [key, value]) => ({ ...acc, [key]: value.value }), {} as JobType);
 
+    setJob(jobFormatted);
+
     if (!hasError) props.newJob(jobFormatted, images, "PUBLISHED");
   };
 
   const handleCancel = () => {
     cleanFormNewJob();
-    setCurrentView("jobs");
+    navigate("/client/home");
   };
 
   return (
@@ -155,7 +161,7 @@ const mapDispatchToProps: MyMapDispatchToProps = {
   setFormNewJob: clientActions.setFormNewJob,
   cleanFormNewJob: clientActions.cleanFormNewJob,
   newJob: clientActions.newJob,
-  setCurrentView: appActions.setCurrentView,
+  setJob: appActions.setJob,
 };
 
 export default withParamsAndNavigate(Jobs, mapStateToProps, mapDispatchToProps);

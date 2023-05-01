@@ -2,8 +2,7 @@ import * as Types from "../Constants/Types";
 
 const initialState = {
   isLoading: false,
-  currentView: "main",
-  user: null,
+  user: undefined,
   openModal: false,
   job: null,
   errors: [],
