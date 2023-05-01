@@ -9,12 +9,20 @@ import Client from "./Screens/Client";
 import Maker from "./Screens/Maker";
 
 import Loading from "./Components/Loading";
+import Errors from "./Components/Errors";
 
 const theme = {
   palette: {
     primary: { main: "#9b70fe", dark: "#8460c2", light: "#a09fcf", contrastText: "#FFFFFF" },
   },
   typography: { fontFamily: "Cabin" },
+  components: {
+    MuiGrid: {
+      styleOverrides: {
+        root: { width: "100%!important" },
+      },
+    },
+  },
 };
 
 interface AppProps {
@@ -34,6 +42,7 @@ const App = (props: AppProps) => {
         <Route path="/maker" element={<Maker />} />
       </Routes>
       {isLoading && <Loading />}
+      <Errors />
     </ThemeProvider>
   );
 };
