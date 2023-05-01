@@ -59,7 +59,7 @@ const ListJobs = (props: ListJobsProps) => {
         return (
           <Card key={`key_client_${index}`} sx={{ width: "100%", boxShadow: "1px 1px 5px #ccc", position: "relative" }}>
             <CardContent>
-              <Grid container spacing={2} sx={{ minHeight: "100px" }}>
+              <Grid container spacing={2} sx={{ minHeight: "130px" }}>
                 <Grid item xs={8}>
                   <Typography sx={{ mb: 0.5 }} color="text.secondary">
                     Type of clothing:
@@ -89,9 +89,8 @@ const ListJobs = (props: ListJobsProps) => {
                     )}
                   </Typography>
                 </Grid>
-                <Grid item xs={4} sx={{ justifyContent: "center", alignItems: "flex-end", display: "flex", pb: 1 }}>
-                  <Stack direction={"row"} spacing={2}>
-                    {job?.quotes ? job.quotes.length : 0}
+                <Grid item xs={3} sx={{ justifyContent: "center", alignItems: "flex-end", display: "flex", pb: 1 }}>
+                  <Stack spacing={2}>
                     {job.status === "PUBLISHED" && job.quotes && job.quotes.length > 0 && (
                       <Button onClick={() => handlePublish(job)} variant="contained" color="primary">
                         Quotes
