@@ -69,9 +69,9 @@ const Jobs = (props: JobsProps) => {
   return (
     <FormView
       title="New job"
-      submitText="Save and publish"
+      submitText="Publish"
       handleSubmit={handleSaveAndPublish}
-      firstExtraBtnText="Save as draft"
+      firstExtraBtnText="Draft"
       handleActionFirstExtraBtn={handleSaveDraft}
       secondExtraBtnText="Cancel"
       handleActionSecondExtraBtn={handleCancel}

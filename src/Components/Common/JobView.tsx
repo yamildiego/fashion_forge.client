@@ -72,6 +72,7 @@ const JobView = (props: JobViewProps) => {
                         width: "auto",
                         height: "auto",
                         margin: "auto",
+                        maxWidth: "100%",
                       }}
                       src={`${Urls.baseUrl}/uploads/${imageSelected.path}` || defaultImage}
                       alt={imageSelected.path}
