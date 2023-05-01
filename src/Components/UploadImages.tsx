@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Dropzone from "react-dropzone";
 import { Stack, Typography, Grid, Button, Avatar } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
@@ -21,7 +20,6 @@ interface UploadImagesProps {
 
 const UploadImages = (props: UploadImagesProps) => {
   const { user, images, addImages, uploadImages, removeImage } = props;
-  const [files, setFiles] = useState([]);
 
   const handleDrop = (acceptedFiles: any) => {
     // @ts-ignore
@@ -49,13 +47,13 @@ const UploadImages = (props: UploadImagesProps) => {
               <div {...getRootProps()} style={{ ...styles.dropzone, ...(isDragActive ? { ...styles.dropzoneActive } : {}) }}>
                 <input {...getInputProps()} />
                 <CloudUploadIcon fontSize="large" />
-                <Typography variant="body1">Drag and drop your images here or click to select files. PNG/JPG Limit 4mb</Typography>
+                <Typography variant="body1">Drag and drop your images here or click to select files. PNG/JPG Limit 1mb</Typography>
               </div>
             )}
           </Dropzone>
         </Grid>
         <Grid item xs={12} sm={6}>
-          {files.length > 0 && (
+          {images.length > 0 && (
             <Typography variant="h6" gutterBottom>
               Selected images:
             </Typography>

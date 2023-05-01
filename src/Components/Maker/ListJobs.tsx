@@ -46,7 +46,7 @@ const ListJobs = (props: ListJobsProps) => {
     <>
       {props.jobs.map((job: JobType, index: number) => {
         const location = job.user ? `${job?.user?.address} ${job?.user?.state} ${job?.user?.postcode}` : "-";
-        const wasQuoted: boolean = job.quotes ? job.quotes.length > 0 && job.quotes.some((x) => x.user_id === user.id) : false;
+        const wasQuoted: boolean = job.quotes ? job.quotes.length > 0 && job.quotes.some((x) => user && x.user_id === user.id) : false;
 
         return (
           <Card key={`key_maker_${index}`} sx={{ width: "100%", boxShadow: "1px 1px 5px #ccc", position: "relative" }}>
