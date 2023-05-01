@@ -40,7 +40,7 @@ export const getJobsByFilter = (filter: FilterType) => {
         dispatch(setAllJobs(response.data));
         dispatch(appActions.setIsLoading(false));
       })
-      .catch((error) => {});
+      .catch((error) => handleCatchGeneric(error, dispatch));
   };
 };
 
@@ -54,7 +54,7 @@ export const newQuote = (quote: QuoteType, job_id: number) => {
         dispatch(appActions.setIsLoading(false));
       })
       .catch((error) =>
-        handleCatchGeneric(error, (formValidation: Partial<FormQuoteType>) => {
+        handleCatchGeneric(error, dispatch, (formValidation: Partial<FormQuoteType>) => {
           dispatch(mergeFormQuote(formValidation));
           dispatch(appActions.setIsLoading(false));
         })

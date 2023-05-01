@@ -39,7 +39,7 @@ export const getJobs = () => {
         dispatch(appActions.setIsLoading(false));
       })
       .catch((error) => {
-        console.log(error);
+        handleCatchGeneric(error, dispatch);
       });
   };
 };
@@ -55,7 +55,7 @@ export const newJob = (job: JobType, images: ImageType[], status?: string) => {
         dispatch(cleanFormNewJob());
       })
       .catch((error) =>
-        handleCatchGeneric(error, (formValidation: Partial<FormJobType>) => {
+        handleCatchGeneric(error, dispatch, (formValidation: Partial<FormJobType>) => {
           dispatch(mergeFormNewJob(formValidation));
           dispatch(appActions.setIsLoading(false));
         })
@@ -74,7 +74,7 @@ export const editJob = (id: number, job: JobType, images: ImageType[], status?: 
         dispatch(cleanFormNewJob());
       })
       .catch((error) =>
-        handleCatchGeneric(error, (formValidation: Partial<FormJobType>) => {
+        handleCatchGeneric(error, dispatch, (formValidation: Partial<FormJobType>) => {
           dispatch(mergeFormNewJob(formValidation));
           dispatch(appActions.setIsLoading(false));
         })
@@ -91,11 +91,6 @@ export const publishJob = (jobId: number) => {
         dispatch(appActions.setCurrentView("reload"));
         dispatch(appActions.setIsLoading(false));
       })
-      .catch((error) => {
-        // handleCatchGeneric(error, (formValidation: Partial<FormJobType>) => {
-        //   dispatch(mergeFormNewJob(formValidation));
-        //   dispatch(appActions.setIsLoading(false));
-        // });
-      });
+      .catch((error) => handleCatchGeneric(error, dispatch));
   };
 };

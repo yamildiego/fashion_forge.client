@@ -50,7 +50,7 @@ export const newUser = (user: UserType, userType: string) => {
         dispatch(appActions.setCurrentUser(response.data));
       })
       .catch((error) =>
-        handleCatchGeneric(error, (formValidation: Partial<FormUserType>) => {
+        handleCatchGeneric(error, dispatch, (formValidation: Partial<FormUserType>) => {
           dispatch(mergeFormUser(formValidation));
           dispatch(appActions.setIsLoading(false));
         })
@@ -70,7 +70,7 @@ export const signInUser = (email: string, password: string, userType: string) =>
         dispatch(appActions.setCurrentUser(response.data));
       })
       .catch((error) =>
-        handleCatchGeneric(error, (formValidation: Partial<FormUserType>) => {
+        handleCatchGeneric(error, dispatch, (formValidation: Partial<FormUserType>) => {
           dispatch(mergeFormUser(formValidation));
           dispatch(appActions.setIsLoading(false));
         })
