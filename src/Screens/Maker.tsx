@@ -15,13 +15,12 @@ import CustomAppBar from "../Components/Common/CustomAppBar";
 import * as appActions from "../Actions/appActions";
 import * as makerActions from "../Actions/makerActions";
 
-import UploadImages from "../Components/UploadImages";
-
 interface MakerProps {
   user: UserType;
   currentView: string;
   navigate: NavigateFunction;
   filter: FilterType;
+  cleanFilter: () => void;
   setCurrentView: (view: string) => void;
   getJobsByFilter: (filter: FilterType) => void;
 }
@@ -30,6 +29,10 @@ class Maker extends Component<MakerProps> {
   componentDidUpdate(oldProps: MakerProps) {
     if (oldProps.currentView !== this.props.currentView && this.props.currentView === "jobs") this.props.getJobsByFilter(this.props.filter);
     if (oldProps.currentView !== this.props.currentView && this.props.currentView === "reload") this.props.setCurrentView("jobs");
+    if (oldProps.user !== this.props.user && this.props.user === null) {
+      this.props.cleanFilter();
+      this.props.setCurrentView("main");
+    }
   }
 
   handleOnClickBack = () => {
@@ -89,6 +92,7 @@ const mapStateToProps = (state: StateType) => {
 const mapDispatchToProps: MyMapDispatchToProps = {
   setCurrentView: appActions.setCurrentView,
   getJobsByFilter: makerActions.getJobsByFilter,
+  cleanFilter: makerActions.cleanFilter,
 };
 
 export default withParamsAndNavigate(Maker, mapStateToProps, mapDispatchToProps);

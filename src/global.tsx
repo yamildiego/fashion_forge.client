@@ -1,4 +1,5 @@
 import { MapDispatchToProps } from "react-redux";
+import { AlertColor } from "@mui/material";
 
 declare global {
   interface Window {
@@ -11,7 +12,8 @@ declare global {
       currentView: string;
       user: UserType;
       openModal: boolean;
-      job: JobType;
+      job: JobType | null;
+      errors: ErrorType[];
     };
     userReducer: {
       formUser: FormUserType;
@@ -112,6 +114,21 @@ declare global {
     size: string;
     type: string;
   };
+
+  type ErrorFormType = {
+    rule: ErrorIdType;
+    field: string;
+    message?: string;
+  };
+
+  interface ErrorType {
+    key: number;
+    title: string;
+    description: string;
+    severity: AlertColor | undefined;
+    datetime?: number;
+    opacity?: number;
+  }
 
   type States = "VIC" | "QLD" | "SA" | "NT" | "WA" | "TAS" | "NSW" | "ACT";
   type TypeOfClothing = "t_shirt" | "jeans" | "swimsuit" | "cocktail_dress" | "tracksuit" | "leather_jacket" | "business_suit" | "skirt";

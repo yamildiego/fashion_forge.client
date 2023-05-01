@@ -29,6 +29,9 @@ class Client extends Component<ClientProps> {
   componentDidUpdate(oldProps: ClientProps) {
     if (oldProps.currentView !== this.props.currentView && this.props.currentView === "jobs") this.props.getJobs();
     if (oldProps.currentView !== this.props.currentView && this.props.currentView === "reload") this.props.setCurrentView("jobs");
+    if (oldProps.user !== this.props.user && this.props.user === null) {
+      this.props.setCurrentView("main");
+    }
   }
 
   handleOnClickBack = () => {
@@ -44,6 +47,7 @@ class Client extends Component<ClientProps> {
       case "newUser":
         setCurrentView("main");
         break;
+      case "editJob":
       case "newJob":
       case "view":
         setCurrentView("jobs");
