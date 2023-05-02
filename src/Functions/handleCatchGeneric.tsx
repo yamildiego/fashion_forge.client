@@ -65,6 +65,29 @@ const handleCatchGeneric = (error: any, dispatch: any, callback?: (formValidatio
           dispatch(appActions.setCurrentUser(null));
           dispatch(appActions.setIsLoading(false));
           break;
+        case "required_job_id":
+          dispatch(
+            appActions.addError({
+              key: Math.random(),
+              severity: "error",
+              title: "Invalid job info",
+              description: "Please enter a valid ID",
+            })
+          );
+          dispatch(appActions.setIsLoading(false));
+          break;
+
+        case "invalid_job_id":
+          dispatch(
+            appActions.addError({
+              key: Math.random(),
+              severity: "error",
+              title: "Job not found",
+              description: "The job with that ID could not be found.",
+            })
+          );
+          dispatch(appActions.setIsLoading(false));
+          break;
 
         default:
           break;
