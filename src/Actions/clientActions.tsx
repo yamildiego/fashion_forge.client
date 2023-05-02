@@ -113,7 +113,7 @@ export const publishJob = (jobId: number) => {
   return async (dispatch: any) => {
     dispatch(appActions.setIsLoading(true));
     await server
-      .post(`${Urls.publishJob}`, { job_id: jobId })
+      .get(`${Urls.publishJob}/${jobId}`)
       .then((response) => {
         dispatch(getJobs());
         dispatch(appActions.setIsLoading(false));
