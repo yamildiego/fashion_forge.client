@@ -29,10 +29,12 @@ class Template extends Component<TemplateProps> {
 
   componentDidUpdate(oldProps: TemplateProps) {
     const { navigate, didMount, myProps } = this.props;
-
+    const { pathname } = this.props.location;
     if (oldProps.user !== this.props.user && this.props.user === null) {
-      if (myProps.userType === "CLIENT") navigate("/client/signInUser");
-      if (myProps.userType === "MAKER") navigate("/maker/signInUser");
+      if (pathname !== "/client" && pathname !== "/maker" && pathname !== "/client/newUser" && pathname !== "/maker/newUser") {
+        if (myProps.userType === "CLIENT") navigate("/client/signInUser");
+        if (myProps.userType === "MAKER") navigate("/maker/signInUser");
+      }
     }
 
     if (oldProps.user !== this.props.user && this.props.user !== null) {
