@@ -48,7 +48,7 @@ export const newQuote = (quote: QuoteType, job_id: number) => {
   return async (dispatch: any) => {
     dispatch(appActions.setIsLoading(true));
     await server
-      .post(`${Urls.newQuote}`, { ...quote, job_id })
+      .post(`${Urls.newQuote}`, { ...quote, id: job_id })
       .then((response) => {
         // dispatch(appActions.setCurrentView("reload"));
         dispatch(appActions.setIsLoading(false));
