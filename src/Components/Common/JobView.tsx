@@ -42,7 +42,9 @@ const JobView = (props: JobViewProps) => {
               name="type_of_clothing"
               label="Type of clothing"
               fullWidth
-              value={TypesOfClothing[job.type_of_clothing as TypeOfClothing]}
+              value={
+                TypesOfClothing[job.type_of_clothing as TypeOfClothing] ? TypesOfClothing[job.type_of_clothing as TypeOfClothing] : "-"
+              }
             />
           </Grid>
           <Grid item xs={12}>

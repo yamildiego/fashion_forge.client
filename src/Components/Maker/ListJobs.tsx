@@ -55,7 +55,7 @@ const ListJobs = (props: ListJobsProps) => {
                     <span style={{ marginLeft: "15px", color: "#333" }}>
                       {
                         //@ts-ignore
-                        TypesOfClothing[job.type_of_clothing]
+                        TypesOfClothing[job.type_of_clothing] ? TypesOfClothing[job.type_of_clothing] : "-"
                       }
                     </span>
                   </Typography>
