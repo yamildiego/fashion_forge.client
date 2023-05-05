@@ -8,7 +8,6 @@ import Template from "./Screens/Template";
 
 import Home from "./Screens/Home";
 
-import MainUserView from "./Components/User/MainUserView";
 import NewUserView from "./Components/User/NewUserView";
 import SignInUserView from "./Components/User/SignInUserView";
 
@@ -16,6 +15,7 @@ import HomeClientView from "./Components/Client/HomeClientView";
 import NewJob from "./Components/Client/NewJob";
 import EditJob from "./Components/Client/EditJob";
 import ViewJob from "./Components/Client/View";
+import Quotes from "./Components/Client/Quotes";
 
 import HomeMakerView from "./Components/Maker/HomeMakerView";
 import ViewUserAndJob from "./Components/Maker/View";
@@ -28,13 +28,18 @@ import * as makerActions from "./Actions/makerActions";
 
 const theme = {
   palette: {
-    primary: { main: "#9b70fe", dark: "#8460c2", light: "#a09fcf", contrastText: "#FFFFFF" },
+    primary: { main: "#8BC34A", dark: "#71a436", light: "#b0d683", contrastText: "#FFFFFF" },
   },
   typography: { fontFamily: "Cabin" },
   components: {
     MuiGrid: {
       styleOverrides: {
         root: { width: "100%!important" },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: { borderRadius: "2px", fontSize: "16px" },
       },
     },
   },
@@ -59,7 +64,6 @@ const App = (props: AppProps) => {
       <Routes>
         <Route path="/" element={<Home />} />
         {/* CLIENT */}
-        <Route path="/client" element={<Template myProps={{ userType: "CLIENT" }} mainView={MainUserView} />} />
         <Route
           path="/client/newUser"
           element={<Template myProps={{ title: "Create your Meyd.it Account", userType: "CLIENT" }} mainView={NewUserView} />}
@@ -78,12 +82,15 @@ const App = (props: AppProps) => {
           element={<Template myProps={{ userType: "CLIENT" }} didMount={(id: number) => props.getJobById(id)} mainView={EditJob} />}
         />
         <Route
-          path="/client/viewJob/:id"
+          path="/client/viewQuotes/:id"
+          element={<Template myProps={{ userType: "CLIENT" }} didMount={(id: number) => props.getJobById(id)} mainView={Quotes} />}
+        />
+        <Route
+          path="/client/viewQuotes/:id"
           element={<Template myProps={{ userType: "CLIENT" }} didMount={(id: number) => props.getJobById(id)} mainView={ViewJob} />}
         />
 
         {/* MAKER */}
-        <Route path="/maker" element={<Template myProps={{ userType: "MAKER" }} mainView={MainUserView} />} />
         <Route
           path="/maker/newUser"
           element={<Template myProps={{ title: "Become Our Partner", userType: "MAKER" }} mainView={NewUserView} />}

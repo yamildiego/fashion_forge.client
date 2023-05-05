@@ -9,7 +9,7 @@ import * as userActions from "../../Actions/userActions";
 
 interface CustomAppBarProps {
   userType: string;
-  // title: string;
+  title: string;
   user: UserType;
   signOutUser: () => void;
   location: Location;
@@ -17,26 +17,23 @@ interface CustomAppBarProps {
 }
 
 const CustomAppBar = (props: CustomAppBarProps) => {
-  const { user, signOutUser, location, navigate, userType } = props;
+  const { user, signOutUser, location, navigate, userType, title } = props;
 
   const rootsPath = location.pathname !== "/" && location.pathname !== "/maker/home" && location.pathname !== "/client/home";
   console.log(location.pathname);
 
   const handleOnClickBack = () => {
     switch (location.pathname) {
-      case "/maker":
-      case "/client":
-        navigate("/");
-        break;
       case "/maker/signInUser":
-      case "/maker/newUser":
-        navigate("/maker");
+        navigate("/maker/newUser");
         break;
       case "/client/signInUser":
-      case "/client/newUser":
-        navigate("/client");
+        navigate("/client/newUser");
         break;
-
+      case "/maker/newUser":
+      case "/client/newUser":
+        navigate("/");
+        break;
       default:
         navigate(-1);
         break;
@@ -52,6 +49,7 @@ const CustomAppBar = (props: CustomAppBarProps) => {
           </IconButton>
         )}
         <Typography variant="h6" component="div" sx={{ flex: 1, ml: 1 }}>
+          {title && <>{title}</>}
           {userType === "CLIENT" && "Client dashboard"}
           {userType === "MAKER" && "Maker dashboard"}
         </Typography>

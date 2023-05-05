@@ -137,6 +137,9 @@ declare global {
   type ErrorIdType = "required" | "email" | "email" | "unique" | "wrongData" | "maxLength" | "minLength" | "matchPassword" | "number";
   type StatusType = "DRAFT" | "PUBLISHED" | "ASSINGNED" | "SHIPPED" | "FINISHED";
 
+  type ColorType = "warning" | "inherit" | "primary" | "secondary" | "success" | "error" | "info" | undefined;
+  type VariantType = "text" | "contained" | "outlined" | undefined;
+
   export type MyMapDispatchToProps<TDispatchProps = {}, TOwnProps = {}> = MapDispatchToProps<TDispatchProps, TOwnProps>;
 }
 

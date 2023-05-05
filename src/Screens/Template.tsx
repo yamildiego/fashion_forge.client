@@ -23,7 +23,11 @@ interface TemplateProps {
 class Template extends Component<TemplateProps> {
   componentDidMount() {
     const { didMount } = this.props;
-    this.props.getCurrentUser();
+    const { pathname } = this.props.location;
+
+    if (pathname !== "/client" && pathname !== "/maker" && pathname !== "/client/newUser" && pathname !== "/maker/newUser")
+      this.props.getCurrentUser();
+
     if (didMount) didMount(this.props?.params?.id ?? undefined);
   }
 

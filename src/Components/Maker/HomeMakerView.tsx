@@ -13,12 +13,7 @@ interface HomeMakerViewProps {
 
 const HomeMakerView = (props: HomeMakerViewProps) => {
   return (
-    <Stack spacing={2} direction="column">
-      <Stack spacing={2} direction="row" sx={styles.header}>
-        <Typography variant="h4" sx={styles.title}>
-          Jobs for quoting
-        </Typography>
-      </Stack>
+    <Stack spacing={2} sx={{ mt: 2 }} direction="column">
       {<Filter />}
       {props.jobs.length === 0 && <Box sx={styles.noElements}>No jobs added</Box>}
       {props.jobs.length > 0 && <ListJobs />}

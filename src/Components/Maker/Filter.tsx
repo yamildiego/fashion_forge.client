@@ -16,7 +16,7 @@ import TypesOfClothing from "../../TypesOfClothing.json";
 import States from "../../States.json";
 
 import IconButton from "@mui/material/IconButton";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import TuneIcon from "@mui/icons-material/Tune";
 
 import * as makerActions from "../../Actions/makerActions";
 
@@ -29,7 +29,7 @@ interface FilterProps {
 
 const Filter = (props: FilterProps) => {
   const { filter, setFilter, cleanFilter, getJobsByFilter } = props;
-  const [expanded, setExpanded] = useState(true);
+  const [expanded, setExpanded] = useState(false);
   const [postcodeChanged, setPostcodeChanged] = useState(false);
 
   const handleOnChange = (filter: FilterType) => {
@@ -39,7 +39,8 @@ const Filter = (props: FilterProps) => {
 
   const handleCleanFilter = () => {
     cleanFilter();
-    getJobsByFilter(filter);
+    const initFilter = { type_of_clothing: "All" as "All", state: "All" as "All", postcode: "" as "" };
+    getJobsByFilter(initFilter);
   };
 
   return (
@@ -49,7 +50,7 @@ const Filter = (props: FilterProps) => {
           <Grid item xs={12}>
             <Stack direction="row" sx={{ justifyContent: "space-between" }}>
               <Typography variant="h5" sx={{ mb: 0.5 }} color="text.secondary">
-                Filter
+                Jobs for quoting
                 {(filter.type_of_clothing !== "All" || filter.state !== "All" || filter.postcode !== "") && (
                   <span onClick={handleCleanFilter} style={{ marginLeft: "8px", fontSize: "14px", cursor: "pointer", color: "#ff4f4f" }}>
                     Clean filter
@@ -58,7 +59,7 @@ const Filter = (props: FilterProps) => {
               </Typography>
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 <IconButton onClick={() => setExpanded(!expanded)} aria-label="delete" size="small">
-                  <ArrowBackIosIcon
+                  <TuneIcon
                     sx={{ transition: "transform 0.2s ease", ...(expanded ? {} : { transform: "rotate(-90deg)" }) }}
                     fontSize="inherit"
                   />

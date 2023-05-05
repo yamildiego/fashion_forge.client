@@ -17,7 +17,7 @@ const initValidationType = { value: "", error: false, helperText: "" };
 
 const initFormQuote = { quote: initValidationType, estimated_time: initValidationType, comments: initValidationType };
 
-const initFilter = { type_of_clothing: "All" as "All", state: "All" as "All", postcode: "" };
+const initFilter = { type_of_clothing: "All" as "All", state: "All" as "All", postcode: "" as "" };
 
 export const setFormQuote = (value: FormQuoteType) => ({ type: Types.SET_FORM_QUOTE, value });
 

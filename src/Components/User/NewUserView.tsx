@@ -17,10 +17,11 @@ interface NewUserViewProps {
   setFormUser: (view: FormUserType) => void;
   newUser: (user: UserType, userType: string) => void;
   cleanFormUser: () => void;
+  navigate: NavigateFunction;
 }
 
 const NewUserView = (props: NewUserViewProps) => {
-  const { formUser, userType, cleanFormUser } = props;
+  const { navigate, formUser, userType, cleanFormUser } = props;
   const [submitted, setSubmitted] = useState<boolean>(false);
 
   useEffect(() => {
@@ -62,8 +63,18 @@ const NewUserView = (props: NewUserViewProps) => {
     return formValidated;
   };
 
+  const handleSignInUser = () => navigate(userType === "MAKER" ? "/maker/signInUser" : "/client/signInUser");
+
   return (
-    <FormView title={props.title} submitText="Create client" handleSubmit={handleSubmit}>
+    <FormView
+      title={props.title}
+      submitText="Create client"
+      firstExtraBtnText={" Sign in"}
+      handleActionFirstExtraBtn={handleSignInUser}
+      firstExtraBtnColor="info"
+      firstExtraBtnVariant="outlined"
+      handleSubmit={handleSubmit}
+    >
       <Grid container spacing={2}>
         {userType === "MAKER" && (
           <Grid item xs={12}>

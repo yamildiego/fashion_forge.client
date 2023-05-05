@@ -4,6 +4,8 @@ import withParamsAndNavigate from "../Hooks/withParamsAndNavigate";
 
 import CustomAppBar from "../Components/Common/CustomAppBar";
 
+import logo from "../Assets/logo.png";
+
 interface HomeProps {
   navigate: NavigateFunction;
 }
@@ -12,15 +14,20 @@ const Home = (props: HomeProps) => {
   const { navigate } = props;
   return (
     <Container sx={{ display: "flex", flexDirection: "column", flex: 1, p: 0 }}>
-      <CustomAppBar title="Test Meyd.it Internship" />
+      <CustomAppBar />
+
+      <img src={logo} alt="" style={{ maxWidth: "200px", margin: "50px auto 20px auto" }} />
+      <Box sx={{ textAlign: "center", fontFamily: "system-ui", textTransform: "uppercase", mb: 4 }}>
+        Where your design, It is our craftsmanship.
+      </Box>
       <Box sx={{ justifyContent: "center", display: "flex" }}>
         <Box maxWidth="sm" sx={styles.container}>
-          <Stack spacing={2} direction="column">
-            <Button variant="contained" onClick={() => navigate("/client")}>
-              Entry as Client
+          <Stack spacing={2} direction="row">
+            <Button color="info" variant="contained" onClick={() => navigate("/client/newUser")}>
+              Find a Design Workshop
             </Button>
-            <Button variant="contained" onClick={() => navigate("/maker")}>
-              Entry as Maker
+            <Button color="warning" variant="contained" onClick={() => navigate("/maker/newUser")}>
+              Join as a Maker
             </Button>
           </Stack>
         </Box>
@@ -34,7 +41,7 @@ const styles = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    mt: 10,
+    mt: 2,
   },
 };
 

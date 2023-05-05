@@ -8,11 +8,15 @@ interface FormViewProps {
   handleSubmit: (event: React.FormEvent<EventTarget>) => void;
   firstExtraBtnText?: string;
   handleActionFirstExtraBtn?: () => void;
+  firstExtraBtnColor?: string;
+  firstExtraBtnVariant?: string;
   secondExtraBtnText?: string;
   handleActionSecondExtraBtn?: () => void;
 }
 
 const FormView = (props: FormViewProps) => {
+  const { firstExtraBtnColor = "warning", firstExtraBtnVariant = "contained" } = props;
+
   const handleExtraAction = () => {
     if (props.handleActionFirstExtraBtn) props.handleActionFirstExtraBtn();
   };
@@ -34,7 +38,12 @@ const FormView = (props: FormViewProps) => {
           </Button>
         )}
         {props.firstExtraBtnText && props.handleActionFirstExtraBtn && (
-          <Button onClick={handleExtraAction} variant="contained" color="warning" sx={styles.btn}>
+          <Button
+            onClick={handleExtraAction}
+            variant={firstExtraBtnVariant as VariantType}
+            color={firstExtraBtnColor as ColorType}
+            sx={styles.btn}
+          >
             {props.firstExtraBtnText}
           </Button>
         )}
