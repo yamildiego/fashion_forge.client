@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Stack, Box, Typography } from "@mui/material";
+import { Stack, Box } from "@mui/material";
 
 import withParamsAndNavigate from "../../Hooks/withParamsAndNavigate";
 
