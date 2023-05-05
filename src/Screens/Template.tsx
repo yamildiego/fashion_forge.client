@@ -25,8 +25,7 @@ class Template extends Component<TemplateProps> {
     const { didMount } = this.props;
     const { pathname } = this.props.location;
 
-    if (pathname !== "/client" && pathname !== "/maker" && pathname !== "/client/newUser" && pathname !== "/maker/newUser")
-      this.props.getCurrentUser();
+    if (pathname !== "/client/newUser" && pathname !== "/maker/newUser") this.props.getCurrentUser();
 
     if (didMount) didMount(this.props?.params?.id ?? undefined);
   }
@@ -35,7 +34,7 @@ class Template extends Component<TemplateProps> {
     const { navigate, didMount, myProps } = this.props;
     const { pathname } = this.props.location;
     if (oldProps.user !== this.props.user && this.props.user === null) {
-      if (pathname !== "/client" && pathname !== "/maker" && pathname !== "/client/newUser" && pathname !== "/maker/newUser") {
+      if (pathname !== "/client/newUser" && pathname !== "/maker/newUser") {
         if (myProps.userType === "CLIENT") navigate("/client/signInUser");
         if (myProps.userType === "MAKER") navigate("/maker/signInUser");
       }
